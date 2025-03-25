@@ -138,7 +138,9 @@ export async function POST(req: NextRequest) {
         const formDataToSend = new FormData();
         formDataToSend.append("file", img, "image.png");
 
-        const paddleResponse = await fetch("http://127.0.0.1:5000/process-image", {
+        const PADDLE_ENDPOINT = process.env.PADDLE_ENDPOINT || '';
+
+        const paddleResponse = await fetch(PADDLE_ENDPOINT, {
           method: "POST",
           body: formDataToSend
         }); 
