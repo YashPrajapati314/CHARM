@@ -1,8 +1,11 @@
-FROM python:3.12-slim
+FROM python:3.11-bookworm
 
 WORKDIR /services/charm-flask
 
-COPY requirements.txt .
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6 -y
+
+COPY paddle/requirements.txt /services/charm-flask
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./paddle /services/charm-flask/

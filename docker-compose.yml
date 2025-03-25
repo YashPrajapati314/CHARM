@@ -27,8 +27,8 @@ services:
     container_name: charm-flask
     restart: always
     build:
-      context: ./paddle
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: charm-flask.Dockerfile
     volumes:
       - vol-charm-flask-uploads:/services/charm-flask/uploads
     ports:
