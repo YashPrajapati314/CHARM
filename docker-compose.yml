@@ -1,0 +1,37 @@
+name: CHARM
+
+volumes:
+  vol-charm-flask-uploads:
+    driver: local
+
+networks:
+  charm-public-net:
+    driver: bridge
+
+services:
+  charm-nextjs:
+    container_name: charm-nextjs
+    restart: always
+    build:
+      context: ./
+      dockerfile: charm-next.Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+    networks:
+      - charm-public-net
+
+
+  charm-flask:
+    container_name: charm-flask
+    restart: always
+    build:
+      context: ./paddle
+      dockerfile: Dockerfile
+    volumes:
+      - vol-charm-flask-uploads:/services/charm-flask/uploads
+    ports:
+      - "5000:5000"
+    networks:
+      - charm-public-net
