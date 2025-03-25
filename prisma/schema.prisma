@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  sapid                     BigInt                  @id
+  name                      String
+  rollno                    Int
+  batchid                   String
+  Batch                     Batch                   @relation(fields: [batchid], references: [batchid])
+  AttendanceRequests        AttendanceRequest[]
+  StudentModuleBookings     StudentModuleBooking[]
+
+  @@map("student")
+}
+
+model Module {
+  course_code               String                  @id
+  course_name               String
+  is_laboratory             Boolean?
+  is_elective               Boolean?
+  is_honours                Boolean?
+  StudentModuleBookings     StudentModuleBooking[]
+  Schedule                  Schedule[]
+
+  @@map("module")
+}
+
+model StudentModuleBooking {
+  sapid         BigInt
+  course_code   String
+  Student       Student     @relation(fields: [sapid], references: [sapid])
+  Module        Module      @relation(fields: [course_code], references: [course_code])
+
+  @@id([sapid, course_code])
+  @@map("studentmodulebooking")
+}
+
+model Batch {
+  batchid       String            @id
+  dept          String
+  div           Int
+  batch         Int
+  studyyear     Int
+  Department    Department        @relation(fields: [dept], references: [departmentname])    
+  Students      Student[]
+  Schedules     Schedule[]
+
+  @@map("batch")
+}
+
+model Schedule {
+  lectureid     String          @db.Uuid      @default(uuid())
+  batchid       String
+  weekday       String
+  starttime     DateTime        @db.Time
+  endtime       DateTime        @db.Time    
+  subject       String
+  teacher       String          @db.Uuid
+  Batch         Batch           @relation(fields: [batchid], references: [batchid])
+  Teacher       Teacher         @relation(fields: [teacher], references: [id])
+  Module        Module          @relation(fields: [subject], references: [course_code])
+
+  @@id([lectureid])
+  @@unique([batchid, weekday, starttime, endtime, subject, teacher])
+  @@map("schedule")
+}
+
+
+model Teacher {
+  id              String          @db.Uuid      @id     @default(uuid())
+  title           String?
+  name            String
+  dept            String
+  initials        String
+  Department      Department      @relation(fields: [dept], references: [departmentname])
+  Schedules       Schedule[]
+
+  @@map("teacher")
+}
+
+model Department {
+  departmentname  String    @id
+  order           Int       @unique
+  shorthand       String?
+  Batches         Batch[]
+  Teachers        Teacher[]
+
+  @@map("department")
+}
+
+model AttendanceRequest {
+  requestid                 String      @db.Uuid          @id               @default(uuid())
+  requesttime               DateTime    @db.Timestamptz   @default(now())
+  sapid                     BigInt      
+  letterstatus              Int
+  date                      DateTime    @db.Date
+  weekday                   String
+  starttime                 DateTime    @db.Time          @default("1970-01-01T00:00:00Z")
+  endtime                   DateTime    @db.Time          @default("1970-01-01T23:59:59Z")
+  Student                   Student     @relation(fields: [sapid], references: [sapid])
+  AttendanceRequestToMedia  AttendanceRequestToMedia[]
+
+  @@map("attendancerequest")
+}
+
+model AttendanceRequestToMedia {
+  requestid         String            @db.Uuid
+  mediaid           String            @db.Uuid
+  AttendanceRequest AttendanceRequest @relation(fields: [requestid], references: [requestid], onDelete: Cascade)
+  Media             Media             @relation(fields: [mediaid], references: [mediaid])
+
+  @@id([requestid, mediaid])
+  @@map("attendancerequesttomedia")
+}
+
+model Media {
+  mediaid                   String      @db.Uuid      @id      @default(uuid())
+  mediaurl                  String
+  reason                    String
+  AttendanceRequestToMedia  AttendanceRequestToMedia[]
+  // Requests                  AttendanceRequest[]
+
+  @@map("media")
+}

@@ -1,0 +1,708 @@
+.next/
+├─ app-build-manifest.json
+├─ build/
+│  └─ chunks/
+│     ├─ node_modules_b5d1de._.js
+│     ├─ node_modules_b5d1de._.js.map
+│     ├─ postcss_config_mjs_transform_ts_89c7e7._.js
+│     ├─ postcss_config_mjs_transform_ts_89c7e7._.js.map
+│     ├─ [root of the server]__05f88b._.js
+│     ├─ [root of the server]__05f88b._.js.map
+│     ├─ [root of the server]__fd836e._.js
+│     ├─ [root of the server]__fd836e._.js.map
+│     ├─ [turbopack]_runtime.js
+│     └─ [turbopack]_runtime.js.map
+├─ build-manifest.json
+├─ cache/
+│  └─ .rscinfo
+├─ fallback-build-manifest.json
+├─ package.json
+├─ react-loadable-manifest.json
+├─ server/
+│  ├─ app/
+│  │  ├─ api/
+│  │  │  ├─ convert-images-to-pdf/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ get-departments/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ get-lecture-details/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ get-lectures/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ get-requests/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ get-students/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ get-teachers/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  ├─ post-attendance/
+│  │  │  │  ├─ route/
+│  │  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  │  ├─ build-manifest.json
+│  │  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  │  └─ server-reference-manifest.json
+│  │  │  │  ├─ route.js
+│  │  │  │  ├─ route.js.map
+│  │  │  │  └─ route_client-reference-manifest.js
+│  │  │  └─ process-image/
+│  │  │     ├─ route/
+│  │  │     │  ├─ app-build-manifest.json
+│  │  │     │  ├─ app-paths-manifest.json
+│  │  │     │  ├─ build-manifest.json
+│  │  │     │  ├─ next-font-manifest.json
+│  │  │     │  ├─ react-loadable-manifest.json
+│  │  │     │  └─ server-reference-manifest.json
+│  │  │     ├─ route.js
+│  │  │     ├─ route.js.map
+│  │  │     └─ route_client-reference-manifest.js
+│  │  ├─ favicon.ico/
+│  │  │  ├─ route/
+│  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  └─ react-loadable-manifest.json
+│  │  │  ├─ route.js
+│  │  │  └─ route.js.map
+│  │  ├─ lecture/
+│  │  │  └─ [lectureId]/
+│  │  │     ├─ page/
+│  │  │     │  ├─ app-build-manifest.json
+│  │  │     │  ├─ app-paths-manifest.json
+│  │  │     │  ├─ build-manifest.json
+│  │  │     │  ├─ next-font-manifest.json
+│  │  │     │  ├─ react-loadable-manifest.json
+│  │  │     │  └─ server-reference-manifest.json
+│  │  │     ├─ page.js
+│  │  │     ├─ page.js.map
+│  │  │     └─ page_client-reference-manifest.js
+│  │  ├─ page/
+│  │  │  ├─ app-build-manifest.json
+│  │  │  ├─ app-paths-manifest.json
+│  │  │  ├─ build-manifest.json
+│  │  │  ├─ next-font-manifest.json
+│  │  │  ├─ react-loadable-manifest.json
+│  │  │  └─ server-reference-manifest.json
+│  │  ├─ page.js
+│  │  ├─ page.js.map
+│  │  ├─ page_client-reference-manifest.js
+│  │  ├─ teacher/
+│  │  │  └─ [teacherId]/
+│  │  │     ├─ page/
+│  │  │     │  ├─ app-build-manifest.json
+│  │  │     │  ├─ app-paths-manifest.json
+│  │  │     │  ├─ build-manifest.json
+│  │  │     │  ├─ next-font-manifest.json
+│  │  │     │  ├─ react-loadable-manifest.json
+│  │  │     │  └─ server-reference-manifest.json
+│  │  │     ├─ page.js
+│  │  │     ├─ page.js.map
+│  │  │     └─ page_client-reference-manifest.js
+│  │  ├─ teacher-view/
+│  │  │  ├─ page/
+│  │  │  │  ├─ app-build-manifest.json
+│  │  │  │  ├─ app-paths-manifest.json
+│  │  │  │  ├─ build-manifest.json
+│  │  │  │  ├─ next-font-manifest.json
+│  │  │  │  ├─ react-loadable-manifest.json
+│  │  │  │  └─ server-reference-manifest.json
+│  │  │  ├─ page.js
+│  │  │  ├─ page.js.map
+│  │  │  └─ page_client-reference-manifest.js
+│  │  └─ _not-found/
+│  │     ├─ page/
+│  │     │  ├─ app-build-manifest.json
+│  │     │  ├─ app-paths-manifest.json
+│  │     │  ├─ build-manifest.json
+│  │     │  ├─ next-font-manifest.json
+│  │     │  ├─ react-loadable-manifest.json
+│  │     │  └─ server-reference-manifest.json
+│  │     ├─ page.js
+│  │     ├─ page.js.map
+│  │     └─ page_client-reference-manifest.js
+│  ├─ app-paths-manifest.json
+│  ├─ chunks/
+│  │  ├─ node_modules_0f4471._.js
+│  │  ├─ node_modules_0f4471._.js.map
+│  │  ├─ node_modules_123a4f._.js
+│  │  ├─ node_modules_123a4f._.js.map
+│  │  ├─ node_modules_25ce37._.js
+│  │  ├─ node_modules_25ce37._.js.map
+│  │  ├─ node_modules_619ea6._.js
+│  │  ├─ node_modules_619ea6._.js.map
+│  │  ├─ node_modules_70b0c4._.js
+│  │  ├─ node_modules_70b0c4._.js.map
+│  │  ├─ node_modules_7e1815._.js
+│  │  ├─ node_modules_7e1815._.js.map
+│  │  ├─ node_modules_9d5d2a._.js
+│  │  ├─ node_modules_9d5d2a._.js.map
+│  │  ├─ node_modules_b1c061._.js
+│  │  ├─ node_modules_b1c061._.js.map
+│  │  ├─ node_modules_dompurify_dist_purify_es_18d7bf.js
+│  │  ├─ node_modules_dompurify_dist_purify_es_18d7bf.js.map
+│  │  ├─ node_modules_formdata-node_lib_esm_fileFromPath_008298.js
+│  │  ├─ node_modules_formdata-node_lib_esm_fileFromPath_008298.js.map
+│  │  ├─ node_modules_formdata-node_lib_esm_fileFromPath_874a61.js
+│  │  ├─ node_modules_formdata-node_lib_esm_fileFromPath_874a61.js.map
+│  │  ├─ node_modules_formdata-node_lib_esm_fileFromPath_e1ddbb.js
+│  │  ├─ node_modules_formdata-node_lib_esm_fileFromPath_e1ddbb.js.map
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_esm_01abac.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_esm_01abac.js.map
+│  │  ├─ node_modules_next_b0b694._.js
+│  │  ├─ node_modules_next_b0b694._.js.map
+│  │  ├─ node_modules_next_c84c4b._.js
+│  │  ├─ node_modules_next_c84c4b._.js.map
+│  │  ├─ node_modules_next_dist_674979._.js
+│  │  ├─ node_modules_next_dist_674979._.js.map
+│  │  ├─ node_modules_openai_4f7e17._.js
+│  │  ├─ node_modules_openai_4f7e17._.js.map
+│  │  ├─ node_modules_openai_b7bf40._.js
+│  │  ├─ node_modules_openai_b7bf40._.js.map
+│  │  ├─ node_modules_tr46_816df9._.js
+│  │  ├─ node_modules_tr46_816df9._.js.map
+│  │  ├─ node_modules_zod_lib_index_mjs_a02341._.js
+│  │  ├─ node_modules_zod_lib_index_mjs_a02341._.js.map
+│  │  ├─ ssr/
+│  │  │  ├─ app_db13a2._.js
+│  │  │  ├─ app_db13a2._.js.map
+│  │  │  ├─ app_globals_b52d8e.css
+│  │  │  ├─ app_globals_b52d8e.css.map
+│  │  │  ├─ app_styles_HomePage_b52d8e.css
+│  │  │  ├─ app_styles_HomePage_b52d8e.css.map
+│  │  │  ├─ app_styles_HomePage_f159fa.css
+│  │  │  ├─ app_styles_HomePage_f159fa.css.map
+│  │  │  ├─ app_styles_LecturePage_b52d8e.css
+│  │  │  ├─ app_styles_LecturePage_b52d8e.css.map
+│  │  │  ├─ app_styles_LecturePage_ec4325.css
+│  │  │  ├─ app_styles_LecturePage_ec4325.css.map
+│  │  │  ├─ app_styles_TeacherPage_9425f1.css
+│  │  │  ├─ app_styles_TeacherPage_9425f1.css.map
+│  │  │  ├─ app_styles_TeacherPage_b52d8e.css
+│  │  │  ├─ app_styles_TeacherPage_b52d8e.css.map
+│  │  │  ├─ node_modules_0722ae._.js
+│  │  │  ├─ node_modules_0722ae._.js.map
+│  │  │  ├─ node_modules_15e7e1._.js
+│  │  │  ├─ node_modules_15e7e1._.js.map
+│  │  │  ├─ node_modules_181a2f._.js
+│  │  │  ├─ node_modules_181a2f._.js.map
+│  │  │  ├─ node_modules_1eae34._.js
+│  │  │  ├─ node_modules_1eae34._.js.map
+│  │  │  ├─ node_modules_1efebd._.js
+│  │  │  ├─ node_modules_1efebd._.js.map
+│  │  │  ├─ node_modules_20f0bd._.js
+│  │  │  ├─ node_modules_20f0bd._.js.map
+│  │  │  ├─ node_modules_2410b3._.js
+│  │  │  ├─ node_modules_2410b3._.js.map
+│  │  │  ├─ node_modules_34dde0._.js
+│  │  │  ├─ node_modules_34dde0._.js.map
+│  │  │  ├─ node_modules_34e35b._.js
+│  │  │  ├─ node_modules_34e35b._.js.map
+│  │  │  ├─ node_modules_36e229._.js
+│  │  │  ├─ node_modules_36e229._.js.map
+│  │  │  ├─ node_modules_3ee9d9._.js
+│  │  │  ├─ node_modules_3ee9d9._.js.map
+│  │  │  ├─ node_modules_56331d._.js
+│  │  │  ├─ node_modules_56331d._.js.map
+│  │  │  ├─ node_modules_59ed26._.js
+│  │  │  ├─ node_modules_59ed26._.js.map
+│  │  │  ├─ node_modules_7f248a._.js
+│  │  │  ├─ node_modules_7f248a._.js.map
+│  │  │  ├─ node_modules_869e06._.js
+│  │  │  ├─ node_modules_869e06._.js.map
+│  │  │  ├─ node_modules_90ef36._.js
+│  │  │  ├─ node_modules_90ef36._.js.map
+│  │  │  ├─ node_modules_9b9ef4._.js
+│  │  │  ├─ node_modules_9b9ef4._.js.map
+│  │  │  ├─ node_modules_@cloudinary-util_url-loader_dist_82dcf0._.js
+│  │  │  ├─ node_modules_@cloudinary-util_url-loader_dist_82dcf0._.js.map
+│  │  │  ├─ node_modules_@pdf-lib_standard-fonts_es_cdb5ae._.js
+│  │  │  ├─ node_modules_@pdf-lib_standard-fonts_es_cdb5ae._.js.map
+│  │  │  ├─ node_modules_a482c1._.js
+│  │  │  ├─ node_modules_a482c1._.js.map
+│  │  │  ├─ node_modules_a55f84._.js
+│  │  │  ├─ node_modules_a55f84._.js.map
+│  │  │  ├─ node_modules_a628d7._.js
+│  │  │  ├─ node_modules_a628d7._.js.map
+│  │  │  ├─ node_modules_abd7c8._.js
+│  │  │  ├─ node_modules_abd7c8._.js.map
+│  │  │  ├─ node_modules_acb67d._.js
+│  │  │  ├─ node_modules_acb67d._.js.map
+│  │  │  ├─ node_modules_ccfeef._.js
+│  │  │  ├─ node_modules_ccfeef._.js.map
+│  │  │  ├─ node_modules_ce97a5._.js
+│  │  │  ├─ node_modules_ce97a5._.js.map
+│  │  │  ├─ node_modules_d3a28f._.js
+│  │  │  ├─ node_modules_d3a28f._.js.map
+│  │  │  ├─ node_modules_dompurify_dist_purify_es_9a0144.js
+│  │  │  ├─ node_modules_dompurify_dist_purify_es_9a0144.js.map
+│  │  │  ├─ node_modules_e25f8e._.js
+│  │  │  ├─ node_modules_e25f8e._.js.map
+│  │  │  ├─ node_modules_f330de._.js
+│  │  │  ├─ node_modules_f330de._.js.map
+│  │  │  ├─ node_modules_ff7771._.js
+│  │  │  ├─ node_modules_ff7771._.js.map
+│  │  │  ├─ node_modules_flatpickr_dist_esm_dc3e8e._.js
+│  │  │  ├─ node_modules_flatpickr_dist_esm_dc3e8e._.js.map
+│  │  │  ├─ node_modules_flatpickr_dist_themes_material_green_b52d8e.css
+│  │  │  ├─ node_modules_flatpickr_dist_themes_material_green_b52d8e.css.map
+│  │  │  ├─ node_modules_heic2any_dist_heic2any_dad2e1.js
+│  │  │  ├─ node_modules_heic2any_dist_heic2any_dad2e1.js.map
+│  │  │  ├─ node_modules_html2canvas_dist_html2canvas_esm_b1a14c.js
+│  │  │  ├─ node_modules_html2canvas_dist_html2canvas_esm_b1a14c.js.map
+│  │  │  ├─ node_modules_jspdf_dist_jspdf_es_min_7b7888.js
+│  │  │  ├─ node_modules_jspdf_dist_jspdf_es_min_7b7888.js.map
+│  │  │  ├─ node_modules_next_81f9cd._.js
+│  │  │  ├─ node_modules_next_81f9cd._.js.map
+│  │  │  ├─ node_modules_next_93a96c._.js
+│  │  │  ├─ node_modules_next_93a96c._.js.map
+│  │  │  ├─ node_modules_next_dist_97f32f._.js
+│  │  │  ├─ node_modules_next_dist_97f32f._.js.map
+│  │  │  ├─ node_modules_next_dist_client_components_forbidden-error_b4e556.js
+│  │  │  ├─ node_modules_next_dist_client_components_forbidden-error_b4e556.js.map
+│  │  │  ├─ node_modules_next_dist_client_components_unauthorized-error_d758e6.js
+│  │  │  ├─ node_modules_next_dist_client_components_unauthorized-error_d758e6.js.map
+│  │  │  ├─ node_modules_pdf-lib_es_1294d9._.js
+│  │  │  ├─ node_modules_pdf-lib_es_1294d9._.js.map
+│  │  │  ├─ node_modules_pdf-lib_es_api_da2888._.js
+│  │  │  ├─ node_modules_pdf-lib_es_api_da2888._.js.map
+│  │  │  ├─ node_modules_pdf-lib_es_core_17a0ea._.js
+│  │  │  ├─ node_modules_pdf-lib_es_core_17a0ea._.js.map
+│  │  │  ├─ node_modules_pdfjs-dist_build_58c319._.js
+│  │  │  ├─ node_modules_pdfjs-dist_build_58c319._.js.map
+│  │  │  ├─ node_modules_pdfjs-dist_build_pdf_9a4323.js
+│  │  │  ├─ node_modules_pdfjs-dist_build_pdf_9a4323.js.map
+│  │  │  ├─ node_modules_zod_lib_index_mjs_f9af47._.js
+│  │  │  ├─ node_modules_zod_lib_index_mjs_f9af47._.js.map
+│  │  │  ├─ [next]_internal_font_google_geist_e531dabc_module_b52d8e.css
+│  │  │  ├─ [next]_internal_font_google_geist_e531dabc_module_b52d8e.css.map
+│  │  │  ├─ [next]_internal_font_google_geist_mono_68a01160_module_b52d8e.css
+│  │  │  ├─ [next]_internal_font_google_geist_mono_68a01160_module_b52d8e.css.map
+│  │  │  ├─ [root of the server]__0f7b52._.js
+│  │  │  ├─ [root of the server]__0f7b52._.js.map
+│  │  │  ├─ [root of the server]__153caf._.js
+│  │  │  ├─ [root of the server]__153caf._.js.map
+│  │  │  ├─ [root of the server]__1cbb93._.js
+│  │  │  ├─ [root of the server]__1cbb93._.js.map
+│  │  │  ├─ [root of the server]__281bd3._.js
+│  │  │  ├─ [root of the server]__281bd3._.js.map
+│  │  │  ├─ [root of the server]__2c6d90._.js
+│  │  │  ├─ [root of the server]__2c6d90._.js.map
+│  │  │  ├─ [root of the server]__3ab4f3._.js
+│  │  │  ├─ [root of the server]__3ab4f3._.js.map
+│  │  │  ├─ [root of the server]__4dcd73._.js
+│  │  │  ├─ [root of the server]__4dcd73._.js.map
+│  │  │  ├─ [root of the server]__4e0676._.js
+│  │  │  ├─ [root of the server]__4e0676._.js.map
+│  │  │  ├─ [root of the server]__592060._.js
+│  │  │  ├─ [root of the server]__592060._.js.map
+│  │  │  ├─ [root of the server]__688d87._.js
+│  │  │  ├─ [root of the server]__688d87._.js.map
+│  │  │  ├─ [root of the server]__86e789._.js
+│  │  │  ├─ [root of the server]__86e789._.js.map
+│  │  │  ├─ [root of the server]__89fb2e._.js
+│  │  │  ├─ [root of the server]__89fb2e._.js.map
+│  │  │  ├─ [root of the server]__9cd01d._.js
+│  │  │  ├─ [root of the server]__9cd01d._.js.map
+│  │  │  ├─ [root of the server]__9d1267._.css
+│  │  │  ├─ [root of the server]__9d1267._.css.map
+│  │  │  ├─ [root of the server]__a13965._.js
+│  │  │  ├─ [root of the server]__a13965._.js.map
+│  │  │  ├─ [root of the server]__a24d08._.js
+│  │  │  ├─ [root of the server]__a24d08._.js.map
+│  │  │  ├─ [root of the server]__b530e5._.js
+│  │  │  ├─ [root of the server]__b530e5._.js.map
+│  │  │  ├─ [root of the server]__b96e65._.js
+│  │  │  ├─ [root of the server]__b96e65._.js.map
+│  │  │  ├─ [root of the server]__c16c88._.js
+│  │  │  ├─ [root of the server]__c16c88._.js.map
+│  │  │  ├─ [root of the server]__c3f22f._.js
+│  │  │  ├─ [root of the server]__c3f22f._.js.map
+│  │  │  ├─ [root of the server]__d4a2ae._.js
+│  │  │  ├─ [root of the server]__d4a2ae._.js.map
+│  │  │  ├─ [root of the server]__d8814d._.js
+│  │  │  ├─ [root of the server]__d8814d._.js.map
+│  │  │  ├─ [root of the server]__e237d7._.js
+│  │  │  ├─ [root of the server]__e237d7._.js.map
+│  │  │  ├─ [turbopack]_runtime.js
+│  │  │  ├─ [turbopack]_runtime.js.map
+│  │  │  ├─ _03deda._.js
+│  │  │  ├─ _03deda._.js.map
+│  │  │  ├─ _2749d2._.js
+│  │  │  ├─ _2749d2._.js.map
+│  │  │  ├─ _3e332b._.js
+│  │  │  ├─ _3e332b._.js.map
+│  │  │  ├─ _4ab017._.js
+│  │  │  ├─ _4ab017._.js.map
+│  │  │  ├─ _84796b._.js
+│  │  │  ├─ _84796b._.js.map
+│  │  │  ├─ _8e1145._.js
+│  │  │  ├─ _8e1145._.js.map
+│  │  │  ├─ _9afd65._.js
+│  │  │  ├─ _9afd65._.js.map
+│  │  │  ├─ _c30fc6._.css
+│  │  │  ├─ _c30fc6._.css.map
+│  │  │  ├─ _c787b7._.js
+│  │  │  ├─ _c787b7._.js.map
+│  │  │  ├─ _d2c2f3._.js
+│  │  │  └─ _d2c2f3._.js.map
+│  │  ├─ [root of the server]__022459._.js
+│  │  ├─ [root of the server]__022459._.js.map
+│  │  ├─ [root of the server]__197a90._.js
+│  │  ├─ [root of the server]__197a90._.js.map
+│  │  ├─ [root of the server]__1bd396._.js
+│  │  ├─ [root of the server]__1bd396._.js.map
+│  │  ├─ [root of the server]__2f6315._.js
+│  │  ├─ [root of the server]__2f6315._.js.map
+│  │  ├─ [root of the server]__30f730._.js
+│  │  ├─ [root of the server]__30f730._.js.map
+│  │  ├─ [root of the server]__5a0543._.js
+│  │  ├─ [root of the server]__5a0543._.js.map
+│  │  ├─ [root of the server]__6e7e18._.js
+│  │  ├─ [root of the server]__6e7e18._.js.map
+│  │  ├─ [root of the server]__7885cc._.js
+│  │  ├─ [root of the server]__7885cc._.js.map
+│  │  ├─ [root of the server]__8867ba._.js
+│  │  ├─ [root of the server]__8867ba._.js.map
+│  │  ├─ [root of the server]__925e4b._.js
+│  │  ├─ [root of the server]__925e4b._.js.map
+│  │  ├─ [root of the server]__975dbe._.js
+│  │  ├─ [root of the server]__975dbe._.js.map
+│  │  ├─ [root of the server]__aa6243._.js
+│  │  ├─ [root of the server]__aa6243._.js.map
+│  │  ├─ [root of the server]__b9834d._.js
+│  │  ├─ [root of the server]__b9834d._.js.map
+│  │  ├─ [root of the server]__c6a9de._.js
+│  │  ├─ [root of the server]__c6a9de._.js.map
+│  │  ├─ [root of the server]__ca213d._.js
+│  │  ├─ [root of the server]__ca213d._.js.map
+│  │  ├─ [root of the server]__d515e3._.js
+│  │  ├─ [root of the server]__d515e3._.js.map
+│  │  ├─ [root of the server]__d9037b._.js
+│  │  ├─ [root of the server]__d9037b._.js.map
+│  │  ├─ [root of the server]__e00b9d._.js
+│  │  ├─ [root of the server]__e00b9d._.js.map
+│  │  ├─ [root of the server]__e14f4b._.js
+│  │  ├─ [root of the server]__e14f4b._.js.map
+│  │  ├─ [root of the server]__f866ad._.js
+│  │  ├─ [root of the server]__f866ad._.js.map
+│  │  ├─ [turbopack]_runtime.js
+│  │  ├─ [turbopack]_runtime.js.map
+│  │  ├─ _46ab41._.js
+│  │  ├─ _46ab41._.js.map
+│  │  ├─ _5b1e21._.js
+│  │  ├─ _5b1e21._.js.map
+│  │  ├─ _6b560b._.js
+│  │  ├─ _6b560b._.js.map
+│  │  ├─ _7ad03e._.js
+│  │  ├─ _7ad03e._.js.map
+│  │  ├─ _7fe6da._.js
+│  │  ├─ _7fe6da._.js.map
+│  │  ├─ _a31393._.js
+│  │  ├─ _a31393._.js.map
+│  │  ├─ _c4a1d4._.js
+│  │  ├─ _c4a1d4._.js.map
+│  │  ├─ _e69132._.js
+│  │  ├─ _e69132._.js.map
+│  │  ├─ _eeda43._.js
+│  │  └─ _eeda43._.js.map
+│  ├─ interception-route-rewrite-manifest.js
+│  ├─ middleware-build-manifest.js
+│  ├─ middleware-manifest.json
+│  ├─ middleware-react-loadable-manifest.js
+│  ├─ next-font-manifest.js
+│  ├─ next-font-manifest.json
+│  ├─ pages/
+│  │  ├─ _app/
+│  │  │  ├─ build-manifest.json
+│  │  │  ├─ next-font-manifest.json
+│  │  │  ├─ pages-manifest.json
+│  │  │  └─ react-loadable-manifest.json
+│  │  ├─ _app.js
+│  │  ├─ _app.js.map
+│  │  ├─ _document/
+│  │  │  ├─ next-font-manifest.json
+│  │  │  ├─ pages-manifest.json
+│  │  │  └─ react-loadable-manifest.json
+│  │  ├─ _document.js
+│  │  ├─ _document.js.map
+│  │  ├─ _error/
+│  │  │  ├─ build-manifest.json
+│  │  │  ├─ next-font-manifest.json
+│  │  │  ├─ pages-manifest.json
+│  │  │  └─ react-loadable-manifest.json
+│  │  ├─ _error.js
+│  │  └─ _error.js.map
+│  ├─ pages-manifest.json
+│  ├─ server-reference-manifest.js
+│  └─ server-reference-manifest.json
+├─ static/
+│  ├─ chunks/
+│  │  ├─ app_09802d._.js
+│  │  ├─ app_09802d._.js.map
+│  │  ├─ app_favicon_ico_mjs_53e3fe._.js
+│  │  ├─ app_globals_b52d8e.css
+│  │  ├─ app_globals_b52d8e.css.map
+│  │  ├─ app_layout_tsx_61af54._.js
+│  │  ├─ app_layout_tsx_83fc40._.js
+│  │  ├─ app_layout_tsx_83fc40._.js.map
+│  │  ├─ app_lecture_[lectureId]_page_tsx_04199f._.js
+│  │  ├─ app_page_tsx_04199f._.js
+│  │  ├─ app_styles_HomePage_b52d8e.css
+│  │  ├─ app_styles_HomePage_b52d8e.css.map
+│  │  ├─ app_styles_HomePage_f159fa.css
+│  │  ├─ app_styles_HomePage_f159fa.css.map
+│  │  ├─ app_styles_LecturePage_b52d8e.css
+│  │  ├─ app_styles_LecturePage_b52d8e.css.map
+│  │  ├─ app_styles_LecturePage_ec4325.css
+│  │  ├─ app_styles_LecturePage_ec4325.css.map
+│  │  ├─ app_styles_TeacherPage_9425f1.css
+│  │  ├─ app_styles_TeacherPage_9425f1.css.map
+│  │  ├─ app_styles_TeacherPage_b52d8e.css
+│  │  ├─ app_styles_TeacherPage_b52d8e.css.map
+│  │  ├─ app_teacher-view_page_tsx_04199f._.js
+│  │  ├─ app_teacher_[teacherId]_page_tsx_04199f._.js
+│  │  ├─ node_modules_0810cc._.js
+│  │  ├─ node_modules_0810cc._.js.map
+│  │  ├─ node_modules_136bf4._.js
+│  │  ├─ node_modules_136bf4._.js.map
+│  │  ├─ node_modules_13e980._.js
+│  │  ├─ node_modules_13e980._.js.map
+│  │  ├─ node_modules_1ab4e0._.js
+│  │  ├─ node_modules_1ab4e0._.js.map
+│  │  ├─ node_modules_3c7d31._.js
+│  │  ├─ node_modules_3c7d31._.js.map
+│  │  ├─ node_modules_3fb22b._.js
+│  │  ├─ node_modules_3fb22b._.js.map
+│  │  ├─ node_modules_471912._.js
+│  │  ├─ node_modules_471912._.js.map
+│  │  ├─ node_modules_4ab0e4._.js
+│  │  ├─ node_modules_4ab0e4._.js.map
+│  │  ├─ node_modules_4ce78b._.js
+│  │  ├─ node_modules_4ce78b._.js.map
+│  │  ├─ node_modules_538e8a._.js
+│  │  ├─ node_modules_538e8a._.js.map
+│  │  ├─ node_modules_7a8bcc._.js
+│  │  ├─ node_modules_7a8bcc._.js.map
+│  │  ├─ node_modules_816380._.js
+│  │  ├─ node_modules_816380._.js.map
+│  │  ├─ node_modules_8cc46c._.js
+│  │  ├─ node_modules_8cc46c._.js.map
+│  │  ├─ node_modules_9bef66._.js
+│  │  ├─ node_modules_9bef66._.js.map
+│  │  ├─ node_modules_9cb6a9._.js
+│  │  ├─ node_modules_9cb6a9._.js.map
+│  │  ├─ node_modules_@cloudinary-util_url-loader_dist_cddbca._.js
+│  │  ├─ node_modules_@cloudinary-util_url-loader_dist_cddbca._.js.map
+│  │  ├─ node_modules_@pdf-lib_standard-fonts_es_93f6d7._.js
+│  │  ├─ node_modules_@pdf-lib_standard-fonts_es_93f6d7._.js.map
+│  │  ├─ node_modules_@swc_helpers_cjs_00636a._.js
+│  │  ├─ node_modules_@swc_helpers_cjs_00636a._.js.map
+│  │  ├─ node_modules_a7d732._.js
+│  │  ├─ node_modules_a7d732._.js.map
+│  │  ├─ node_modules_ac4b9f._.js
+│  │  ├─ node_modules_ac4b9f._.js.map
+│  │  ├─ node_modules_beb007._.js
+│  │  ├─ node_modules_beb007._.js.map
+│  │  ├─ node_modules_bfd2dd._.js
+│  │  ├─ node_modules_bfd2dd._.js.map
+│  │  ├─ node_modules_c148ab._.js
+│  │  ├─ node_modules_c148ab._.js.map
+│  │  ├─ node_modules_canvg_lib_index_es_0936f6.js
+│  │  ├─ node_modules_canvg_lib_index_es_3f78d7.js
+│  │  ├─ node_modules_canvg_lib_index_es_59249e.js
+│  │  ├─ node_modules_canvg_lib_index_es_61d8c3.js
+│  │  ├─ node_modules_canvg_lib_index_es_b83566.js
+│  │  ├─ node_modules_canvg_lib_index_es_bc7f83.js
+│  │  ├─ node_modules_canvg_lib_index_es_cad9d1.js
+│  │  ├─ node_modules_d53656._.js
+│  │  ├─ node_modules_d53656._.js.map
+│  │  ├─ node_modules_dompurify_dist_purify_0936f6.js
+│  │  ├─ node_modules_dompurify_dist_purify_140b3e.js
+│  │  ├─ node_modules_dompurify_dist_purify_140b3e.js.map
+│  │  ├─ node_modules_dompurify_dist_purify_3f78d7.js
+│  │  ├─ node_modules_dompurify_dist_purify_59249e.js
+│  │  ├─ node_modules_dompurify_dist_purify_61d8c3.js
+│  │  ├─ node_modules_dompurify_dist_purify_b83566.js
+│  │  ├─ node_modules_dompurify_dist_purify_bc7f83.js
+│  │  ├─ node_modules_dompurify_dist_purify_cad9d1.js
+│  │  ├─ node_modules_e900dd._.js
+│  │  ├─ node_modules_e900dd._.js.map
+│  │  ├─ node_modules_f919d7._.js
+│  │  ├─ node_modules_f919d7._.js.map
+│  │  ├─ node_modules_f97cf1._.js
+│  │  ├─ node_modules_f97cf1._.js.map
+│  │  ├─ node_modules_fdb984._.js
+│  │  ├─ node_modules_fdb984._.js.map
+│  │  ├─ node_modules_flatpickr_dist_esm_fede35._.js
+│  │  ├─ node_modules_flatpickr_dist_esm_fede35._.js.map
+│  │  ├─ node_modules_flatpickr_dist_themes_material_green_b52d8e.css
+│  │  ├─ node_modules_flatpickr_dist_themes_material_green_b52d8e.css.map
+│  │  ├─ node_modules_heic2any_dist_heic2any_841f2f.js
+│  │  ├─ node_modules_heic2any_dist_heic2any_841f2f.js.map
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_0936f6.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_3938cd.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_3938cd.js.map
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_3f78d7.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_59249e.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_61d8c3.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_b83566.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_bc7f83.js
+│  │  ├─ node_modules_html2canvas_dist_html2canvas_cad9d1.js
+│  │  ├─ node_modules_jspdf_dist_jspdf_es_min_c277e7.js
+│  │  ├─ node_modules_jspdf_dist_jspdf_es_min_c277e7.js.map
+│  │  ├─ node_modules_next_585830._.js
+│  │  ├─ node_modules_next_585830._.js.map
+│  │  ├─ node_modules_next_dist_4bb10e._.js
+│  │  ├─ node_modules_next_dist_4bb10e._.js.map
+│  │  ├─ node_modules_next_dist_build_polyfills_polyfill-nomodule.js
+│  │  ├─ node_modules_next_dist_client_523921._.js
+│  │  ├─ node_modules_next_dist_client_523921._.js.map
+│  │  ├─ node_modules_next_dist_compiled_107ce8._.js
+│  │  ├─ node_modules_next_dist_compiled_107ce8._.js.map
+│  │  ├─ node_modules_next_dist_compiled_react-dom_1f56dc._.js
+│  │  ├─ node_modules_next_dist_compiled_react-dom_1f56dc._.js.map
+│  │  ├─ node_modules_pdf-lib_es_9d565b._.js
+│  │  ├─ node_modules_pdf-lib_es_9d565b._.js.map
+│  │  ├─ node_modules_pdf-lib_es_api_edc6b9._.js
+│  │  ├─ node_modules_pdf-lib_es_api_edc6b9._.js.map
+│  │  ├─ node_modules_pdf-lib_es_core_2dde5b._.js
+│  │  ├─ node_modules_pdf-lib_es_core_2dde5b._.js.map
+│  │  ├─ node_modules_pdfjs-dist_build_adfa70._.js
+│  │  ├─ node_modules_pdfjs-dist_build_adfa70._.js.map
+│  │  ├─ node_modules_pdfjs-dist_build_pdf_5e5dd1.js
+│  │  ├─ node_modules_pdfjs-dist_build_pdf_5e5dd1.js.map
+│  │  ├─ node_modules_react-dom_82bb97._.js
+│  │  ├─ node_modules_react-dom_82bb97._.js.map
+│  │  ├─ node_modules_zod_lib_index_mjs_ee760a._.js
+│  │  ├─ node_modules_zod_lib_index_mjs_ee760a._.js.map
+│  │  ├─ pages/
+│  │  │  ├─ _app.js
+│  │  │  └─ _error.js
+│  │  ├─ pages__app_5771e1._.js
+│  │  ├─ pages__app_f2320d._.js
+│  │  ├─ pages__app_f2320d._.js.map
+│  │  ├─ pages__error_5771e1._.js
+│  │  ├─ pages__error_b8c4c3._.js
+│  │  ├─ pages__error_b8c4c3._.js.map
+│  │  ├─ [next]_internal_font_google_geist_e531dabc_module_b52d8e.css
+│  │  ├─ [next]_internal_font_google_geist_e531dabc_module_b52d8e.css.map
+│  │  ├─ [next]_internal_font_google_geist_mono_68a01160_module_b52d8e.css
+│  │  ├─ [next]_internal_font_google_geist_mono_68a01160_module_b52d8e.css.map
+│  │  ├─ [root of the server]__2e1cf5._.js
+│  │  ├─ [root of the server]__2e1cf5._.js.map
+│  │  ├─ [root of the server]__31723f._.js
+│  │  ├─ [root of the server]__31723f._.js.map
+│  │  ├─ [root of the server]__9d1267._.css
+│  │  ├─ [root of the server]__9d1267._.css.map
+│  │  ├─ [root of the server]__f265a1._.js
+│  │  ├─ [root of the server]__f265a1._.js.map
+│  │  ├─ [root of the server]__f81d50._.js
+│  │  ├─ [root of the server]__f81d50._.js.map
+│  │  ├─ [turbopack]_browser_dev_hmr-client_d6d8d4._.js
+│  │  ├─ [turbopack]_browser_dev_hmr-client_d6d8d4._.js.map
+│  │  ├─ [turbopack]_browser_dev_hmr-client_hmr-client_ts_8e6352._.js
+│  │  ├─ [turbopack]_browser_dev_hmr-client_hmr-client_ts_d0a96d._.js
+│  │  ├─ [turbopack]_browser_dev_hmr-client_hmr-client_ts_d0a96d._.js.map
+│  │  ├─ _22d2ba._.js
+│  │  ├─ _22d2ba._.js.map
+│  │  ├─ _4242ca._.js
+│  │  ├─ _4242ca._.js.map
+│  │  ├─ _5d8f4c._.js
+│  │  ├─ _5d8f4c._.js.map
+│  │  ├─ _88ede3._.js
+│  │  ├─ _88ede3._.js.map
+│  │  ├─ _98d5fb._.js
+│  │  ├─ _98d5fb._.js.map
+│  │  ├─ _9965f1._.js
+│  │  ├─ _9965f1._.js.map
+│  │  ├─ _c30fc6._.css
+│  │  ├─ _c30fc6._.css.map
+│  │  ├─ _ca98f4._.js
+│  │  ├─ _ca98f4._.js.map
+│  │  ├─ _cb9851._.js
+│  │  ├─ _cb9851._.js.map
+│  │  ├─ _d1bca3._.js
+│  │  ├─ _d1bca3._.js.map
+│  │  ├─ _d95469._.js
+│  │  ├─ _d95469._.js.map
+│  │  ├─ _dd9c1c._.js
+│  │  ├─ _dd9c1c._.js.map
+│  │  └─ _e69f0d._.js
+│  ├─ development/
+│  │  ├─ _buildManifest.js
+│  │  ├─ _clientMiddlewareManifest.json
+│  │  └─ _ssgManifest.js
+│  └─ media/
+│     ├─ favicon.45db1c09.ico
+│     ├─ gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2
+│     ├─ gyByhwUxId8gMEwSGFWNOITddY4-s.81df3a5b.woff2
+│     ├─ or3nQ6H_1_WfwkMZI_qYFrcdmhHkjko-s.p.be19f591.woff2
+│     ├─ or3nQ6H_1_WfwkMZI_qYFrkdmhHkjkotbA-s.e32db976.woff2
+│     └─ pdf.worker.min.a955cd6d.mjs
+├─ trace
+├─ transform.js
+├─ transform.js.map
+└─ types/

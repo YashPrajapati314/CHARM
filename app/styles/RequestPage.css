@@ -1,0 +1,444 @@
+.html {
+    scroll-behavior: smooth;
+}
+
+.request-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1.request-page, h2.request-page, p.request-page {
+    color: #333;
+    font-size: 25px;
+}
+
+.info {
+    font-size: 25px;
+}
+
+.request-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.request {
+    /* background-color: #007bff; */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    /* transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out; */
+}
+
+.title-and-table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.body-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-container {
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.green-row {
+    background-color: #268c40;
+}
+
+.yellow-row {
+    background-color: rgb(255, 217, 0);
+}
+
+.orange-row {
+    background-color: rgb(255, 145, 0);
+}
+
+.red-row {
+    background-color: #c72b2b;
+}
+
+.selected-0 td {
+    background-color: rgba(137, 202, 255, 0.483); ;
+}
+
+.selected-1 td {
+    background-color: rgba(176, 178, 77, 0.483); ;
+}
+
+.selected-2 td {
+    background-color: rgba(255, 200, 158, 0.483); ;
+}
+
+.selected-3 td {
+    background-color: rgba(255, 122, 122, 0.483); ;
+}
+
+.selected-0 {
+    border: 2px solid green;
+}
+
+.selected-1 {
+    border: 2px solid rgb(166, 205, 50);
+}
+
+.selected-2 {
+    border: 2px solid rgb(255, 136, 0);
+}
+
+.selected-3 {
+    border: 2px solid rgb(154, 0, 0);
+}
+
+td.truncatable {
+    max-width: 80px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.approve-info {
+    margin-bottom: 10px;
+    background-color: rgb(203, 243, 255);
+    color: #006bad;
+    border-radius: 5px;
+    padding: 10px 40px; 
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+.colour-key-header {
+    color: #333;
+}
+
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    padding: 20px 20px;
+    border-radius: 20px;
+}
+
+.image-container-0 {
+    background-color: rgb(193, 255, 221);
+}
+
+.image-container-1 {
+    background-color: rgb(247, 255, 194);
+}
+
+.image-container-2 {
+    background-color: rgb(255, 241, 223);
+}
+
+.image-container-3 {
+    background-color: rgb(255, 216, 222);
+}
+
+.letter-image {
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+}
+
+.request-reason {
+    margin-bottom: 7.5px;
+}
+
+table {
+    margin: 15px;   
+    width: 100%;
+    width: 60vw
+    /* border: 1px solid; */
+    /* border: cadetblue; */
+}
+
+table.request-table th, table.request-table td {
+    padding: 8px;
+    border: 1px solid white;
+    text-align: center;
+    transition: background-color 0.25s ease-in-out;
+}
+
+table.request-table th {
+    color: white;
+    background-color: #0083d4; 
+}
+
+.root-request-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.server-error {
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 500px;
+    padding: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.server-error p.request-page {
+    text-align: center;
+    justify-content: center;
+}
+
+.server-error .server-error-image {
+    height: 100px;
+    object-fit: contain;
+}
+
+.no-requests {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.no-requests-image {
+    height: 100px;
+    object-fit: contain;
+}
+
+.desc {
+    font-size: 1.3rem;
+    margin-top: 10px;
+}
+
+.colour-square {
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+    min-height: 30px;
+}
+
+.explanation {
+    font-size: 15px;
+    /* text-align: left; */
+    text-align: justify;
+}
+
+.colour-key-desc {
+    /* text-align: left; */
+    text-align: justify;
+    margin-bottom: 5px;
+}
+
+.green-square {
+    background-color: green;
+}
+
+.yellow-square {
+    background-color: rgb(255, 217, 0);
+}
+
+.orange-square {
+    background-color: rgb(255, 145, 0);
+}
+
+.red-square {
+    background-color: #c72b2b;
+}
+
+.green-text {
+    color: green;
+}
+
+.yellow-text {
+    color: rgb(255, 217, 0);
+}
+
+.orange-text {
+    color: rgb(255, 145, 0);
+}
+
+.red-text {
+    color: #c72b2b;
+}
+
+.colour-key-div {
+    margin-top: 10px;
+    background-color: azure;
+    max-width: 840px;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.colour-key-header {
+    margin-bottom: 5px;
+    font-size: 17.5px;
+}
+
+.colour-key {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.colour-explanation-pair {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 10px
+}
+
+
+details[open] > :not(summary) {
+    animation: expand 0.5s ease-in-out;
+}
+
+
+.request-table-container-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.request-table-container {
+    justify-content: center;
+    align-items: center;
+    width: 90svw;
+    width: auto;
+    overflow-x: auto;
+}
+
+/* details[close] > :not(summary) {
+    animation: contract 0.5s ease-in-out;
+} */
+  
+@keyframes expand {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+/* @keyframes contract {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+} */
+
+@media only screen and (max-width: 599px) {
+    table.request-table {
+        overflow-x: scroll;
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    table.request-table th {
+        font-size: 0.8rem;
+    }
+
+    table.request-table td {
+        font-size: 0.8rem;
+    }
+
+    h1.request-page, h2.request-page, p.request-page {
+        color: #333;
+        font-size: 1.2rem;
+    }
+
+    .students-name-request, .info, .request-reason {
+        font-size: 15px;
+    }
+
+    .desc {
+        font-size: 1rem;
+    }
+
+    td.truncatable {
+        max-width: 80px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .approve-info {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .table-container {
+        /* display: flex; */
+        /* flex-direction: column; */
+        justify-content: center;
+        align-items: center;
+        width: 90svw;
+        overflow-x: auto;
+    }
+
+    .image-container {
+        padding: 15px 20px;
+    }
+
+    .request-table-container {
+        width: 90svw;
+    }
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 6px solid rgb(79, 0, 128);
+    animation:
+      l20-1 0.8s infinite linear alternate,
+      l20-2 1.6s infinite linear,
+      color-change 1.6s infinite linear alternate;
+  }
+  @keyframes l20-1 {
+     0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+     12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+     25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+     50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+     62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+     75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+     100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+  }
+  @keyframes l20-2 { 
+    0%    {transform:scaleY(1)  rotate(0deg)}
+    49.99%{transform:scaleY(1)  rotate(135deg)}
+    50%   {transform:scaleY(-1) rotate(0deg)}
+    100%  {transform:scaleY(-1) rotate(-135deg)}
+  }
+  @keyframes color-change {
+    0% {border: 6px solid rgb(79, 0, 128);}
+    50% {border: 6px solid blueviolet;}
+    100% {border: 6px solid purple;}
+  }
