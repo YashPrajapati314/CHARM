@@ -11,7 +11,7 @@ import { end } from "@patternfly/react-core/dist/esm/helpers/Popper/thirdparty/p
 
 const TeacherProfile = () => {
     const {teacherId} = useParams();
-    const today = new Date();
+    const today = actualDateHereNowAndJustTheDate();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [listOfLectures, setListOfLectures] = useState<Lecture[]>([]);
     const [loadedLectures, setLoadedLectures] = useState<boolean>(false);
@@ -39,8 +39,6 @@ const TeacherProfile = () => {
     useEffect(() => {
         const fetchLectures = async () => {
             try {
-                const today = actualDateHereNowAndJustTheDate();
-
                 const response = await fetch('/api/get-lectures', {
                         method: 'POST',
                         headers: { "Content-Type": "application/json" },
