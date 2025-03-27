@@ -29,7 +29,6 @@ const AttendancesForLecture = () => {
     }
 
     const {lectureId} = useParams();
-    const today = new Date();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [listOfStudentsWithRequests, setlistOfStudentsWithRequests] = useState<StudentWithRequests[]>([]);
     const [selectedStudent, setSelectedStudent] = useState<StudentWithRequests | null>(null);
@@ -43,10 +42,12 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const fetchAttendanceRequests = async () => {
             try {
+                const today = actualDateHereNowAndJustTheDate();
+
                 const response = await fetch('/api/get-requests', {
                         method: 'POST',
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({lectureId})
+                        body: JSON.stringify({ lectureId, today })
                     }
                 );
                 if(response.status === 200)
@@ -129,6 +130,12 @@ const AttendancesForLecture = () => {
         {
             setSelectedStudent(std);
         }
+    }
+
+    function actualDateHereNowAndJustTheDate(): Date
+    {
+        const d = new Date();
+        return new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`);
     }
 
     function sortRequests(requestList: StudentWithRequests[]): void

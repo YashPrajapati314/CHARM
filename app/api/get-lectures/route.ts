@@ -6,17 +6,15 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
     try
     {
-        const {teacherId} = await req.json();
+        const { teacherId, today } = await req.json();
 
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-        const today = new Date();
-        
         const lectures = await prisma.schedule.findMany(
             {
                 where: {
                     teacher: {in: [teacherId]},
-                    weekday: {in: [days[today.getDay()]]}
+                    weekday: {in: [days[(new Date(today)).getDay()]]}
                 },
                 select: {
                     lectureid: true,

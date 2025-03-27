@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
             return attendanceDates.map((attendanceDate: Date) => ({
                 sapid: student.sapid,
                 letterstatus: student.letterstatus,
-                date: add5hours30minutes(new Date(attendanceDate)),
+                date: new Date(attendanceDate),
                 weekday: days[(new Date(attendanceDate)).getDay()]
             }));
         });

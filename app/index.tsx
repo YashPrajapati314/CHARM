@@ -143,6 +143,20 @@ const HomePage = () => {
 
 
   useEffect(() => {
+    dates.forEach((date) => {
+      date.setHours(5, 30, 0, 0)
+    });
+  }, [dates]);
+
+
+  useEffect(() => {
+    noLetterDates.forEach((date) => {
+      date.setHours(5, 30, 0, 0)
+    });
+  }, [noLetterDates])
+
+
+  useEffect(() => {
     if (uploadedFiles) {
       setStudents([]);
       setReceivedResponse(false);
@@ -488,7 +502,7 @@ const HomePage = () => {
               const theDate = new Date(date);
               if(!isNaN(theDate.getTime()))
               {
-                theDate.setHours(0, 0, 0, 0);
+                // theDate.setHours(0, 0, 0, 0);
                 const condition = checkIfDateWithinTwoMonthsFromToday(theDate);
                 condition === 0 ? datesWithinTwoMonthsFromNow.push(theDate) : 
                 condition === 1 ? datesOfTheFarFuture.push(theDate) : 
@@ -873,13 +887,18 @@ const HomePage = () => {
   }
 
   const getManuallyEnteredDates = (): Date[] => {
+    dates.forEach((date) => {
+      date.setHours(5, 30, 0, 0)
+    });
+    
     dates.sort((a: Date, b: Date) => a.getTime() - b.getTime());
-
+    
     const manuallyEnteredDates = dates.filter(date => 
       !originallyExtractedDates.some(extractedDate => 
           new Date(date).getTime() === new Date(extractedDate).getTime()
       )
     );
+    
 
     return manuallyEnteredDates;
   }
@@ -1006,7 +1025,7 @@ const HomePage = () => {
     try
     {
       noLetterDates.forEach((date: Date) => {
-        date.setHours(0, 0, 0, 0);
+        date.setHours(5, 30, 0, 0);
       });
 
       const attendance_response = await fetch('/api/post-attendance-without-letters', {
@@ -1049,10 +1068,6 @@ const HomePage = () => {
         }, 1200);
       }, 500);
     }
-  }
-
-  const askForConfirmation = () => {
-
   }
 
   const formattedDate = (date: Date): string => {

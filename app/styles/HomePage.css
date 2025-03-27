@@ -590,7 +590,7 @@
 
   .hamburger-menu {
     display: block;
-    transform: translate(-15, 10);
+    transform: translate(-20px, 0px);
   }
 }
 

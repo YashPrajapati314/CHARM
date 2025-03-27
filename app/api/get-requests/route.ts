@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         
-        const {lectureId} = await req.json();
+        const { lectureId, today } = await req.json();
         
         const query = `
         SELECT arq.sapid, std.name, std.rollno, std.batchid, arq.weekday, arq.letterstatus, m.mediaurl FROM attendancerequest arq
@@ -43,8 +43,8 @@ export async function POST(req: NextRequest) {
         
         const attendanceRequests = await prisma.attendanceRequest.findMany({
             where: {
-                date: add5hours30minutes(new Date()),
-                weekday: days[(new Date()).getDay()],
+                date: (new Date(today)),
+                weekday: days[(new Date(today)).getDay()],
                 Student: {
                     Batch: {
                         is: {

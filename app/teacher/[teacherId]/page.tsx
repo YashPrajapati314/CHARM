@@ -39,10 +39,12 @@ const TeacherProfile = () => {
     useEffect(() => {
         const fetchLectures = async () => {
             try {
+                const today = actualDateHereNowAndJustTheDate();
+
                 const response = await fetch('/api/get-lectures', {
                         method: 'POST',
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({teacherId})
+                        body: JSON.stringify({ teacherId, today })
                     }
                 );
                 if(response.status === 200)
@@ -74,6 +76,12 @@ const TeacherProfile = () => {
         console.log("Lecture Selected:", lectureId);
         router.push(`/lecture/${lectureId}`);
     };
+
+    function actualDateHereNowAndJustTheDate(): Date
+    {
+        const d = new Date();
+        return new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`);
+    }
 
     function sortLectures(lectureList: Lecture[]): void
     {
