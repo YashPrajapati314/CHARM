@@ -278,7 +278,7 @@ const AttendancesForLecture = () => {
                                                                             'red')))}}>Request {index + 1} {request.letterstatus === 0 ? '' : request.letterstatus === 1 ? '(Manually Entered Name)' : request.letterstatus === 2 ? '(Modified Date)' : request.letterstatus === 3 ? '(No Letter Uploaded)' : ''}</p>
                                                         <p className='request-page request-reason'>Reason: {request.reason}</p>
                                                         {request.imagelinks.map((imageLink, imageIndex) => {
-                                                            return <a id={`${imageIndex}`} key={imageIndex} href={imageLink} target='_blank'><img src={imageLink} id={`${imageIndex}`} key={imageIndex} className='letter-image'></img></a>
+                                                            return <a id={`${imageIndex}`} key={imageIndex} href={imageLink} target='_blank'><img src={imageLink} id={`${imageIndex}`} key={imageIndex} className='letter-image' alt='Deleted Image'></img></a>
                                                         })}
                                                     </>
                                                 </div>
