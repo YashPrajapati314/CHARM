@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         const lectures = await prisma.schedule.findMany(
-            {
+            { 
                 where: {
                     teacher: {in: [teacherId]},
                     weekday: {in: [days[(new Date(today)).getDay()]]}
