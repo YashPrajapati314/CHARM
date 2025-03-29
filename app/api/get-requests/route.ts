@@ -20,8 +20,9 @@ export async function POST(req: NextRequest) {
         
         const { lectureIds, today } = await req.json() as Request;
 
-        console.log('Debug Info');
-        console.log(lectureIds, today);
+        console.log('Timezone Debug Info');
+        console.log(today);
+        console.log(new Date(today));
         
         const query = `
         SELECT arq.sapid, std.name, std.rollno, std.batchid, arq.weekday, arq.letterstatus, m.mediaurl FROM attendancerequest arq
