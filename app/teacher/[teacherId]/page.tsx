@@ -90,8 +90,10 @@ const TeacherProfile = () => {
 
     function actualDateHereNowAndJustTheDate(): Date
     {
-        const d = new Date();
-        return new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`);
+        const time = new Date();
+        const date = new Date(`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`);
+        date.setHours(5, 30, 0, 0);
+        return date;
     }
 
     function sortLectures(lectureList: Lecture[]): void
