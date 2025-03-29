@@ -20,23 +20,44 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
     font-size: 25px;
 }
 
-.department-button, .teacher-button, .back-button {
-    background-color: #007bff;
-    color: white;
+.department-button, .back-button {
+    background-color: #e4bfff;
+    color: #6f00bf;
+    border-radius: 5px;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
     width: 200px;
     margin: 5px;
 }
 
-.department-button:hover, .teacher-button:hover, .back-button:hover {
-    background-color: #0056b3;
+.department-button:hover, .back-button:hover {
+    color: white;
+    background-color: #6f00bf;
     transform: scale(1.05);
 }
+
+.teacher-button {
+    background-color: #fabfff;
+    color: #f800a6;
+    border-radius: 40px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    width: 200px;
+    margin: 5px;
+}
+
+.teacher-button:hover {
+    color: white;
+    background-color: #f800a6;
+    transform: scale(1.05);
+}
+
 
 .back-button {
     background-color: #ff4747;
