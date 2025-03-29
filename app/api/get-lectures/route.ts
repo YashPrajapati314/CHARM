@@ -8,6 +8,10 @@ export async function POST(req: NextRequest) {
     {
         const { teacherId, today } = await req.json();
 
+        console.log('Timezone Debug Info');
+        console.log(today);
+        console.log(new Date(today));
+
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         const lectures = await prisma.schedule.findMany(
