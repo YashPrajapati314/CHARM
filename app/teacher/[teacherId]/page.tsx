@@ -133,7 +133,7 @@ const TeacherProfile = () => {
         const endtime = new Date(lecture.endtime);
         const currenttime = setDateToUnixEpoch(add5hours30minutes(new Date()));
 
-        return !((starttime <= currenttime) && (currenttime <= endtime));
+        return ((starttime <= currenttime) && (currenttime <= endtime));
     }
 
     return (
