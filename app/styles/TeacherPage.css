@@ -58,24 +58,6 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
     transform: scale(1.05);
 }
 
-
-.back-button {
-    border-radius: 5px;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-    width: 200px;
-    margin: 5px;
-    background-color: #ff4747;
-}
-
-.back-button:hover {
-    background-color: #cc0000;
-}
-
 .department-list button, .teacher-list button {
     width: 220px;
 }
@@ -102,6 +84,22 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
 }
 
 .server-error .server-error-image {
+    height: 100px;
+    object-fit: contain;
+}
+
+.teachers-not-found {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.teachers-not-found p.teacher-page-open {
+    text-align: center;
+    justify-content: center;
+}
+
+.teachers-not-found .teachers-not-found-image {
     height: 100px;
     object-fit: contain;
 }

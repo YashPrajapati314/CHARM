@@ -43,49 +43,6 @@ interface StudentWithLetterStatus extends Student {
   letterstatus: number
 };
 
-// const tableVariants = {
-//   animate: {
-//     transition: {
-//       staggerChildren: 0.1, // Delay between rows on entry
-//     }
-//   },
-//   exit: {
-//     transition: {
-//       staggerChildren: 0.05, // Delay between rows on exit (could be shorter)
-//     }
-//   }
-// };
-
-// const rowVariants = {
-//   initial: { opacity: 0, y: -20 }, // Start slightly above
-//   animate: {
-//     opacity: 1,
-//     y: 0,
-//     transition: { duration: 0.5 } // Entry duration (0.5s, adjust as needed)
-//   },
-//   exit: {
-//     opacity: 0,
-//     y: -20,
-//     transition: { duration: 0.2 } // Exit duration (0.2s, adjust as needed)
-//   }
-// };
-
-// const tableContainerVariants = {
-//   initial: { opacity: 0 },
-//   animate: { 
-//     opacity: 1,
-//     // transition: { 
-//     //   staggerChildren: 0.005 // very short delay between each row appearing
-//     // } 
-//   },
-//   exit: { opacity: 0, transition: { duration: 0.1 } }
-// };
-
-// const rowVariants = {
-//   initial: { opacity: 0, y: -10 },
-//   animate: { opacity: 1, y: 0, transition: { duration: 0.05 } },
-//   // easeInOut: true
-// };
 
 const HomePage = () => {
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');

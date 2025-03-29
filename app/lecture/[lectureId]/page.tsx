@@ -81,6 +81,7 @@ const AttendancesForLecture = () => {
                 }
             }
             catch (error) {
+                setErrorScenario2(true);
                 console.error("Error fetching attendance requests:", error);
             }
         };
@@ -112,6 +113,7 @@ const AttendancesForLecture = () => {
                 }
             }
             catch (error) {
+                setErrorScenario1(true);
                 console.error("Error fetching lecture details:", error);
             }
         };
