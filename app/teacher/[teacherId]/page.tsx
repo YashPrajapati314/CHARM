@@ -75,6 +75,19 @@ const TeacherProfile = () => {
         router.push(`/lecture/${lectureId}`);
     };
 
+    const fetchMultipleLecturesAttendanceRequests = () => {
+        const currentlyOngoingLectures: string[] = [];
+        listOfLectures.map((lecture) => {
+            if(currentlyOngoing(lecture))
+            {
+                currentlyOngoingLectures.push(lecture.lectureid);
+            }
+        });
+        const currentlyOngoingLecturesString: string = currentlyOngoingLectures.join('&');
+        console.log("Lectures Selected:", currentlyOngoingLectures);
+        router.push(`/ongoing-lectures/${currentlyOngoingLecturesString}`);
+    };
+
     function actualDateHereNowAndJustTheDate(): Date
     {
         const d = new Date();
@@ -120,7 +133,7 @@ const TeacherProfile = () => {
         const endtime = new Date(lecture.endtime);
         const currenttime = setDateToUnixEpoch(add5hours30minutes(new Date()));
 
-        return ((starttime <= currenttime) && (currenttime <= endtime));
+        return !((starttime <= currenttime) && (currenttime <= endtime));
     }
 
     return (
@@ -134,25 +147,38 @@ const TeacherProfile = () => {
             <h1 className='lecture-page'>{days[today.getDay()]}'s Lecture List</h1>
             {
                 loadedLectures ? (listOfLectures.length > 0 ?
-                listOfLectures.map((lecture, index) =>
-                    <div key={`${lecture.lectureid}`} className="lecture-button-ongoing-text-container">
-                        <motion.button
-                            key={`${lecture.lectureid}`}
-                            className="lecture-button"
-                            style={(currentlyOngoing(lecture)) ? {backgroundColor: "rgb(0, 165, 0)"} : {}}
-                            onClick={() => fetchAttendanceRequests(`${lecture.lectureid}`)}
-                            initial={{ opacity: 0, scale: 1 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                        >
-                            {lecture.Module.course_name} 
-                            <br/>
-                            {lecture.batchid} ({formatTime(lecture.starttime)}-{formatTime(lecture.endtime)})
-                        </motion.button>
-                        {currentlyOngoing(lecture) && <motion.p className="currently-ongoing">Currently Ongoing</motion.p>}
-                    </div>
-                ) :
+                <>
+                    {listOfLectures.some(lecture => currentlyOngoing(lecture)) &&
+                    <motion.button
+                        className="all-ongoing-lectures-button"
+                        onClick={() => fetchMultipleLecturesAttendanceRequests()}
+                        initial={{ opacity: 0, scale: 1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                        View Requests For All <br></br> Ongoing Lectures
+                    </motion.button>
+                    }
+                    {listOfLectures.map((lecture, index) =>
+                        <div key={`${lecture.lectureid}`} className="lecture-button-ongoing-text-container">
+                            <motion.button
+                                key={`${lecture.lectureid}`}
+                                className={(currentlyOngoing(lecture)) ? 'ongoing-lecture-button' : 'lecture-button'}
+                                onClick={() => fetchAttendanceRequests(`${lecture.lectureid}`)}
+                                initial={{ opacity: 0, scale: 1 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 1 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                            >
+                                {lecture.Module.course_name} 
+                                <br/>
+                                {lecture.batchid} ({formatTime(lecture.starttime)}-{formatTime(lecture.endtime)})
+                            </motion.button>
+                            {currentlyOngoing(lecture) && <motion.p className="currently-ongoing-text">Currently Ongoing</motion.p>}
+                        </div>
+                    )}
+                </> :
                 <div className="no-lectures">
                     <img className="no-lectures-image" src={keqing_sleeping.src}></img>
                     <p className='lecture-page'>You have no lectures today</p>

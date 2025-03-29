@@ -8,12 +8,20 @@ const add5hours30minutes = (date: Date) => {
     return new Date(date.getTime() + noOfMillisecondsIn5hours30minutes);
 }
 
+interface Request {
+    lectureIds: string[];
+    today: string;
+}
+
 export async function POST(req: NextRequest) {
     try
     {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         
-        const { lectureId, today } = await req.json();
+        const { lectureIds, today } = await req.json() as Request;
+
+        console.log('Debug Info');
+        console.log(lectureIds, today);
         
         const query = `
         SELECT arq.sapid, std.name, std.rollno, std.batchid, arq.weekday, arq.letterstatus, m.mediaurl FROM attendancerequest arq
@@ -22,12 +30,14 @@ export async function POST(req: NextRequest) {
         JOIN student std ON arq.sapid = std.sapid
         JOIN studentmodulebooking stdmod ON std.sapid = stdmod.sapid
         JOIN schedule sch ON stdmod.course_code = sch.subject
-        WHERE sch.weekday = arq.weekday AND std.batchid = sch.batchid AND arq.date = CURRENT_DATE AND sch.lectureid = '${lectureId}';
+        WHERE sch.weekday = arq.weekday AND std.batchid = sch.batchid AND arq.date = CURRENT_DATE AND sch.lectureid IN '${lectureIds}';
         `;
         
         const lectureDay = await prisma.schedule.findFirst({
             where: {
-                lectureid: lectureId
+                lectureid: {
+                    in: lectureIds
+                }
             }
         });
 
@@ -36,7 +46,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ requests: [] }, { status: 200 });
         }
 
-        if(lectureDay?.weekday !== days[(new Date()).getDay()])
+        if(lectureDay?.weekday !== days[(new Date(today)).getDay()])
         {
             return NextResponse.json({ requests: [] }, { status: 200 });
         }
@@ -51,7 +61,7 @@ export async function POST(req: NextRequest) {
                             Schedules: {
                                 some: {
                                     lectureid: {
-                                        equals: lectureId
+                                        in: lectureIds
                                     }
                                 }
                             }
@@ -63,7 +73,7 @@ export async function POST(req: NextRequest) {
                                 Schedule: {
                                     some: {
                                         lectureid: {
-                                            equals: lectureId
+                                            in: lectureIds
                                         }
                                     }
                                 }
@@ -89,7 +99,9 @@ export async function POST(req: NextRequest) {
                                                 Batch: true
                                             },
                                             where: {
-                                                lectureid: lectureId
+                                                lectureid: {
+                                                    in: lectureIds
+                                                }
                                             }
                                         },
                                     }

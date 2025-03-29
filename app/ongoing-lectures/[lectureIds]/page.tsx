@@ -43,11 +43,11 @@ const AttendancesForLecture = () => {
         lectureDetails: Lecture[];
     }
 
-    const {lectureId} = useParams<{lectureId: string}>();
+    const {lectureIds} = useParams<{lectureIds: string}>();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [listOfStudentsWithRequests, setlistOfStudentsWithRequests] = useState<StudentWithRequests[]>([]);
     const [selectedStudent, setSelectedStudent] = useState<StudentWithRequests | null>(null);
-    const [lecture, setLecture] = useState<Lecture | null>();
+    const [lectures, setLectures] = useState<Lecture[] | null>();
     const [loadedTitle, setLoadedTitle] = useState<boolean>(false);
     const [loadedRequests, setLoadedRequests] = useState<boolean>(false);
     const [errorScenario1, setErrorScenario1] = useState<boolean>(false);
@@ -59,17 +59,23 @@ const AttendancesForLecture = () => {
             try {
                 const today = actualDateHereNowAndJustTheDate();
 
+                const ampersandEquivalentASCII = '%26';
+                const currentlyOngoingLectures: string[] = lectureIds.split(ampersandEquivalentASCII);
+
+                console.log('Get Requests');
+                console.log(currentlyOngoingLectures);
+
                 const response = await fetch('/api/get-requests', {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ lectureIds: [lectureId], today })
-                    }
-                );
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ lectureIds: currentlyOngoingLectures, today })
+                });
+
                 if(response.status === 200)
                 {
                     setErrorScenario2(false);
                     console.log('Response', response);
-                    const {requests} = await response?.json() as AttendanceRequestResponse;
+                    const {requests} = await response.json() as AttendanceRequestResponse;
                     sortRequests(requests);
                     setlistOfStudentsWithRequests(requests);
                     console.log('Requests', requests);
@@ -90,18 +96,24 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const getLectureDetails = async() => {
             try {
+                const ampersandEquivalentASCII = '%26';
+                const currentlyOngoingLectures: string[] = lectureIds.split(ampersandEquivalentASCII);
+
+                console.log(currentlyOngoingLectures);
+
                 const response = await fetch('/api/get-lecture-details', {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({lectureIds: [lectureId]})
-                    }
-                );
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({lectureIds: currentlyOngoingLectures})
+                });
+
                 if(response.status === 200)
                 {
                     setErrorScenario1(false);
                     console.log(response);
                     const {lectureDetails} = await response.json() as LectureResponse;
-                    setLecture(lectureDetails[0]);
+                    sortLectures(lectureDetails)
+                    setLectures(lectureDetails);
                     console.log(lectureDetails);
                     setLoadedTitle(true);
                 }
@@ -123,8 +135,8 @@ const AttendancesForLecture = () => {
     }, [listOfStudentsWithRequests]);
 
     useEffect(() => {
-        console.log(lecture);
-    }, [lecture]);
+        console.log(lectures);
+    }, [lectures]);
 
     useEffect(() => {
         if(selectedStudent)
@@ -153,9 +165,20 @@ const AttendancesForLecture = () => {
         return new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`);
     }
 
+    function sortLectures(lectureList: Lecture[]): void
+    {
+        lectureList.sort((a, b) => {
+            if (a.batchid < b.batchid) return -1;
+            if (a.batchid > b.batchid) return 1;
+            return 0;
+        })
+    }
+
     function sortRequests(requestList: StudentWithRequests[]): void
     {
         requestList?.sort((a, b) => {
+            if (a.batchid < b.batchid) return -1;
+            if (a.batchid > b.batchid) return 1;
             if (a.rollno < b.rollno) return -1;
             if (a.rollno > b.rollno) return 1;
             return 0;
@@ -193,8 +216,8 @@ const AttendancesForLecture = () => {
                 {errorScenario1 ? 
                     <h1 className='request-page'>Attendance Request List</h1> : 
                     <>
-                        <h1 className='request-page'>Attendance Requests for {lecture?.Module.course_name}</h1>
-                        <h1 className='request-page'>{lecture?.batchid} ({formatTime(lecture?.starttime)}-{formatTime(lecture?.endtime)})</h1>
+                        <h1 className='request-page'>Attendance Requests for {lectures && lectures[0]?.Module?.course_name}</h1>
+                        <h1 className='request-page'>{lectures && lectures.map((lecture) => (lecture.batchid)).join(', ')} <br></br> ({lectures && formatTime(lectures[0]?.starttime)}-{lectures && formatTime(lectures[0]?.endtime)})</h1>
                     </>
                 }
                 {loadedRequests ? 
@@ -241,6 +264,7 @@ const AttendancesForLecture = () => {
                                         <tr>
                                             <th>SAP ID</th>
                                             <th>Name</th>
+                                            <th>Batch</th>
                                             <th>Roll No</th>
                                             <th>Reason</th>
                                         </tr>
@@ -264,6 +288,7 @@ const AttendancesForLecture = () => {
                                                     >
                                                         <td>{std.sapid}</td>
                                                         <td>{std.name}</td>
+                                                        <td>{std.batchid}</td>
                                                         <td>{std.rollno}</td>
                                                         <td className={(std.listofrequests[0].reason?.split(/\s+/).every(word => word.length < 12) && std.listofrequests[0].reason?.split(/\s+/).length < 5) ? `` : `truncatable`}>{std.listofrequests[0].reason} {std.listofrequests.length > 1 ? `& ${std.listofrequests.length - 1} other${std.listofrequests.length > 2 ? 's' : ''}` : ``}</td>
                                                     </tr>

@@ -13,21 +13,49 @@
 }
 
 .lecture-button {
-    background-color: #007bff;
-    color: white;
+    background-color: #b1cdec;
+    color: #0056b3;
     border: none;
-    padding: 10px 20px;
+    padding: 5px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    border-radius: 80px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
     width: 220px;
     margin: 5px;
 }
 
 .lecture-button:hover {
+    color: white;
     background-color: #0056b3;
     transform: scale(1.05);
+}
+
+.ongoing-lecture-button {
+    background-color: rgba(133, 185, 171, 0.731);
+    color: rgb(0, 139, 107);
+    border: none;
+    padding: 5px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 80px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    width: 220px;
+    margin: 5px;
+}
+
+.ongoing-lecture-button:hover {
+    color: white;
+    background-color: rgb(0, 176, 105);
+    transform: scale(1.05);
+}
+
+.currently-ongoing-text {
+    color: rgb(0, 176, 105);
+    color: darkcyan;
+    /* font-style: italic; */
+    /* font-weight: bold; */
+    margin-top: 5px;
 }
 
 .lecture-list {
@@ -93,13 +121,23 @@ h1.lecture-page, h2.lecture-page, p.lecture-page {
     object-fit: contain;
 }
 
-.currently-ongoing {
-    color: rgb(0, 165, 0);
-    /* font-style: italic; */
-    /* font-weight: bold; */
-    margin-top: 5px;
+.all-ongoing-lectures-button {
+    width: 220px;
+    font-size: 16px;
+    color: darkcyan;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    border-radius: 40px;
+    background-color: rgba(139, 184, 184, 0.665);
+    transition: width 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
 }
 
+.all-ongoing-lectures-button:hover {
+    background-color: rgba(148, 243, 243, 0.603);
+    transition: width 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
+}
 
 .loader {
     width: 50px;
@@ -131,5 +169,3 @@ h1.lecture-page, h2.lecture-page, p.lecture-page {
     50% {border: 6px solid blueviolet;}
     100% {border: 6px solid purple;}
   }
-  
-  

@@ -1,17 +1,21 @@
 import { NextResponse, NextRequest } from "next/server";
 import { Prisma, PrismaClient } from "@prisma/client";
 
+interface Request {
+    lectureIds: string[];
+}
+
 export async function POST(req: NextRequest) {
     try
     {
-        const {lectureId} = await req.json();
+        const {lectureIds} = await req.json() as Request;
         
         const prisma = new PrismaClient();
         
-        const lectureDetails = await prisma.schedule.findFirst(
+        const lectureDetails = await prisma.schedule.findMany(
             {
                 where: {
-                    lectureid: {in: [lectureId]}
+                    lectureid: {in: lectureIds}
                 },
                 select: {
                     subject: true,
