@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
         console.log('Timezone Debug Info Get Requests');
         console.log(today);
         console.log(new Date(today));
+        console.log(days[(new Date(today)).getDay()]);
         
         const query = `
         SELECT arq.sapid, std.name, std.rollno, std.batchid, arq.weekday, arq.letterstatus, m.mediaurl FROM attendancerequest arq
