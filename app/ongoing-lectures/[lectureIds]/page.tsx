@@ -59,8 +59,8 @@ const AttendancesForLecture = () => {
             try {
                 const today = actualDateHereNowAndJustTheDate();
 
-                const ampersandEquivalentASCII = '%26';
-                const currentlyOngoingLectures: string[] = lectureIds.split(ampersandEquivalentASCII);
+                const convertedLectureIds = decodeURIComponent(lectureIds);
+                const currentlyOngoingLectures: string[] = convertedLectureIds.split('&');
 
                 console.log('Get Requests');
                 console.log(currentlyOngoingLectures);
@@ -96,8 +96,8 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const getLectureDetails = async() => {
             try {
-                const ampersandEquivalentASCII = '%26';
-                const currentlyOngoingLectures: string[] = lectureIds.split(ampersandEquivalentASCII);
+                const convertedLectureIds = decodeURIComponent(lectureIds);
+                const currentlyOngoingLectures: string[] = convertedLectureIds.split('&');
 
                 console.log(currentlyOngoingLectures);
 
