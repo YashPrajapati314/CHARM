@@ -1049,7 +1049,7 @@ const HomePage = () => {
         <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
       </div>
       <p className='home-page description'>
-        Post your attendance requests for one or more days and have the attendance granted!
+        Post your attendance requests for one or more days and have it viewed by the teachers and granted!
         No more overhead of communication and workload on others
       </p>
       <div className='upload-section'>
