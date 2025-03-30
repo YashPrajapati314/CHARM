@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     {
         const { teacherId, today } = await req.json();
 
-        console.log('Timezone Debug Info');
+        console.log('Timezone Debug Info Get Lectures');
         console.log(today);
         console.log(new Date(today));
 

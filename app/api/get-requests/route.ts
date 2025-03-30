@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         
         const { lectureIds, today } = await req.json() as Request;
 
-        console.log('Timezone Debug Info');
+        console.log('Timezone Debug Info Get Requests');
         console.log(today);
         console.log(new Date(today));
         
