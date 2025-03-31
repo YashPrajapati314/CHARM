@@ -223,13 +223,13 @@ table.request-table th {
     object-fit: contain;
 }
 
-.no-requests {
+.no-requests, .invalid-request, .invalid-day {
     text-align: center;
     display: flex;
     flex-direction: column;
 }
 
-.no-requests-image {
+.no-requests-image, .invalid-request-image, .invalid-day-image {
     height: 100px;
     object-fit: contain;
 }

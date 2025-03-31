@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { text } from "stream/consumers";
 
 const prisma = new PrismaClient();
 
@@ -45,12 +46,12 @@ export async function POST(req: NextRequest) {
 
         if(!lectureDay)
         {
-            return NextResponse.json({ requests: [] }, { status: 200 });
+            return NextResponse.json({ requests: [] }, { status: 404 });
         }
 
         if(lectureDay?.weekday !== days[(new Date(today)).getDay()])
         {
-            return NextResponse.json({ requests: [] }, { status: 200 });
+            return NextResponse.json({ requests: [] }, { status: 400 });
         }
         
         const attendanceRequests = await prisma.attendanceRequest.findMany({
