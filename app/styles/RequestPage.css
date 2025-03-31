@@ -339,6 +339,10 @@ details[open] > :not(summary) {
     overflow-x: auto;
 }
 
+.request-reason-container {
+    max-width: 80vw;
+}
+
 /* details[close] > :not(summary) {
     animation: contract 0.5s ease-in-out;
 } */

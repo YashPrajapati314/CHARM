@@ -31,13 +31,14 @@ export async function POST(req: NextRequest) {
 
         const imageLinks: string[] = letterDetails.imageLinks;
         const reason: string = letterDetails.reason;
+        const truncatedReason: string = reason.length > 256 ? reason.slice(0, 256) + '...' : reason;
         
         console.log(imageLinks);
 
         const imageRows = await prisma.media.createManyAndReturn({
             data: imageLinks.map(link => ({
                 mediaurl: link,
-                reason: reason
+                reason: truncatedReason
             }))
         });
 

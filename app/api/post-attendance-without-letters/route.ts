@@ -29,11 +29,12 @@ export async function POST(req: NextRequest) {
         const {studentDetails, letterDetails, attendanceDates} = await req.json() as Response;
 
         const reason: string = letterDetails.reason;
+        const truncatedReason: string = reason.length > 256 ? reason.slice(0, 256) + '...' : reason;
 
         const noImageRow = await prisma.media.create({
             data: {
                 mediaurl: NO_LETTER_MEDIA_LINK,
-                reason: reason
+                reason: truncatedReason
             }
         });
 
