@@ -197,7 +197,7 @@ table.request-table th {
     align-items: center;
 }
 
-.server-error {
+.server-error, .invalid-request, .invalid-day {
     text-align: center;
     justify-content: center;
     position: absolute;
@@ -223,7 +223,7 @@ table.request-table th {
     object-fit: contain;
 }
 
-.no-requests, .invalid-request, .invalid-day {
+.no-requests {
     text-align: center;
     display: flex;
     flex-direction: column;

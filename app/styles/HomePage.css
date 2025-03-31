@@ -712,6 +712,14 @@
   color: rgb(255, 153, 0);
 }
 
+.table-skeleton-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
 .confirmation-table.extracted-names th, .confirmation-table.extracted-names td {
   border: 1.8px solid #009b10;
   background-image: linear-gradient(to right, rgba(148, 228, 0, 0.729), rgba(208, 255, 122, 0.6));

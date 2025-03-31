@@ -86,11 +86,13 @@ const AttendancesForLecture = () => {
                 else if(response.status === 400)
                 {
                     setErrorScenario2(false);
+                    setInvalidRequestScenario(false);
                     setInvalidDayScenario(true);
                 }
                 else if(response.status === 404)
                 {
                     setErrorScenario2(false);
+                    setInvalidDayScenario(false);
                     setInvalidRequestScenario(true);
                 }
                 else
@@ -245,13 +247,13 @@ const AttendancesForLecture = () => {
                     <>
                         <div className="invalid-request">
                             <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
-                            <p>No such lecture found... Perhaps you have lost your way</p>
+                            <h1 className='request-page'>No such lecture found... Perhaps you have lost your way</h1>
                         </div>
                     </> :
                     <>
                         <div className="invalid-day">
                             <img className="invalid-day-image" src={fischl_folded_arms.src}></img>
-                            <p>The requested lecture exists but is not scheduled for today</p>
+                            <h1 className='request-page'>The requested lecture exists but is not scheduled for today</h1>
                         </div>
                     </>
                 }

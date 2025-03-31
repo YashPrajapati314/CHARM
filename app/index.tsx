@@ -7,6 +7,7 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import * as pdfjsLib from 'pdfjs-dist';
 import { fileTypeFromBlob } from 'file-type';
+import TableSkeleton from './table-loading-skeleton';
 // import heic2any from 'heic2any';
 import { Student } from '@prisma/client';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
@@ -1081,8 +1082,13 @@ const HomePage = () => {
 
       {
         !safeToUpload ? 
-        // <SkeletonTable rowsCount={4} columns={['1', '2', '3', '4']} /> 
-        <></>
+        <>
+          {/* <div className='table-skeleton-container'>
+            <br></br>
+            <br></br>
+            <TableSkeleton />
+          </div> */}
+        </>
         : 
         <AnimatePresence>
           {
