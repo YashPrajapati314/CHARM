@@ -68,6 +68,9 @@ const AttendancesForLecture = () => {
                         body: JSON.stringify({ lectureIds: [lectureId], today })
                     }
                 );
+
+                console.log(response.status);
+
                 if(response.status === 200)
                 {
                     setErrorScenario2(false);
@@ -82,10 +85,12 @@ const AttendancesForLecture = () => {
                 }
                 else if(response.status === 400)
                 {
+                    setErrorScenario2(false);
                     setInvalidDayScenario(true);
                 }
                 else if(response.status === 404)
                 {
+                    setErrorScenario2(false);
                     setInvalidRequestScenario(true);
                 }
                 else
@@ -262,7 +267,7 @@ const AttendancesForLecture = () => {
                             {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} 
                         </h1> : 
                         <>
-                            <h1 className='request-page'>Attendance Requests for {lecture?.Module.course_name}</h1>
+                            <h1 className='request-page'>Attendance Requests for <br></br> {lecture?.Module.course_name}</h1>
                             <h1 className='request-page'>
                                 {lecture?.batchid} 
                                 <br></br>

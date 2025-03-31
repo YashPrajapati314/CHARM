@@ -46,11 +46,13 @@ export async function POST(req: NextRequest) {
 
         if(!lectureDay)
         {
+            console.log('404 Lecture Not Found');
             return NextResponse.json({ requests: [] }, { status: 404 });
         }
-
+        
         if(lectureDay?.weekday !== days[(new Date(today)).getDay()])
         {
+            console.log('400 Not on today\'s date');
             return NextResponse.json({ requests: [] }, { status: 400 });
         }
         
