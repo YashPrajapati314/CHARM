@@ -3,6 +3,8 @@ name: CHARM
 volumes:
   vol-charm-flask-uploads:
     driver: local
+  vol-charm-db:
+    driver: local
 
 networks:
   charm-public-net:
@@ -18,10 +20,9 @@ services:
     env_file:
       - ./.env
     ports:
-      - "3000:3000"
+      - "${WEB_PORT}:3000"
     networks:
       - charm-public-net
-
 
   charm-flask:
     container_name: charm-flask
@@ -32,6 +33,18 @@ services:
     volumes:
       - vol-charm-flask-uploads:/services/charm-flask/uploads
     ports:
-      - "5000:5000"
+      - "${FLASK_PORT}:5000"
+    networks:
+      - charm-public-net
+  charm-db:
+    container_name: charm-db
+    restart: always
+    image: postgres:latest
+    volumes:
+      - vol-charm-db:/var/lib/postgresql/data
+    env_file:
+      - ./charm-db.env
+    ports:
+      - "${DB_PORT}:5432"
     networks:
       - charm-public-net
