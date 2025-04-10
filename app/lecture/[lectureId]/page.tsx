@@ -173,7 +173,10 @@ const AttendancesForLecture = () => {
     {
         const time = new Date();
         const date = new Date(`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`);
-        date.setHours(5, 30, 0, 0);
+        // date.setHours(5, 30, 0, 0);
+        const localDate = new Date("1970-01-01T00:00:00")
+        const utcDate = new Date("1970-01-01T00:00:00Z")
+        console.log(localDate.getTime() - utcDate.getTime())
         return date;
     }
 

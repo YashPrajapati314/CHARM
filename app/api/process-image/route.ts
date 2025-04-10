@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import openAI, { OpenAI } from 'openai';
 import Together from 'together-ai';
+import { GoogleGenAI, Type } from "@google/genai";
 import { date, string, z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import fs from 'fs';
 import path from 'path';
+import { Bubblegum_Sans } from 'next/font/google';
 
 
 export const config = {
@@ -17,8 +19,9 @@ export const config = {
 const TOGETHER_AI_API_KEY_1: string = process.env.TOGETHER_AI_API_KEY_1 || '';
 const TOGETHER_AI_API_KEY_2: string = process.env.TOGETHER_AI_API_KEY_2 || '';
 const GPT4_API_KEY: string = process.env.GPT4_API_KEY || '';
+const GEMINI_API_KEY: string = process.env.GEMINI_API_KEY || '';
 
-const response_schema = {
+const response_schema_for_gpt4 = {
   "type": "json_schema",
   "json_schema": {
     "name": "letter_details",
@@ -49,7 +52,7 @@ const response_schema = {
 }
 
 
-const SYSTEM_PROMPT_FOR_GPT4 = `You are an expert at structured data extraction from image. You will be given images of letters that are a request to grant attenadnce to certain students for some dates and your task is to extract the following details from them:
+const SYSTEM_PROMPT_FOR_GPT4_AND_GEMINI = `You are an expert at structured data extraction from image. You will be given images of letters that are a request to grant attenadnce to certain students for some dates and your task is to extract the following details from them:
 1) The dates for which those students will be granted attendance. This can be mentioned in any format and the correct set of dates are usually mentioned just before the list of students start. Multiple dates can also be mentioned and sometimes the dates can be mentioned as a range as well, for example: 14th February 2025 to 18th February 2025 in which case you should return all the dates between 14 and 18, inclusive of both ends (i.e. 2025-02-14, 2025-02-15, 2025-02-16, 2025-02-17, 2025-02-18) in YYYY-MM-DD format. If the year for a particular date is not mentioned, assume it to be the current year ie ${(new Date()).getFullYear()}. However, if there are hints of the letter being dated near the end of the year, e.g. December 20, ${(new Date()).getFullYear()} and the request is likely for a date from the upcoming year, e.g. January 4, assume the date for January 4 to be ${(new Date()).getFullYear() + 1} i.e. the next year.
 2) A summarized reason for receiving attendance. This can be known from the subject or the body of the letter. Keep the reason short and to the point, avoid mentioning redundant phrases like "Request to" or "Attendance for" and only mention the task/event that the students are working with along with the name of the committee if any. For example: 'Sport Day Preparation' and NOT 'Request to grant attendance to students involved in making preparations for Sports Day'.
 The input image can also be the second or third page of a letter which might only contain student details or the complimentary close and no relevant information to infer the reason from. In such a case, just return an empty string for the reason and an empty list for the dates.
@@ -117,6 +120,7 @@ export async function POST(req: NextRequest) {
         
         if(extractedText)
         {
+          console.log(`Llama OCR responded: ${extractedText}`);
           const SAPID_REGEX = /[0-9]{11}/g;          
           sapids = extractedText.match(SAPID_REGEX)?.map((id) => parseInt(id, 10)) || [];
           return sapids;
@@ -151,11 +155,12 @@ export async function POST(req: NextRequest) {
         {
           const data = await paddleResponse.json();
           sapids = data?.list || [];
-          return sapids
+          console.log(`Paddle responded: ${sapids}`);
+          return sapids;
         }
         else
         {
-          return undefined
+          return undefined;
         }
       }
       catch
@@ -174,19 +179,20 @@ export async function POST(req: NextRequest) {
         const completion = await openai.chat.completions.create({
           model: 'gpt-4o',
           messages: [
-            {role: 'system', content: SYSTEM_PROMPT_FOR_GPT4},
+            {role: 'system', content: SYSTEM_PROMPT_FOR_GPT4_AND_GEMINI},
             {role: 'user', content: [{
               'type': 'image_url', // @ts-ignore
               'image_url': {'url': imgBase64}
             }]} 
           ], // @ts-ignore
-          response_format: response_schema,
+          response_format: response_schema_for_gpt4,
           temperature: 0
         });
 
         const extractedText = completion?.choices[0].message?.content;
         if(extractedText)
         {
+          console.log(`GPT responded: ${extractedText}`);
           const parsedDetails = JSON.parse(extractedText);
           if(parsedDetails)
           {
@@ -207,6 +213,69 @@ export async function POST(req: NextRequest) {
         return undefined;
       }
     }
+
+      async function getDateAndReasonFromGemini(API_KEY: string, img: Blob) {
+        try
+        {
+          const gemini = new GoogleGenAI({apiKey: API_KEY});
+
+          const response = await gemini.models.generateContent({
+            model: 'gemini-2.0-flash', //
+            contents: {
+              inlineData: {
+                mimeType: img.type,
+                data: Buffer.from(await img.arrayBuffer()).toString('base64')
+              }
+            },
+            config: {
+              systemInstruction: SYSTEM_PROMPT_FOR_GPT4_AND_GEMINI,
+              responseMimeType: 'application/json',
+              responseSchema: {
+                type: Type.OBJECT,
+                properties: {
+                  dates: {
+                    type: Type.ARRAY,
+                    description: "A list of dates on which attendance is being granted. Can be mentioned as a range. Example: Date A to Date B in which case every date within that range including A and B have to be returned in YYYY-MM-DD format",
+                    items: {
+                      type: Type.STRING,
+                      description: "Dates in YYYY-MM-DD format."
+                    }
+                  },
+                  reason: {
+                    type: Type.STRING,
+                    description: "The reason due to which the students are being granted attendance. A very short descriptive phrase that just mentions the event/work they are busy with. Can be extracted from the subject or body of the letter only if it is the first page. If the exact reason can't be found, return an empty string."
+                  }
+                },
+                required: ['dates', 'reason']
+              }
+            }
+          });
+
+          const extractedText = response?.text;
+          if(extractedText)
+          {
+            console.log(`Gemini responded: ${extractedText}`);
+            const parsedDetails = JSON.parse(extractedText);
+            if(parsedDetails)
+            {
+              return parsedDetails;
+            }
+            else
+            {
+              return undefined;
+            }
+          }
+          else
+          {
+            return undefined;
+          }
+        }
+        catch (error)
+        {
+          console.log(error);
+          return undefined;
+        }
+      }
 
     const finalresult = await Promise.all(
       allImages.map(async (anImage) => {
@@ -234,17 +303,31 @@ export async function POST(req: NextRequest) {
               sapids.forEach((sapid: number) => {
                   sapidset.add(sapid);
               });
-            }   
+            }
           }
         }
         let parsedDetails = await getDateAndReasonFromGPT4(GPT4_API_KEY, anImage.imageBase64);
-        parsedDetails?.dates.map((date: string) => {
-          dates.add(date);
-        })
-        let reason: string = parsedDetails?.reason || '';
-        reason = reason.trim();
-        if(reason !== '')
-        reasons.add(reason);
+        if(parsedDetails)
+        {
+          parsedDetails?.dates.map((date: string) => {
+            dates.add(date);
+          })
+          let reason: string = parsedDetails?.reason || '';
+          reason = reason.trim();
+          if(reason !== '')
+          reasons.add(reason);
+        }
+        else
+        {
+          let parsedDetails = await getDateAndReasonFromGemini(GEMINI_API_KEY, anImage.imageFile);
+          parsedDetails?.dates.map((date: string) => {
+            dates.add(date);
+          })
+          let reason: string = parsedDetails?.reason || '';
+          reason = reason.trim();
+          if(reason !== '')
+          reasons.add(reason);
+        }
       })
     );
 

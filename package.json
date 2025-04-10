@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^0.8.0",
+    "@google/generative-ai": "^0.24.0",
     "@patternfly/react-component-groups": "^6.1.0",
     "@patternfly/react-core": "^6.1.0",
     "@prisma/client": "^6.2.1",
