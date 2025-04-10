@@ -90,10 +90,21 @@ const TeacherProfile = () => {
 
     function actualDateHereNowAndJustTheDate(): Date
     {
-        const time = new Date();
-        const date = new Date(`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`);
-        date.setHours(5, 30, 0, 0);
-        return date;
+        const formatter = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Asia/Kolkata',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          });
+        const formattedDate = formatter.format(new Date());
+        const finalDate = new Date(formattedDate + 'T00:00:00.000Z');
+        console.log(`Trial ${finalDate}`)
+        return finalDate;
+        // const time =    
+        // const date = new Date(`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`);
+        // date.setHours(5, 30, 0, 0);
+        // // 5:30 am today -> ISO String -> 00:00 today
+        // return date;
     }
 
     function sortLectures(lectureList: Lecture[]): void
