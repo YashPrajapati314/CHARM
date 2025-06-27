@@ -80,7 +80,7 @@ const HomePage = () => {
   const [plural, setPlural] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [imagesUploadedToCloudinary, setImagesUploadedToCloudinary] = useState<string[]>([]);
-  const [dateOfCacheUpdate, setDateOfCacheUpdate] = useState<Date | null>(new Date('2025-03-24'));
+  const [dateOfCacheUpdate, setDateOfCacheUpdate] = useState<Date | null>(new Date());
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const prevStudentsLength = useRef<number>(0);
   const currStudentsLength = useRef<number>(0);
