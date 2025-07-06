@@ -2,17 +2,17 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import './styles/HomePage.css';
+import '../styles/HomePage.css';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import * as pdfjsLib from 'pdfjs-dist';
 import { fileTypeFromBlob } from 'file-type';
-import TableSkeleton from './table-loading-skeleton';
+import TableSkeleton from '../table-loading-skeleton';
 // import heic2any from 'heic2any';
 import { Student } from '@prisma/client';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
-import Header from './header';
-import ConfirmationPopup from './confirmation';
+import Header from '../header';
+import ConfirmationPopup from '../confirmation';
 import { Skeleton } from "@/components/ui/skeleton"
 import SkeletonTable from "@patternfly/react-component-groups/dist/dynamic/SkeletonTable";
 import imageCompression from 'browser-image-compression';
@@ -25,10 +25,6 @@ import { deflateSync } from 'zlib';
 import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
-import OptionCard from './option-card';
-import letter_envelop from '../images/letter.svg'
-// import no_letter_envelop from '../images/no-letter.svg'
-import no_letter_envelop from '../images/no-letter.png'
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -48,73 +44,8 @@ interface StudentWithLetterStatus extends Student {
   letterstatus: number
 };
 
+
 const HomePage = () => {
-  return (
-    <div className='homepage'>
-      <div className='top-container'>
-        {/* <div className='title-button-side-by-side'>
-          <h1 className='home-page title'>CHARM</h1>
-          <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
-              View requests as a teacher
-          </button>
-        </div> */}
-        <Header></Header>
-        <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
-      </div>
-      <p className='home-page description'>
-        Post your attendance requests for one or more days and have it viewed by the teachers and granted!
-        No more overhead of communication and workload on others
-      </p>
-      
-      <br/>
-      
-      <div className='flex flex-col items-center gap-2'>
-        <OptionCard
-          title={'Make a request with a letter'}
-          image_src={letter_envelop.src}
-          page='request-with-letter'
-        />
-
-        <OptionCard
-          title={'Make a request without a letter'}
-          image_src={no_letter_envelop.src}
-          page='request-without-letter'
-        />
-
-        <OptionCard
-          title={'View requests by class'}
-          image_src={no_letter_envelop.src}
-          page='view-requests'
-        />
-
-        <OptionCard
-          title={'View requests for your lecture as a teacher'}
-          image_src={no_letter_envelop.src}
-          page='teacher-view'
-        />
-      </div>
-
-
-      
-      <br/>
-
-
-      {/* {(
-        <div className='no-letter' id='no-letter-div'>
-          <h1 className='home-page'>Make a request without a letter</h1>
-          <p className='home-page description'>
-            If you don't have a letter available for the day and can't attend for a genuine reason,
-            you can make a letterless request.
-            Only go for this option if you have talked to the teachers about it before and they have agreed to mark
-            you present without a letter being needed.
-          </p>
-        </div>
-      )} */}
-    </div>
-  );
-}
-
-const HomePag = () => {
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -774,83 +705,83 @@ const HomePag = () => {
     }
   }
 
-  const fetchNoLetterStudents = async (event: React.FormEvent) => {
-    event?.preventDefault();
-    setNoLetterFlipFlop((prev) => !prev);
-    setNoLetterErrorMessage('');
-    setNoLetterSuccessMessage('');
-    console.log(noLetterSAPIDs);
-    const noLetterSAPIDArray = noLetterSAPIDs.match(/[0-9]{11}/g)?.map((id) => parseInt(id, 10)) || [];
-    const noLetterSet = [...new Set(noLetterSAPIDArray)];
+  // const fetchNoLetterStudents = async (event: React.FormEvent) => {
+  //   event?.preventDefault();
+  //   setNoLetterFlipFlop((prev) => !prev);
+  //   setNoLetterErrorMessage('');
+  //   setNoLetterSuccessMessage('');
+  //   console.log(noLetterSAPIDs);
+  //   const noLetterSAPIDArray = noLetterSAPIDs.match(/[0-9]{11}/g)?.map((id) => parseInt(id, 10)) || [];
+  //   const noLetterSet = [...new Set(noLetterSAPIDArray)];
 
-    if(noLetterSet.length === 0)
-    {
-      setShowNoLetterErrorMessageWithoutTable(true);
-      setNoLetterErrorMessage('No valid SAP IDs were entered.');
-      if(noLetterStudents.length > 0)
-      {
-        setShowNoLetterErrorMessageWithoutTable(false);
-      }
-      return;
-    }
+  //   if(noLetterSet.length === 0)
+  //   {
+  //     setShowNoLetterErrorMessageWithoutTable(true);
+  //     setNoLetterErrorMessage('No valid SAP IDs were entered.');
+  //     if(noLetterStudents.length > 0)
+  //     {
+  //       setShowNoLetterErrorMessageWithoutTable(false);
+  //     }
+  //     return;
+  //   }
 
-    const response = await fetch('/api/get-students', 
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ sapid_list: noLetterSet })
-      }
-    );
+  //   const response = await fetch('/api/get-students', 
+  //     {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({ sapid_list: noLetterSet })
+  //     }
+  //   );
 
-    if(response.status !== 200)
-    {
-      setNoLetterErrorMessage(`Error fetching student data.`);
-      return;
-    }
+  //   if(response.status !== 200)
+  //   {
+  //     setNoLetterErrorMessage(`Error fetching student data.`);
+  //     return;
+  //   }
 
-    const result = await response.json();
+  //   const result = await response.json();
 
-    if(!response.ok)
-    {
-      return;
-    }
+  //   if(!response.ok)
+  //   {
+  //     return;
+  //   }
 
-    if(result.students.length === 0)
-    {
-      setShowNoLetterErrorMessageWithoutTable(true);
-      setNoLetterErrorMessage('Couldn\'t find any records for any of the entered SAP IDs.');
-    }
+  //   if(result.students.length === 0)
+  //   {
+  //     setShowNoLetterErrorMessageWithoutTable(true);
+  //     setNoLetterErrorMessage('Couldn\'t find any records for any of the entered SAP IDs.');
+  //   }
 
-    result.students.forEach((student: any, index: number, arr: any[]) => {
-      student.letterstatus = 3;
-    });
+  //   result.students.forEach((student: any, index: number, arr: any[]) => {
+  //     student.letterstatus = 3;
+  //   });
 
-    const ideal_length = noLetterStudents.length + result.students.length;
-    let updatedStudents = [...noLetterStudents];
-    let count = 0;
-    for(let studentObject of result.students)
-    {
-      if(!noLetterStudents.some(existingStudent => existingStudent.sapid === studentObject.sapid))
-      {
-        updatedStudents.push(studentObject);
-        count = count + 1;
-      }
-    }
-    setNoLetterStudents(updatedStudents);
-    if(ideal_length!==updatedStudents.length)
-    {
-      setShowNoLetterErrorMessageWithoutTable(false);
-      setNoLetterErrorMessage('Ignored one or more records that were repetitive.');
-    }
-    if(count > 0)
-    {
-      setNoLetterSuccessMessage(`Added ${count} row${count > 1 ? 's' : ''}.`);
-    }
-    if(noLetterStudents.length > 0)
-    {
-      setShowNoLetterErrorMessageWithoutTable(false);
-    }
-  }
+  //   const ideal_length = noLetterStudents.length + result.students.length;
+  //   let updatedStudents = [...noLetterStudents];
+  //   let count = 0;
+  //   for(let studentObject of result.students)
+  //   {
+  //     if(!noLetterStudents.some(existingStudent => existingStudent.sapid === studentObject.sapid))
+  //     {
+  //       updatedStudents.push(studentObject);
+  //       count = count + 1;
+  //     }
+  //   }
+  //   setNoLetterStudents(updatedStudents);
+  //   if(ideal_length!==updatedStudents.length)
+  //   {
+  //     setShowNoLetterErrorMessageWithoutTable(false);
+  //     setNoLetterErrorMessage('Ignored one or more records that were repetitive.');
+  //   }
+  //   if(count > 0)
+  //   {
+  //     setNoLetterSuccessMessage(`Added ${count} row${count > 1 ? 's' : ''}.`);
+  //   }
+  //   if(noLetterStudents.length > 0)
+  //   {
+  //     setShowNoLetterErrorMessageWithoutTable(false);
+  //   }
+  // }
 
 
   const handleManualInputSubmit = async (event: React.FormEvent) => {
@@ -898,20 +829,20 @@ const HomePag = () => {
     setSelectedRows(flippedSelection);
   };
 
-  const removeRow = (sapid: number) => {
-    if(noLetterStudents.length === 1)
-    {
-      setNoLetterErrorMessage('');
-      setNoLetterSuccessMessage('');
-    }
-    setNoLetterStudents(prev => ( prev?.filter((item) => Number(item.sapid)!==sapid) ));
-  }
+  // const removeRow = (sapid: number) => {
+  //   if(noLetterStudents.length === 1)
+  //   {
+  //     setNoLetterErrorMessage('');
+  //     setNoLetterSuccessMessage('');
+  //   }
+  //   setNoLetterStudents(prev => ( prev?.filter((item) => Number(item.sapid)!==sapid) ));
+  // }
 
-  const removeAll = () => {
-    setNoLetterStudents([]);
-    setNoLetterErrorMessage('');
-    setNoLetterSuccessMessage('');
-  }
+  // const removeAll = () => {
+  //   setNoLetterStudents([]);
+  //   setNoLetterErrorMessage('');
+  //   setNoLetterSuccessMessage('');
+  // }
 
   const getManuallyEnteredDates = (): Date[] => {
     dates.forEach((date) => {
@@ -1048,33 +979,33 @@ const HomePag = () => {
     }
   };
 
-  const handleSubmitNoLetter = async (): Promise<number> => {
-    try
-    {
-      noLetterDates.forEach((date: Date) => {
-        date.setHours(5, 30, 0, 0);
-      });
+  // const handleSubmitNoLetter = async (): Promise<number> => {
+  //   try
+  //   {
+  //     noLetterDates.forEach((date: Date) => {
+  //       date.setHours(5, 30, 0, 0);
+  //     });
 
-      const attendance_response = await fetch('/api/post-attendance-without-letters', {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          studentDetails: noLetterStudents,
-          letterDetails: {reason: noLetterReason},
-          attendanceDates: noLetterDates
-        })
-      });
+  //     const attendance_response = await fetch('/api/post-attendance-without-letters', {
+  //       method: 'POST',
+  //       headers: {"Content-Type": "application/json"},
+  //       body: JSON.stringify({
+  //         studentDetails: noLetterStudents,
+  //         letterDetails: {reason: noLetterReason},
+  //         attendanceDates: noLetterDates
+  //       })
+  //     });
 
-      console.log(attendance_response);
+  //     console.log(attendance_response);
 
-      return attendance_response.status;
-    }
-    catch (error)
-    {
-      console.log(`Error sending student data: ${error}`);
-      return -1;
-    }
-  }
+  //     return attendance_response.status;
+  //   }
+  //   catch (error)
+  //   {
+  //     console.log(`Error sending student data: ${error}`);
+  //     return -1;
+  //   }
+  // }
 
   const goToSAPIDEntering = () => {
     // if(typeof window === 'undefined') return;
@@ -1118,9 +1049,12 @@ const HomePag = () => {
         <Header></Header>
         <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
       </div>
+      <br/>
+      {/* <strong><h1 className='home-page'>Make a request with a letter</h1></strong> */}
+      <h1 className='home-page'>Make a request with a letter</h1>
+      <br/>
       <p className='home-page description'>
-        Post your attendance requests for one or more days and have it viewed by the teachers and granted!
-        No more overhead of communication and workload on others
+        Upload an image/PDF of your letter to send along with the request. Multiple pages for the same letter can be uploaded together, select as many files as necessary.
       </p>
       <div className='upload-section'>
         <input type='file' multiple ref={fileInputRef} style={{display: 'none'}} onChange={handleFileUpload} />
@@ -1321,119 +1255,6 @@ const HomePag = () => {
           </div>
         )
       }
-      <br/>
-      {safeToUpload && (<div className='no-letter' id='no-letter-div'>
-        <h1 className='home-page'>Make a request without a letter</h1>
-        <p className='home-page description'>
-          If you don't have a letter available for the day and can't attend for a genuine reason,
-          you can make a letterless request.
-          Only go for this option if you have talked to the teachers about it before and they have agreed to mark
-          you present without a letter being needed.
-        </p>
-          <AnimatePresence>
-            {safeToUpload && (<div>
-              {noLetterStudents.length!==0 && (
-                <motion.div className='table-div-container'
-                initial={{ opacity: 0, scale: 1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-                >
-                  <h1 className='home-page main-table-info-text'>Scroll horizontally to view all the details</h1>
-                  <h1 className='home-page main-table-info-text'>Click on the last cell ✘ of a row to remove it</h1>
-                  <b><h1 className='home-page table-title-no-letter'>Names (Without Letter)</h1></b>
-                  <div className='table-div'>
-                    <table className='main-table-no-letter'>
-                      <thead>
-                        <tr>
-                          <th className='redth'>SAP ID</th>
-                          <th className='redth'>Name</th>
-                          <th className='redth'>Roll No</th>
-                          <th className='redth'>Batch</th>
-                          <th className='redth'>
-                            Remove Rows
-                            <br></br>
-                          </th>
-                        </tr>
-                      </thead>
-                        <tbody>
-                          {
-                          <AnimatePresence>
-                            {noLetterStudents.map((student) => (
-                              <motion.tr key={student.sapid}
-                                initial={{ opacity: 0, scale: 1 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1 }}
-                                transition={{ duration: 0.25, ease: "easeInOut" }}
-                              >
-                                <td className='redtd'>{student.sapid}</td>
-                                <td className='redtd'>{student.name}</td>
-                                <td className='redtd'>{student.rollno}</td>
-                                <td className='redtd'>{student.batchid}</td>
-                                <td onClick={() => removeRow(Number(student.sapid))} className='row-bt redtd' style={{color: 'red'}}>
-                                  ✘
-                                </td>
-                              </motion.tr>
-                            ))}
-                          </AnimatePresence>
-                          }
-                        </tbody>
-                    </table>
-                  </div>
-                  <div>
-                    <button className='remove-all-btn' onClick={removeAll}>Remove All</button>
-                    {noLetterSuccessMessage && <p className='home-page no-letter-success' id='no-letter-success-message'>{noLetterSuccessMessage}</p>}
-                    {noLetterErrorMessage && !showNoLetterErrorMessageWithoutTable && <p className='home-page no-letter-error' id='no-letter-error-with-table'>{noLetterErrorMessage}</p>}
-                  </div>
-                </motion.div>
-              )}
-              <form className='sapid-form' onSubmit={fetchNoLetterStudents}>
-                <input
-                  type='text'
-                  id='no-letter-enter'
-                  className='sapid-input'
-                  placeholder='Enter SAP IDs (space separated)'
-                  value={noLetterSAPIDs}
-                  onChange={(e) => setNoLetterSAPIDs(e.target.value)}
-                />
-                <button className='btn add-extra-sapids' type='submit'>Add SAP ID(s)</button>
-              </form>
-              {noLetterErrorMessage && showNoLetterErrorMessageWithoutTable && <p className='home-page no-letter-error' id='no-letter-error-without-table'>{noLetterErrorMessage}</p>}
-                {noLetterStudents.length!==0 && 
-                  <motion.div className='reason-date-container-container'
-                    initial={{ opacity: 0, scale: 1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                  >
-                    <div className='reason-date-container grid grid-cols-[1fr_2.5fr] w-1/2 place-content-center'>
-                      <label>Enter the reason:</label>
-                      <input type='text' className='enter-reason' placeholder='Enter Reason' value={noLetterReason} onChange={e => setNoLetterReason(e.target.value)} />
-                      {/* <br/> */}
-                      <label>Pick attendance dates:</label>
-                      <Flatpickr
-                        options={{
-                          mode: 'multiple',
-                          minDate: 'today',
-                          maxDate: twoMonthsFromNow,
-                          animate: true
-                          // formatDate: 
-                        }}
-                        className='calendar-date-picker'
-                        // placeholder='Upto two months into the future...'
-                        placeholder='Within next 2 months...'
-                        value={noLetterDates}
-                        onChange={setNoLetterDates}
-                      />
-                      {/* <br/> */}
-                    </div>
-                    <button className='btn final-submit' onClick={() => {submittingWithLetter.current = false; setIsPopupOpen(true)}} disabled={!noLetterReason.trim() || noLetterDates.length === 0} style={(!noLetterReason.trim() || noLetterDates.length === 0) ? {backgroundColor: 'grey', cursor: 'default'} : {}}>Submit all letterless rows</button>
-                    {isPopupOpen && !submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} noLetterStudents={noLetterStudents} noLetterDates={noLetterDates} submitFunction={handleSubmitNoLetter} />}
-                  </motion.div>
-                }
-            </div>)}
-          </AnimatePresence>
-      </div>)}
     </div>
   );
 };

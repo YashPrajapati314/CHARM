@@ -215,20 +215,34 @@ const AttendancesForLecture = () => {
             const month = input_date.getMonth();
             const year = input_date.getFullYear();
             let ordinal_suffix: string;
-            switch(date % 10)
+            switch(date % 100)
             {
-                case 1:
-                    ordinal_suffix = 'st';
+                case 11:
+                    ordinal_suffix = 'th';
                     break;
-                case 2:
-                    ordinal_suffix = 'nd';
+                case 12:
+                    ordinal_suffix = 'th';
                     break;
-                case 3:
-                    ordinal_suffix = 'rd';
+                case 13:
+                    ordinal_suffix = 'th';
                     break;
                 default:
-                    ordinal_suffix = 'th';
-                    break;    
+                    switch(date % 10)
+                    {
+                        case 1:
+                            ordinal_suffix = 'st';
+                            break;
+                        case 2:
+                            ordinal_suffix = 'nd';
+                            break;
+                        case 3:
+                            ordinal_suffix = 'rd';
+                            break;
+                        default:
+                            ordinal_suffix = 'th';
+                            break;    
+                    }
+                    break;
             }
             return [date.toString(), ordinal_suffix, months[month], year.toString()];
         }

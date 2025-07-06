@@ -8,19 +8,19 @@
     font-family: Arial, sans-serif;
 }
 
-.department-list, .teacher-list {
+.department-list, .teacher-list, .year-list {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
 }
 
-h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
+h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open, h1.batches-page-open, h2.batches-page-open, p.batches-page-open {
     color: #333;
     font-size: 25px;
 }
 
-.department-button {
+.department-button, .year-button {
     background-color: #e4bfff;
     color: #6f00bf;
     border-radius: 5px;
@@ -33,7 +33,7 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
     margin: 5px;
 }
 
-.department-button:hover {
+.department-button:hover, .year-button:hover {
     color: white;
     background-color: #6f00bf;
     transform: scale(1.05);
@@ -58,7 +58,7 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
     transform: scale(1.05);
 }
 
-.department-list button, .teacher-list button {
+.department-list button, .teacher-list button, .year-list button {
     width: 220px;
 }
 
@@ -78,7 +78,7 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
     flex-direction: column;
 }
 
-.server-error p.teacher-page-open {
+.server-error p.teacher-page-open, .server-error p.batches-page-open {
     text-align: center;
     justify-content: center;
 }
@@ -88,18 +88,18 @@ h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open {
     object-fit: contain;
 }
 
-.teachers-not-found {
+.teachers-not-found, .batches-not-found {
     text-align: center;
     display: flex;
     flex-direction: column;
 }
 
-.teachers-not-found p.teacher-page-open {
+.teachers-not-found p.teacher-page-open, .batches-not-found p.batches-page-open {
     text-align: center;
     justify-content: center;
 }
 
-.teachers-not-found .teachers-not-found-image {
+.teachers-not-found .teachers-not-found-image, .batches-not-found .batches-not-found-image {
     height: 100px;
     object-fit: contain;
 }

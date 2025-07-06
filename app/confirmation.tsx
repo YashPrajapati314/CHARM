@@ -119,6 +119,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className='warning yellow-warning'>
                             Manually added names could not be detected by the model and will be distinctly highlighted
                         </div>}
+                        <br></br>
                         <div className="letter-dates-confirmation">
                             The request will be made for <br></br>
                             {extractedDates!.length > 0 && <>The following dates extracted from the letter: <div className="extracted-ones">{extractedDates!.map((date: Date) => formattedDate(date)).join(', ')}</div></>}

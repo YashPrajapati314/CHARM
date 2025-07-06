@@ -25,10 +25,6 @@ import { deflateSync } from 'zlib';
 import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
-import OptionCard from './option-card';
-import letter_envelop from '../images/letter.svg'
-// import no_letter_envelop from '../images/no-letter.svg'
-import no_letter_envelop from '../images/no-letter.png'
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -48,73 +44,8 @@ interface StudentWithLetterStatus extends Student {
   letterstatus: number
 };
 
+
 const HomePage = () => {
-  return (
-    <div className='homepage'>
-      <div className='top-container'>
-        {/* <div className='title-button-side-by-side'>
-          <h1 className='home-page title'>CHARM</h1>
-          <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
-              View requests as a teacher
-          </button>
-        </div> */}
-        <Header></Header>
-        <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
-      </div>
-      <p className='home-page description'>
-        Post your attendance requests for one or more days and have it viewed by the teachers and granted!
-        No more overhead of communication and workload on others
-      </p>
-      
-      <br/>
-      
-      <div className='flex flex-col items-center gap-2'>
-        <OptionCard
-          title={'Make a request with a letter'}
-          image_src={letter_envelop.src}
-          page='request-with-letter'
-        />
-
-        <OptionCard
-          title={'Make a request without a letter'}
-          image_src={no_letter_envelop.src}
-          page='request-without-letter'
-        />
-
-        <OptionCard
-          title={'View requests by class'}
-          image_src={no_letter_envelop.src}
-          page='view-requests'
-        />
-
-        <OptionCard
-          title={'View requests for your lecture as a teacher'}
-          image_src={no_letter_envelop.src}
-          page='teacher-view'
-        />
-      </div>
-
-
-      
-      <br/>
-
-
-      {/* {(
-        <div className='no-letter' id='no-letter-div'>
-          <h1 className='home-page'>Make a request without a letter</h1>
-          <p className='home-page description'>
-            If you don't have a letter available for the day and can't attend for a genuine reason,
-            you can make a letterless request.
-            Only go for this option if you have talked to the teachers about it before and they have agreed to mark
-            you present without a letter being needed.
-          </p>
-        </div>
-      )} */}
-    </div>
-  );
-}
-
-const HomePag = () => {
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
