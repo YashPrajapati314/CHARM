@@ -14,6 +14,25 @@ interface Request {
     today: string;
 }
 
+const checkIfAllBatchesAreValid = async (batches: string[]) => {
+    const dbBatchCount = await prisma.batch.count({
+        where: {
+            batchid: {
+                in: batches
+            }
+        }
+    });
+
+    if(dbBatchCount === batches.length)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 export async function POST(req: NextRequest) {
     try
     {
@@ -26,6 +45,13 @@ export async function POST(req: NextRequest) {
         console.log(new Date(today));
         console.log(days[(new Date(today)).getDay()]);
         console.log(batchIds);
+
+        const allBatchesExist = await checkIfAllBatchesAreValid(batchIds);
+
+        if(!allBatchesExist)
+        {
+            return NextResponse.json({ error: `One or more of the requested batches do not exist` }, { status: 400 });
+        }
         
         // There was no need to add5hours30mins before this
         const attendanceRequests = await prisma.attendanceRequest.findMany({

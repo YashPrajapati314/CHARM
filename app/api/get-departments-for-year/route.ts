@@ -3,9 +3,34 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const validYear = (year: string) => {
+    const validYears = ['FE', 'SE', 'TE', 'BE'];
+    if(validYears.includes(year))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 export async function GET(req: NextRequest) {
     try
     {
+        const searchParams = req.nextUrl.searchParams;
+        
+        const year = searchParams.get('year') || '';
+
+        console.log('hi year');
+        console.log(year);
+        console.log('hi year');
+        
+        if(!validYear(year))
+        {
+            return NextResponse.json({ error: `Invalid Year` }, { status: 400 });
+        }
+
         const departments = await prisma.department.findMany(
             {
                 select:
@@ -24,6 +49,6 @@ export async function GET(req: NextRequest) {
     catch(error)
     {
         console.error('Error fetching departments', error);
-        return NextResponse.json({ error: `Internal Server Error (${error})`}, { status: 500 });
+        return NextResponse.json({ error: `Internal Server Error (${error})` }, { status: 500 });
     }
 }

@@ -3,7 +3,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import '../../../styles/TeacherPage.css';
+import '../../../styles/RequestPage.css';
 import qiqi_fallen from '../../../../images/qiqi-fallen.png'
+import fischl_folded_arms from '../../../../images/fischl-folded-arms.png'
 import sucrose_clipboard from '../../../../images/sucrose-clipboard.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 
@@ -25,6 +27,7 @@ const Batches = () => {
     const [listOfBatches, setListOfBatches] = useState<Batch[]>([]);
     const [loadedBatches, setLoadedBatches] = useState<boolean>(false);
     const [errorScenario, setErrorScenario] = useState<boolean>(false);
+    const [errorScenario2, setErrorScenario2] = useState<boolean>(false);
     const router = useRouter();
     const pathname = usePathname();
 
@@ -58,6 +61,10 @@ const Batches = () => {
                 setListOfBatches(batches);
                 setLoadedBatches(true);
             }
+            else if(response.status === 400)
+            {
+                setErrorScenario2(true);
+            }
             else
             {
                 setErrorScenario(true);
@@ -72,7 +79,7 @@ const Batches = () => {
     //
     const fetchLectures = (batchIds: string) => {
         console.log("Batch Selected:", batchIds);
-        router.push(`${pathname}/${batchIds}`);
+        router.push(`/view-requests-for-batches/${batchIds}`);
     };
 
 
@@ -83,6 +90,13 @@ const Batches = () => {
             <p className='teacher-page-open'>Error fetching batches</p>
             <p className='teacher-page-open'>This could be an internal server error, please try refreshing the page</p>
         </div>) :
+        (errorScenario2 ? 
+        <>
+            <div className="invalid-request">
+                <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
+                <h1 className='request-page'>No such department found... Perhaps you have mistyped the URL</h1>
+            </div>
+        </> :
         (<div className='teacher-view'>
             {selectedDepartment && (
                 <div className="teacher-list">
@@ -114,7 +128,7 @@ const Batches = () => {
                     }
                 </div>
             )}
-        </div>)
+        </div>))
     );
 }
 

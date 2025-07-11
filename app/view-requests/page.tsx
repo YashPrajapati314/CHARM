@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import '../styles/TeacherPage.css';
 import qiqi_fallen from '../../images/qiqi-fallen.png'
+import fischl_folded_arms from '../../images/fischl-folded-arms.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 
 interface studyYearFormat {
@@ -20,6 +21,7 @@ const Years = () => {
     const [listOfYears, setListOfYears] = useState<studyYearFormat[]>([]);
     const [loadedYears, setLoadedYears] = useState<boolean>(false);
     const [errorScenario, setErrorScenario] = useState<boolean>(false);
+    const [errorScenario2, setErrorScenario2] = useState<boolean>(false);
     const router = useRouter();
     const pathname = usePathname();
 
@@ -41,9 +43,14 @@ const Years = () => {
             if(response.status === 200)
             {
                 setErrorScenario(false);
+                setErrorScenario2(false);
                 const {years} = await response.json() as Response;
                 setListOfYears(years);
                 setLoadedYears(true);
+            }
+            else if(response.status === 400)
+            {
+                setErrorScenario2(true);
             }
             else
             {
@@ -70,6 +77,13 @@ const Years = () => {
             <p className='teacher-page-open'>Error fetching years</p>
             <p className='teacher-page-open'>This could be an internal server error, please try refreshing the page</p>
         </div>) :
+        (errorScenario2 ? 
+        <>
+            <div className="invalid-request">
+                <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
+                <h1 className='request-page'>Uh oh, invalid request... Perhaps you have lost your way</h1>
+            </div>
+        </> :
         (<div className='teacher-view'>
             {listOfYears && (
                 <div className="year-list">
@@ -92,7 +106,7 @@ const Years = () => {
                     <br/>
                 </div>
             )}
-        </div>)
+        </div>))
     );
 }
 

@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Skeleton } from "@/components/ui/skeleton"
-import TableSkeleton from '../../../../table-loading-skeleton'
-import '../../../../styles/RequestPage.css';
-import qiqi_fallen from '../../../../../images/qiqi-fallen.png'
-import yanfei_thinking from '../../../../../images/yanfei-thinking.png'
-import fischl_folded_arms from '../../../../../images/fischl-folded-arms.png'
+import TableSkeleton from '../../table-loading-skeleton'
+import '../../styles/RequestPage.css';
+import qiqi_fallen from '../../../images/qiqi-fallen.png'
+import yanfei_thinking from '../../../images/yanfei-thinking.png'
+import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
 
 const AttendancesForLecture = () => {
 
@@ -260,7 +260,13 @@ const AttendancesForLecture = () => {
         (
             (invalidDayScenario || invalidRequestScenario) ?
             <>
-                {
+                <>
+                    <div className="invalid-request">
+                        <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
+                        <h1 className='request-page'>One or more of the requested batches do not exist. Perhaps you have mistyped the URL</h1>
+                    </div>
+                </>
+                {/* {
                     invalidRequestScenario ?
                     <>
                         <div className="invalid-request">
@@ -274,7 +280,7 @@ const AttendancesForLecture = () => {
                             <h1 className='request-page'>The requested lecture exists but is not scheduled for today</h1>
                         </div>
                     </>
-                }
+                } */}
             </> :
             (<div className="request-list">
                 {

@@ -23,7 +23,18 @@ export async function GET(req: NextRequest) {
 
         if(yearMap[year] === undefined)
         {
-            return NextResponse.json({ error: `Invalid Year`}, { status: 400 });
+            return NextResponse.json({ error: `Invalid Year` }, { status: 400 });
+        }
+
+        const departmentExists = await prisma.department.findFirst({
+            where: {
+                departmentname: department
+            }
+        });
+
+        if(departmentExists === null)
+        {
+            return NextResponse.json({ error: `Invalid Department` }, { status: 400 });
         }
         
         const batches = await prisma.batch.findMany(
@@ -42,10 +53,6 @@ export async function GET(req: NextRequest) {
             }
         );
 
-        if(batches.length === 0)
-        {
-            return NextResponse.json({ error: `Invalid Department`}, { status: 400 });
-        }
 
         const yearFilteredBatches = batches.filter(batch => batch.studyyear === yearMap[year]);
 
@@ -56,6 +63,6 @@ export async function GET(req: NextRequest) {
     catch (error)
     {
         // console.error('Error fetching lecture details', error);
-        return NextResponse.json({ error: `Internal Server Error (${error})`}, { status: 500 });
+        return NextResponse.json({ error: `Internal Server Error (${error})` }, { status: 500 });
     }
 }

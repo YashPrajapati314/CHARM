@@ -3,13 +3,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import '../../styles/TeacherPage.css';
+import '../../styles/RequestPage.css'
 import qiqi_fallen from '../../../images/qiqi-fallen.png'
+import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 
 const Departments = () => {
     const [listOfDepartments, setListOfDepartments] = useState<any[]>([]);
     const [loadedDepartments, setLoadedDepartments] = useState<boolean>(false);
     const [errorScenario, setErrorScenario] = useState<boolean>(false);
+    const [errorScenario2, setErrorScenario2] = useState<boolean>(false);
     const router = useRouter();
     const pathname = usePathname();
     const {studyYear} = useParams<{studyYear: string}>();
@@ -26,15 +29,20 @@ const Departments = () => {
     const fetchDepartments = async () => {
         try 
         {
-            const response = await fetch('/api/get-departments', {
+            const response = await fetch(`/api/get-departments-for-year?year=${studyYear}`, {
                 method: 'GET'
             });
             if(response.status === 200)
             {
                 setErrorScenario(false);
+                setErrorScenario2(false);
                 const {departments} = await response.json();
                 setListOfDepartments(departments);
                 setLoadedDepartments(true);
+            }
+            else if(response.status === 400)
+            {
+                setErrorScenario2(true);
             }
             else
             {
@@ -61,6 +69,13 @@ const Departments = () => {
             <p className='teacher-page-open'>Error fetching departments</p>
             <p className='teacher-page-open'>This could be an internal server error, please try refreshing the page</p>
         </div>) :
+        (errorScenario2 ? 
+        <>
+            <div className="invalid-request">
+                <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
+                <h1 className='request-page'>No such year found... Perhaps you have mistyped the URL</h1>
+            </div>
+        </> :
         (<div className='teacher-view'>
             {listOfDepartments && (
                 <div className="department-list">
@@ -83,7 +98,7 @@ const Departments = () => {
                     <br/>
                 </div>
             )}
-        </div>)
+        </div>))
     );
 }
 
