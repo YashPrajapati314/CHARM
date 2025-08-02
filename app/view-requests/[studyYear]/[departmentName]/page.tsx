@@ -8,6 +8,8 @@ import qiqi_fallen from '../../../../images/qiqi-fallen.png'
 import fischl_folded_arms from '../../../../images/fischl-folded-arms.png'
 import sucrose_clipboard from '../../../../images/sucrose-clipboard.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
+import { SrvRecord } from "dns";
+import { buffer } from "stream/consumers";
 
 interface Batch {
     batchid: string,
@@ -24,6 +26,7 @@ interface Response {
 // Change Teachers to Divisions or Batches
 const Batches = () => {
     const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+    const [selectedBatches, setSelectedBatches] = useState<Record<string, boolean>>({});
     const [listOfBatches, setListOfBatches] = useState<Batch[]>([]);
     const [loadedBatches, setLoadedBatches] = useState<boolean>(false);
     const [errorScenario, setErrorScenario] = useState<boolean>(false);
@@ -34,16 +37,38 @@ const Batches = () => {
     const {studyYear, departmentName} = useParams<{studyYear: string, departmentName: string}>(); //
     const department = decodeURIComponent(departmentName || '');
     const year = decodeURIComponent(studyYear || '' );
-    
+
     useEffect(() => {
         fetchBatches(department, year);
     }, []);
-
-
+    
+    
     useEffect(() => {
         console.log(listOfBatches);
     }, [listOfBatches]);
     
+    useEffect(() => {
+        console.log(selectedBatches);
+    }, [selectedBatches])
+    
+    const toggleBatchSelection = (batchId: string) => {
+        setSelectedBatches((prev) => ({
+            ...prev,
+            [batchId]: !prev[batchId]
+        }));
+    }
+
+    
+    const fetchLectures = (batchIds: string) => {
+        console.log("Batch Selected:", batchIds);
+        router.push(`/view-requests-for-batches/${batchIds}`);
+    };
+    
+    const handleBatchSubmit = () => {
+        const listOfSelectedBatches = Object.entries(selectedBatches).filter(([batchId, isChecked]) => (isChecked)).map(([batchId]) => batchId);
+        console.log("Batch Selected:", listOfSelectedBatches);
+        fetchLectures(listOfSelectedBatches.join('&'));      
+    }
 
     const fetchBatches = async (department: string, year: string) => {
         console.log('Selected department:', department)
@@ -76,11 +101,6 @@ const Batches = () => {
             console.error("Error fetching batches:", error);
         }
     }
-    //
-    const fetchLectures = (batchIds: string) => {
-        console.log("Batch Selected:", batchIds);
-        router.push(`/view-requests-for-batches/${batchIds}`);
-    };
 
 
     return (
@@ -103,21 +123,62 @@ const Batches = () => {
                     {selectedDepartment.trim() === 'First Year Block' ? <h2 className='teacher-page-open'>First Year Block</h2> : 
                     selectedDepartment.trim() === 'Other' ? <h2 className='teacher-page-open'>Other Departments</h2> : 
                     <h2 className='teacher-page-open'>Department of {selectedDepartment.trim()} ({year})</h2> }
-                    {listOfBatches.length > 0 ? <h2 className='teacher-page-open'>Batches</h2> : <></>}
+                    {listOfBatches.length > 0 ? <h2 className='text-xl'>Select Batches To View Requests Of</h2> : <></>}
                     {loadedBatches ? (listOfBatches.length > 0 ? (
-                        listOfBatches.map((batch) => (
-                            <motion.button 
-                                key={batch.batchid} 
-                                className="teacher-button" 
-                                onClick={() => fetchLectures(batch.batchid)}
+                        <>
+                            {listOfBatches.map((batch) => (
+                                <motion.div 
+                                    key={`div_${batch.batchid}`} 
+                                    className={selectedBatches[batch.batchid] ? "flex flex-row w-[140] gap-2 px-6 py-2 items-center justify-center rounded-full bg-emerald-400" : "flex flex-row w-[140] gap-2 px-6 py-2 text-center items-center justify-center rounded-full bg-emerald-300"}
+                                    // className="flex flex-row gap-2 px-6 py-2 items-center rounded-full bg-emerald-400"
+                                    id={`${batch.batchid}`}
+                                    onClick={() => toggleBatchSelection(batch.batchid)}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                >
+                                    {/* <motion.input 
+                                        type="checkbox"
+                                        key={`input_${batch.batchid}`}
+                                        id={`${batch.batchid}`}
+                                        name="batches"
+                                        // className="teacher-button" 
+                                        className="w-6 h-6"
+                                        onChange={() => toggleBatchSelection(batch.batchid)}
+                                        checked={!!selectedBatches[batch.batchid]}
+                                        // onClick={() => fetchLectures(batch.batchid)}
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    >
+                                    </motion.input> */}
+                                    <motion.label
+                                        key={`label_${batch.batchid}`}
+                                        htmlFor={`${batch.batchid}`}
+                                        className="text-lg text-cyan-900"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {selectedBatches[batch.batchid] ? `✔ ${batch.batchid}` : `${batch.batchid}`}
+                                        {/* {batch.batchid} */}
+                                    </motion.label>
+                                </motion.div>
+                            ))}
+                            <motion.button
+                                onClick={handleBatchSubmit}
+                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.3, ease: "easeInOut" }}
                             >
-                                {batch.batchid}
+                                View Requests of Selected Batches
                             </motion.button>
-                        ))
+                        </>
                     ) : (
                         <div className="batches-not-found">
                             <p className='teacher-page-open'>No batches found in this department.</p>
