@@ -131,8 +131,8 @@ const Batches = () => {
                                     key={`div_${batch.batchid}`} 
                                     className={
                                         selectedBatches[batch.batchid] ? 
-                                        "flex flex-row w-[140] gap-2 px-6 py-2 items-center justify-center rounded-full text-lg text-cyan-900 bg-emerald-400 cursor-pointer transition duration-200 ease-in-out" : 
-                                        "flex flex-row w-[140] gap-2 px-6 py-2 text-center items-center justify-center rounded-full text-lg text-cyan-900 bg-emerald-300 cursor-pointer transition duration-200 ease-in-out"
+                                        "flex flex-row w-[140] gap-2 px-6 py-2 items-center justify-center rounded-full text-lg text-cyan-900 bg-emerald-400 cursor-pointer transition duration-200 ease-in-out select-none" : 
+                                        "flex flex-row w-[140] gap-2 px-6 py-2 text-center items-center justify-center rounded-full text-lg text-cyan-900 bg-emerald-300 cursor-pointer transition duration-200 ease-in-out select-none"
                                     }
                                     id={`${batch.batchid}`}
                                     onClick={() => toggleBatchSelection(batch.batchid)}
@@ -141,35 +141,7 @@ const Batches = () => {
                                     exit={{ opacity: 0, scale: 0.95 }}
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                 >
-                                    {/* <motion.input 
-                                        type="checkbox"
-                                        key={`input_${batch.batchid}`}
-                                        id={`${batch.batchid}`}
-                                        name="batches"
-                                        // className="teacher-button" 
-                                        className="w-6 h-6"
-                                        onChange={() => toggleBatchSelection(batch.batchid)}
-                                        checked={!!selectedBatches[batch.batchid]}
-                                        // onClick={() => fetchLectures(batch.batchid)}
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
-                                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                                    >
-                                    </motion.input> */}
                                     {selectedBatches[batch.batchid] ? `✔ ${batch.batchid}` : `${batch.batchid}`}
-                                    {/* <motion.label
-                                        key={`label_${batch.batchid}`}
-                                        htmlFor={`${batch.batchid}`}
-                                        className="text-lg text-cyan-900"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        {selectedBatches[batch.batchid] ? `✔ ${batch.batchid}` : `${batch.batchid}`}
-                                        {batch.batchid}
-                                    </motion.label> */}
                                 </motion.div>
                             ))}
                             <motion.button
