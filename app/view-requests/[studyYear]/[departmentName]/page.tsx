@@ -129,8 +129,11 @@ const Batches = () => {
                             {listOfBatches.map((batch) => (
                                 <motion.div 
                                     key={`div_${batch.batchid}`} 
-                                    className={selectedBatches[batch.batchid] ? "flex flex-row w-[140] gap-2 px-6 py-2 items-center justify-center rounded-full bg-emerald-400" : "flex flex-row w-[140] gap-2 px-6 py-2 text-center items-center justify-center rounded-full bg-emerald-300"}
-                                    // className="flex flex-row gap-2 px-6 py-2 items-center rounded-full bg-emerald-400"
+                                    className={
+                                        selectedBatches[batch.batchid] ? 
+                                        "flex flex-row w-[140] gap-2 px-6 py-2 items-center justify-center rounded-full text-lg text-cyan-900 bg-emerald-400 cursor-pointer transition duration-200 ease-in-out" : 
+                                        "flex flex-row w-[140] gap-2 px-6 py-2 text-center items-center justify-center rounded-full text-lg text-cyan-900 bg-emerald-300 cursor-pointer transition duration-200 ease-in-out"
+                                    }
                                     id={`${batch.batchid}`}
                                     onClick={() => toggleBatchSelection(batch.batchid)}
                                     initial={{ opacity: 0, scale: 0.95 }}
@@ -154,7 +157,8 @@ const Batches = () => {
                                         transition={{ duration: 0.3, ease: "easeInOut" }}
                                     >
                                     </motion.input> */}
-                                    <motion.label
+                                    {selectedBatches[batch.batchid] ? `✔ ${batch.batchid}` : `${batch.batchid}`}
+                                    {/* <motion.label
                                         key={`label_${batch.batchid}`}
                                         htmlFor={`${batch.batchid}`}
                                         className="text-lg text-cyan-900"
@@ -164,17 +168,18 @@ const Batches = () => {
                                         transition={{ duration: 0.3 }}
                                     >
                                         {selectedBatches[batch.batchid] ? `✔ ${batch.batchid}` : `${batch.batchid}`}
-                                        {/* {batch.batchid} */}
-                                    </motion.label>
+                                        {batch.batchid}
+                                    </motion.label> */}
                                 </motion.div>
                             ))}
                             <motion.button
                                 onClick={handleBatchSubmit}
-                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full"
+                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full transition duration-200 ease-in-out hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.3, ease: "easeInOut" }}
+                                disabled={Object.keys(selectedBatches).length === 0 || Object.values(selectedBatches).every((isChecked) => !isChecked) ? true : false}
                             >
                                 View Requests of Selected Batches
                             </motion.button>
