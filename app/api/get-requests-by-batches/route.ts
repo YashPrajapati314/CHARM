@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { text } from "stream/consumers";
+import { DateTime } from "luxon";
 
 const prisma = new PrismaClient();
 
@@ -41,6 +42,15 @@ export async function POST(req: NextRequest) {
         const { batchIds, today } = await req.json() as Request;
 
         console.log('Timezone Debug Info Get Requests');
+        const indiaTime = DateTime.now().setZone("Asia/Kolkata");
+        const utcTime = indiaTime.toUTC();
+        console.log(`${indiaTime} vs ${utcTime}`);
+        console.log(`${indiaTime.toISO()} vs ${utcTime.toISO()}`);
+        // const currentTime = DateTime.now().setZone("Asia/Kolkata");
+        // console.log(`Current Time: ${currentTime.toISO()}`);
+        // console.log(`Current Time in UTC: ${currentTime.toUTC().toISO()}`);
+        // console.log(`Current Time in Local: ${currentTime.toLocal().toISO()}`);
+        console.log(`...`);
         console.log(today);
         console.log(new Date(today));
         console.log(days[(new Date(today)).getDay()]);

@@ -17,9 +17,13 @@ export async function POST(req: NextRequest) {
             imageLinks: string[];
             reason: string;
         }
-
+        
+        interface StudentWithLetterStatus extends Student {
+            letterstatus: number
+        };
+        
         interface Response {
-            studentDetails: Student[];
+            studentDetails: StudentWithLetterStatus[];
             letterDetails: LetterDetails;
             attendanceDates: Date[];
             manuallyEnteredDates: Date[];
@@ -42,12 +46,16 @@ export async function POST(req: NextRequest) {
             }))
         });
 
-        const pairOfStudentAndDate = studentDetails.flatMap((student: any) => {
-            return attendanceDates.map((attendanceDate: Date) => ({
+        console.log(`...`);
+        console.log(attendanceDates);
+        console.log(`...`);
+
+        const pairOfStudentAndDate = studentDetails.flatMap((student) => {
+            return attendanceDates.map((attendanceDate) => ({
                 sapid: student.sapid,
                 letterstatus: manuallyEnteredDates.includes(attendanceDate) ? 2 : student.letterstatus,
                 date: new Date(attendanceDate),
-                weekday: days[(new Date(attendanceDate)).getDay()]
+                weekday: days[(new Date(attendanceDate)).getDay()] // needs to be removed
             }))
         });
 

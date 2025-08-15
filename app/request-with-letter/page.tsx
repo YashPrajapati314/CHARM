@@ -25,6 +25,8 @@ import { deflateSync } from 'zlib';
 import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
+import { DateTime } from 'luxon';
+import { get } from 'http';
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -102,7 +104,9 @@ const HomePage = () => {
 
   useEffect(() => {
     dates.forEach((date) => {
-      date.setHours(5, 30, 0, 0)
+      console.log('Hi', date, date.toISOString());
+      date.setHours(5, 30, 0, 0);
+      console.log('Hi', date, date.toISOString());
     });
   }, [dates]);
 
@@ -871,6 +875,16 @@ const HomePage = () => {
     }
   }
 
+  const getISTNoon = (pureDateString: string): DateTime => {
+    return DateTime.fromISO(pureDateString, { zone: 'Asia/Kolkata' }).set({
+      hour: 12,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    });
+  }
+
+
   const handleSubmit = async (force_reupload: boolean = false): Promise<number> => {
     const currDate = (new Date());
     if(!force_reupload)
@@ -934,14 +948,25 @@ const HomePage = () => {
         imageLinks = imagesUploadedToCloudinary;
       }
 
+      const ISTNoonAllDates: Date[] = dates.map((date) => {
+        return getISTNoon(date.toISOString().split('T')[0]).toJSDate();
+      });
+
+      const ISTNoonManuallyEnteredDates: Date[] = manuallyEnteredDates.map((date) => {
+        return getISTNoon(date.toISOString().split('T')[0]).toJSDate();
+      });
+
+      console.log('IST Noon DateTimes:', ISTNoonAllDates);
+      console.log('IST Noon DateTimes:', ISTNoonManuallyEnteredDates);
+
       const attendance_response = await fetch('/api/post-attendance', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           studentDetails: selectedSAPIDs,
           letterDetails: {imageLinks: imageLinks, reason: reason},
-          attendanceDates: dates,
-          manuallyEnteredDates: manuallyEnteredDates
+          attendanceDates: ISTNoonAllDates,
+          manuallyEnteredDates: ISTNoonManuallyEnteredDates
         })
       });
 

@@ -4,10 +4,10 @@ import { Student } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const add5hours30minutes = (date: Date) => {
-    const noOfMillisecondsIn5hours30minutes = 5.5 * 60 * 60 * 1000;
-    return new Date(date.getTime() + noOfMillisecondsIn5hours30minutes);
-}
+// const add5hours30minutes = (date: Date) => {
+//     const noOfMillisecondsIn5hours30minutes = 5.5 * 60 * 60 * 1000;
+//     return new Date(date.getTime() + noOfMillisecondsIn5hours30minutes);
+// }
 
 export async function POST(req: NextRequest) {
     try
@@ -37,6 +37,10 @@ export async function POST(req: NextRequest) {
                 reason: truncatedReason
             }
         });
+
+        console.log(`...`);
+        console.log(attendanceDates);
+        console.log(`...`);
 
         const pairOfStudentAndDate = studentDetails.flatMap((student: any) => {
             return attendanceDates.map((attendanceDate: Date) => ({

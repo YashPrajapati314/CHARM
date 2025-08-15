@@ -25,6 +25,7 @@ import { deflateSync } from 'zlib';
 import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
+import { DateTime } from 'luxon';
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -65,7 +66,7 @@ const HomePage = () => {
   const [reason, setReason] = useState<string>('');
   const [noLetterReason, setNoLetterReason] = useState<string>('');
   const [originallyExtractedDates, setOriginallyExtractedDates] = useState<Date[]>([]);
-  const [dates, setDates] = useState<Date[]>([]);
+  // const [dates, setDates] = useState<Date[]>([]);
   const [noLetterDates, setNoLetterDates] = useState<Date[]>([]);
   const [pastDates, setPastDates] = useState<Date[]>([]);
   const [farFutureDates, setFutureDates] = useState<Date[]>([]);
@@ -100,11 +101,11 @@ const HomePage = () => {
   }, [students]);
 
 
-  useEffect(() => {
-    dates.forEach((date) => {
-      date.setHours(5, 30, 0, 0)
-    });
-  }, [dates]);
+  // useEffect(() => {
+  //   dates.forEach((date) => {
+  //     date.setHours(5, 30, 0, 0)
+  //   });
+  // }, [dates]);
 
 
   useEffect(() => {
@@ -184,411 +185,411 @@ const HomePage = () => {
   }, [manualInputLetterFlipFlop]);
   
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+  // const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files;
 
-    if (files) {
-      if (files.length === 0) return;
+  //   if (files) {
+  //     if (files.length === 0) return;
 
-      setErrorMessage('');
-      setErrorMessage2('');
-      setSizeLimitExceededMessage('');
-      setMediaFilesLimitExceededMessage('');
-      setSuccessMessage2('');
-      setSelectedRows({});
-      setReason('');
-      setPlural('');
-      setUploadedFiles([]);
-      setUploadedFileNamesToDisplay('');
-      setLoadingMessage('Uploading files...');
-      setSafeToUpload(false);
-      setImagesUploadedToCloudinary([]);
+  //     setErrorMessage('');
+  //     setErrorMessage2('');
+  //     setSizeLimitExceededMessage('');
+  //     setMediaFilesLimitExceededMessage('');
+  //     setSuccessMessage2('');
+  //     setSelectedRows({});
+  //     setReason('');
+  //     setPlural('');
+  //     setUploadedFiles([]);
+  //     setUploadedFileNamesToDisplay('');
+  //     setLoadingMessage('Uploading files...');
+  //     setSafeToUpload(false);
+  //     setImagesUploadedToCloudinary([]);
       
-      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/heic'];
+  //     const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/heic'];
       
-      const images: File[] = [];
-      const pdfs: File[] = [];
-      const allPDFsToImages: File[] = [];
+  //     const images: File[] = [];
+  //     const pdfs: File[] = [];
+  //     const allPDFsToImages: File[] = [];
 
-      const ignoredFiles: File[] = []
-      const namedFiles: File[] = [];
+  //     const ignoredFiles: File[] = []
+  //     const namedFiles: File[] = [];
       
       
-      let pluralstr = '';
+  //     let pluralstr = '';
 
-      const heic2any = (await import('heic2any')).default;
+  //     const heic2any = (await import('heic2any')).default;
 
-      for(const file of Array.from(files))
-      {
-        if(file.type==='')
-        {
-          const actualFileTypeResponse = await fileTypeFromBlob(file);
-          const actualFileType = actualFileTypeResponse?.mime;
-          if(actualFileType === 'image/heic')
-          {
-            console.log('Converting HEIC to JPG...');
-            setLoadingMessage('Converting HEIC to JPG...');
-            const fileURL = URL.createObjectURL(file);
-            const fileRes = await fetch(fileURL);
-            const fileBlob = await fileRes.blob();
-            let convertedFile: any = await heic2any({blob: fileBlob, toType: 'image/jpeg'});
-            convertedFile.name = file.name;
-            convertedFile.lastModifiedDate = new Date();
-            console.log(convertedFile);
-            const finalConvertedFile = new File([convertedFile], file.name, {type: 'image/jpeg', lastModified: Date.now()});
-            console.log(finalConvertedFile)
-            namedFiles.push(finalConvertedFile);
-            images.push(finalConvertedFile);
-          }
-        }
-        if(allowedTypes.includes(file.type) && file.size > FILE_SIZE_LIMIT_IN_MB * 1024 * 1024)
-        {
-          ignoredFiles.push(file);
-        }
-        else if(allowedTypes.includes(file.type) && file.type !== 'application/pdf')
-        {
-          images.push(file);
-          namedFiles.push(file);
-        }
-        else if(allowedTypes.includes(file.type) && file.type === 'application/pdf')
-        {
-          namedFiles.push(file);
-          pdfs.push(file);
-        }
-      }
+  //     for(const file of Array.from(files))
+  //     {
+  //       if(file.type==='')
+  //       {
+  //         const actualFileTypeResponse = await fileTypeFromBlob(file);
+  //         const actualFileType = actualFileTypeResponse?.mime;
+  //         if(actualFileType === 'image/heic')
+  //         {
+  //           console.log('Converting HEIC to JPG...');
+  //           setLoadingMessage('Converting HEIC to JPG...');
+  //           const fileURL = URL.createObjectURL(file);
+  //           const fileRes = await fetch(fileURL);
+  //           const fileBlob = await fileRes.blob();
+  //           let convertedFile: any = await heic2any({blob: fileBlob, toType: 'image/jpeg'});
+  //           convertedFile.name = file.name;
+  //           convertedFile.lastModifiedDate = new Date();
+  //           console.log(convertedFile);
+  //           const finalConvertedFile = new File([convertedFile], file.name, {type: 'image/jpeg', lastModified: Date.now()});
+  //           console.log(finalConvertedFile)
+  //           namedFiles.push(finalConvertedFile);
+  //           images.push(finalConvertedFile);
+  //         }
+  //       }
+  //       if(allowedTypes.includes(file.type) && file.size > FILE_SIZE_LIMIT_IN_MB * 1024 * 1024)
+  //       {
+  //         ignoredFiles.push(file);
+  //       }
+  //       else if(allowedTypes.includes(file.type) && file.type !== 'application/pdf')
+  //       {
+  //         images.push(file);
+  //         namedFiles.push(file);
+  //       }
+  //       else if(allowedTypes.includes(file.type) && file.type === 'application/pdf')
+  //       {
+  //         namedFiles.push(file);
+  //         pdfs.push(file);
+  //       }
+  //     }
 
-      const pdfToImages: File[][] = await Promise.all(pdfs.map((pdf) => {
-        return convertPdfToImage(pdf);
-      }));
+  //     const pdfToImages: File[][] = await Promise.all(pdfs.map((pdf) => {
+  //       return convertPdfToImage(pdf);
+  //     }));
 
-      pdfToImages.forEach((pdfImageList) => {
-        allPDFsToImages.push(...pdfImageList);
-      })
+  //     pdfToImages.forEach((pdfImageList) => {
+  //       allPDFsToImages.push(...pdfImageList);
+  //     })
 
-      setLoadingMessage('Fetching response... Please wait');
+  //     setLoadingMessage('Fetching response... Please wait');
 
-      console.log('Named Files', namedFiles);
+  //     console.log('Named Files', namedFiles);
 
-      if(namedFiles.length > 1)
-      {
-        pluralstr = 's';
-      }
-      else
-      {
-        pluralstr = '';
-      }
+  //     if(namedFiles.length > 1)
+  //     {
+  //       pluralstr = 's';
+  //     }
+  //     else
+  //     {
+  //       pluralstr = '';
+  //     }
       
-      setPlural(pluralstr);
+  //     setPlural(pluralstr);
 
-      if(namedFiles.length > 0)
-      {
-        if(namedFiles.length === 1)
-        {
-          setUploadedFileNamesToDisplay(`${namedFiles[0].name}`);
-        }
-        else if(namedFiles.length === 2)
-        {
-          setUploadedFileNamesToDisplay(`\`${namedFiles[0].name}\` and \`${namedFiles[1].name}\``);
-        }
-        else
-        {
-          const file_or_files = (namedFiles.length - 2 > 1) ? 'files' : 'file';
-          setUploadedFileNamesToDisplay(`\`${namedFiles[0].name}\`, \`${namedFiles[1].name}\` and ${namedFiles.length-2} other ${file_or_files}`);
-        }
-      }
+  //     if(namedFiles.length > 0)
+  //     {
+  //       if(namedFiles.length === 1)
+  //       {
+  //         setUploadedFileNamesToDisplay(`${namedFiles[0].name}`);
+  //       }
+  //       else if(namedFiles.length === 2)
+  //       {
+  //         setUploadedFileNamesToDisplay(`\`${namedFiles[0].name}\` and \`${namedFiles[1].name}\``);
+  //       }
+  //       else
+  //       {
+  //         const file_or_files = (namedFiles.length - 2 > 1) ? 'files' : 'file';
+  //         setUploadedFileNamesToDisplay(`\`${namedFiles[0].name}\`, \`${namedFiles[1].name}\` and ${namedFiles.length-2} other ${file_or_files}`);
+  //       }
+  //     }
 
-      let validFiles = [...allPDFsToImages, ...images];
+  //     let validFiles = [...allPDFsToImages, ...images];
 
-      if(validFiles.length === 0 && ignoredFiles.length === 0)
-      {
-        setLoadingMessage('');
-        setSafeToUpload(true);
-        setErrorMessage('Please upload a valid PDF, JPG, PNG or HEIC file.');
-        return;
-      }
+  //     if(validFiles.length === 0 && ignoredFiles.length === 0)
+  //     {
+  //       setLoadingMessage('');
+  //       setSafeToUpload(true);
+  //       setErrorMessage('Please upload a valid PDF, JPG, PNG or HEIC file.');
+  //       return;
+  //     }
 
-      if(validFiles.length > MEDIA_FILES_LIMIT)
-      {
-        setMediaFilesLimitExceededMessage(`Sorry, due to memory constraints we can only allow uploads of upto ${MEDIA_FILES_LIMIT} images at once. The last ${validFiles.length - MEDIA_FILES_LIMIT} image${validFiles.length - MEDIA_FILES_LIMIT > 1 ? 's' : ''} will be discarded. 
-          If all of these images are a part of a single letter and you really need to upload them, please try contacting the owner or attach a link to these files uploaded on a separate cloud storage in the reason section.`);
-        validFiles = validFiles.slice(0, MEDIA_FILES_LIMIT);
-      }
+  //     if(validFiles.length > MEDIA_FILES_LIMIT)
+  //     {
+  //       setMediaFilesLimitExceededMessage(`Sorry, due to memory constraints we can only allow uploads of upto ${MEDIA_FILES_LIMIT} images at once. The last ${validFiles.length - MEDIA_FILES_LIMIT} image${validFiles.length - MEDIA_FILES_LIMIT > 1 ? 's' : ''} will be discarded. 
+  //         If all of these images are a part of a single letter and you really need to upload them, please try contacting the owner or attach a link to these files uploaded on a separate cloud storage in the reason section.`);
+  //       validFiles = validFiles.slice(0, MEDIA_FILES_LIMIT);
+  //     }
 
 
-      const compressedImages: File[] = [];
+  //     const compressedImages: File[] = [];
 
-      // console.log(validFiles);
+  //     // console.log(validFiles);
 
-      // for (let i = 0; i < validFiles.length; i++) {
-      //   const image = validFiles[i];
-      //   const compressedImage = await imageCompression(image, { maxSizeMB: 1 });
-      //   compressedImages.push(new File([compressedImage], validFiles[i].name));
-        // let orgSize = image.size, compSize = compressedImage.size;
-        // console.log(`${image.name} Original Size: ${orgSize / 1024} KB Compressed Size: ${compSize / 1024} KB`);
-      // }
+  //     // for (let i = 0; i < validFiles.length; i++) {
+  //     //   const image = validFiles[i];
+  //     //   const compressedImage = await imageCompression(image, { maxSizeMB: 1 });
+  //     //   compressedImages.push(new File([compressedImage], validFiles[i].name));
+  //       // let orgSize = image.size, compSize = compressedImage.size;
+  //       // console.log(`${image.name} Original Size: ${orgSize / 1024} KB Compressed Size: ${compSize / 1024} KB`);
+  //     // }
 
-      // await Promise.all(validFiles.map(async (image) => {
-      //   const compressedImage = await imageCompression(image, { maxSizeMB: image.size / 1024 / 1024 / 2 });
-      //   compressedImages.push(compressedImage);
-      //   // compressedImages.push(new File([compressedImage], image.name));
-      //   console.log(image.size/1024, compressedImage.size/1024)
-      // }));
+  //     // await Promise.all(validFiles.map(async (image) => {
+  //     //   const compressedImage = await imageCompression(image, { maxSizeMB: image.size / 1024 / 1024 / 2 });
+  //     //   compressedImages.push(compressedImage);
+  //     //   // compressedImages.push(new File([compressedImage], image.name));
+  //     //   console.log(image.size/1024, compressedImage.size/1024)
+  //     // }));
 
-      console.log('Compressed Images', compressedImages);
+  //     console.log('Compressed Images', compressedImages);
 
-      for(let j = 0; j < compressedImages.length; j++)
-      {
-        let orgSize = validFiles[j].size, compSize = compressedImages[j].size;
-        console.log(`${validFiles[j].name} Original Size: ${orgSize / 1024} KB Compressed Size: ${compSize / 1024} KB`);
-      }
+  //     for(let j = 0; j < compressedImages.length; j++)
+  //     {
+  //       let orgSize = validFiles[j].size, compSize = compressedImages[j].size;
+  //       console.log(`${validFiles[j].name} Original Size: ${orgSize / 1024} KB Compressed Size: ${compSize / 1024} KB`);
+  //     }
       
-      setSafeToUpload(false);
-      setUploadedFiles(validFiles);
-      setErrorMessage('');
-      setErrorMessage2('');
-      setSizeLimitExceededMessage('');
-      setSuccessMessage2('');
-      setSelectedRows({});
-      setReason('');
+  //     setSafeToUpload(false);
+  //     setUploadedFiles(validFiles);
+  //     setErrorMessage('');
+  //     setErrorMessage2('');
+  //     setSizeLimitExceededMessage('');
+  //     setSuccessMessage2('');
+  //     setSelectedRows({});
+  //     setReason('');
       
-      setStudents([]);
-      setReceivedResponse(false);
-      setManuallyEntered(false);
+  //     setStudents([]);
+  //     setReceivedResponse(false);
+  //     setManuallyEntered(false);
       
-      // console.log('Here!', students, receivedResponse, manuallyEntered);
+  //     // console.log('Here!', students, receivedResponse, manuallyEntered);
 
-      console.log('Uploading files: ', validFiles);
+  //     console.log('Uploading files: ', validFiles);
 
-      console.log(ignoredFiles);
+  //     console.log(ignoredFiles);
 
-      let fileURLs: string[] = []
+  //     let fileURLs: string[] = []
         
-      for(const file of Array.from(validFiles))
-      {
-        fileURLs.push(URL.createObjectURL(file));
-      }
+  //     for(const file of Array.from(validFiles))
+  //     {
+  //       fileURLs.push(URL.createObjectURL(file));
+  //     }
 
-      setPreviewImages(fileURLs);
+  //     setPreviewImages(fileURLs);
       
-      console.log(ignoredFiles)
+  //     console.log(ignoredFiles)
 
-      if(ignoredFiles.length > 0)
-      {
-        if(ignoredFiles.length === 1)
-        {
-          setSizeLimitExceededMessage(`Ignored "${ignoredFiles[0].name}" as its size exceeded ${FILE_SIZE_LIMIT_IN_MB} MB`);
-        }
-        else if(ignoredFiles.length === 2)
-        {
-          setSizeLimitExceededMessage(`Ignored "${ignoredFiles[0].name}" and "${ignoredFiles[1].name}" as their size exceeded ${FILE_SIZE_LIMIT_IN_MB} MB`);
-        }
-        else
-        {
-          const file_or_files = (ignoredFiles.length - 2 > 1) ? 'files' : 'file';
-          setSizeLimitExceededMessage(`Ignored "${ignoredFiles[0].name}", "${ignoredFiles[1].name}" and ${ignoredFiles.length-2} other ${file_or_files} as their size exceeded ${FILE_SIZE_LIMIT_IN_MB} MB`);
-        }
-      }
+  //     if(ignoredFiles.length > 0)
+  //     {
+  //       if(ignoredFiles.length === 1)
+  //       {
+  //         setSizeLimitExceededMessage(`Ignored "${ignoredFiles[0].name}" as its size exceeded ${FILE_SIZE_LIMIT_IN_MB} MB`);
+  //       }
+  //       else if(ignoredFiles.length === 2)
+  //       {
+  //         setSizeLimitExceededMessage(`Ignored "${ignoredFiles[0].name}" and "${ignoredFiles[1].name}" as their size exceeded ${FILE_SIZE_LIMIT_IN_MB} MB`);
+  //       }
+  //       else
+  //       {
+  //         const file_or_files = (ignoredFiles.length - 2 > 1) ? 'files' : 'file';
+  //         setSizeLimitExceededMessage(`Ignored "${ignoredFiles[0].name}", "${ignoredFiles[1].name}" and ${ignoredFiles.length-2} other ${file_or_files} as their size exceeded ${FILE_SIZE_LIMIT_IN_MB} MB`);
+  //       }
+  //     }
       
-      if(validFiles.length === 0)
-      {
-        setSafeToUpload(true);
-        return;
-      }
+  //     if(validFiles.length === 0)
+  //     {
+  //       setSafeToUpload(true);
+  //       return;
+  //     }
 
-      const formData = new FormData();
+  //     const formData = new FormData();
 
-      formData.append('noOfImages', fileURLs.length.toString());
+  //     formData.append('noOfImages', fileURLs.length.toString());
 
-      async function blobToBase64(blob: Blob): Promise<string> {
-        const reader = new FileReader();
+  //     async function blobToBase64(blob: Blob): Promise<string> {
+  //       const reader = new FileReader();
         
-        // Create a promise that will be resolved when the reader finishes
-        const readPromise = new Promise<string>((resolve, reject) => {
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-          reader.onerror = (error) => {
-            reject(error);
-          };
-        });
+  //       // Create a promise that will be resolved when the reader finishes
+  //       const readPromise = new Promise<string>((resolve, reject) => {
+  //         reader.onloadend = () => {
+  //           resolve(reader.result as string);
+  //         };
+  //         reader.onerror = (error) => {
+  //           reject(error);
+  //         };
+  //       });
       
-        // Start reading the blob as a Data URL (Base64 string)
-        reader.readAsDataURL(blob);
+  //       // Start reading the blob as a Data URL (Base64 string)
+  //       reader.readAsDataURL(blob);
       
-        // Wait for the reader to finish and return the result
-        return await readPromise;
-      }
+  //       // Wait for the reader to finish and return the result
+  //       return await readPromise;
+  //     }
       
 
-      await Promise.all(
-        validFiles.map(async (validFile, index) => {
-          formData.append(`file-${index+1}`, validFile);
-          const base64String = await blobToBase64(validFile);
-          formData.append(`file-${index+1}-base64`, base64String);
-        }
-      ));
+  //     await Promise.all(
+  //       validFiles.map(async (validFile, index) => {
+  //         formData.append(`file-${index+1}`, validFile);
+  //         const base64String = await blobToBase64(validFile);
+  //         formData.append(`file-${index+1}-base64`, base64String);
+  //       }
+  //     ));
 
-      try
-      {
-          const response = await fetch('/api/process-image', {
-              method: 'POST',
-              body: formData,
-          });
+  //     try
+  //     {
+  //         const response = await fetch('/api/process-image', {
+  //             method: 'POST',
+  //             body: formData,
+  //         });
 
-          if(response.status !== 200)
-          {
-            setErrorMessage(`Error processing image`);
-            setSafeToUpload(true);
-            return;
-          }
+  //         if(response.status !== 200)
+  //         {
+  //           setErrorMessage(`Error processing image`);
+  //           setSafeToUpload(true);
+  //           return;
+  //         }
           
-          try
-          {
-            const data = await response.json();
-            setReceivedResponse(true);
-            const sapid_list: Array<number> = data.list;
-            const dates: Array<string> = data.dates;
-            const reason: string = data.reason;
-            console.log(sapid_list);
-            console.log(dates);
-            console.log(reason);
-            setReason(reason);
-            const datesOfThePast: Array<Date> = [];
-            const datesWithinTwoMonthsFromNow: Array<Date> = [];
-            const datesOfTheFarFuture: Array<Date> = [];
-            dates.map((date) => {
-              const theDate = new Date(date);
-              if(!isNaN(theDate.getTime()))
-              {
-                // theDate.setHours(0, 0, 0, 0);
-                const condition = checkIfDateWithinTwoMonthsFromToday(theDate);
-                condition === 0 ? datesWithinTwoMonthsFromNow.push(theDate) : 
-                condition === 1 ? datesOfTheFarFuture.push(theDate) : 
-                datesOfThePast.push(theDate);
-              }
-            });
-            datesOfThePast.sort((a: Date, b: Date) => a.getTime() - b.getTime());
-            datesWithinTwoMonthsFromNow.sort((a: Date, b: Date) => a.getTime() - b.getTime());
-            datesOfTheFarFuture.sort((a: Date, b: Date) => a.getTime() - b.getTime());
-            console.log('Past', datesOfThePast);
-            console.log('Near Present', datesWithinTwoMonthsFromNow);
-            console.log('Far Future', datesOfTheFarFuture);
-            setPastDates(datesOfThePast);
-            setDates(datesWithinTwoMonthsFromNow);
-            setOriginallyExtractedDates(datesWithinTwoMonthsFromNow);
-            setFutureDates(datesOfTheFarFuture);
-            if(Array.isArray(sapid_list))
-            {
-              console.log(sapid_list.length);
-              if(sapid_list.length > 0)
-              {
-                setReceivedResponse(false);
-                console.log('Extracted SAP IDs:', sapid_list);
-                fetchStudentData(sapid_list, true);
-              }
-              else
-              {
-                currStudentsLength.current = 0;
-                setLetterUploadFlipFlop((prev) => !prev);
-                setErrorMessage(`Failed to extract valid SAP IDs from the image${pluralstr}.`);
-              }
-            }
-            else
-            {
-              setErrorMessage(`Failed to extract text from the image${pluralstr}.`);
-            }
-          }
-          catch (error)
-          {
-            console.log('Error parsing response:', error);
-            setErrorMessage(`Failed to extract text from the image${pluralstr}.`);
-          }
-          finally
-          {
-            setSafeToUpload(true);
-          }
-      }
-      catch (error)
-      {
-          console.log('Error processing image:', error);
-          setErrorMessage('Error processing image.');
-      }
-      finally
-      {
-        setSafeToUpload(true);
-        event.target.value = '';
-      }
-    }
-  };
+  //         try
+  //         {
+  //           const data = await response.json();
+  //           setReceivedResponse(true);
+  //           const sapid_list: Array<number> = data.list;
+  //           const dates: Array<string> = data.dates;
+  //           const reason: string = data.reason;
+  //           console.log(sapid_list);
+  //           console.log(dates);
+  //           console.log(reason);
+  //           setReason(reason);
+  //           const datesOfThePast: Array<Date> = [];
+  //           const datesWithinTwoMonthsFromNow: Array<Date> = [];
+  //           const datesOfTheFarFuture: Array<Date> = [];
+  //           dates.map((date) => {
+  //             const theDate = new Date(date);
+  //             if(!isNaN(theDate.getTime()))
+  //             {
+  //               // theDate.setHours(0, 0, 0, 0);
+  //               const condition = checkIfDateWithinTwoMonthsFromToday(theDate);
+  //               condition === 0 ? datesWithinTwoMonthsFromNow.push(theDate) : 
+  //               condition === 1 ? datesOfTheFarFuture.push(theDate) : 
+  //               datesOfThePast.push(theDate);
+  //             }
+  //           });
+  //           datesOfThePast.sort((a: Date, b: Date) => a.getTime() - b.getTime());
+  //           datesWithinTwoMonthsFromNow.sort((a: Date, b: Date) => a.getTime() - b.getTime());
+  //           datesOfTheFarFuture.sort((a: Date, b: Date) => a.getTime() - b.getTime());
+  //           console.log('Past', datesOfThePast);
+  //           console.log('Near Present', datesWithinTwoMonthsFromNow);
+  //           console.log('Far Future', datesOfTheFarFuture);
+  //           setPastDates(datesOfThePast);
+  //           setDates(datesWithinTwoMonthsFromNow);
+  //           setOriginallyExtractedDates(datesWithinTwoMonthsFromNow);
+  //           setFutureDates(datesOfTheFarFuture);
+  //           if(Array.isArray(sapid_list))
+  //           {
+  //             console.log(sapid_list.length);
+  //             if(sapid_list.length > 0)
+  //             {
+  //               setReceivedResponse(false);
+  //               console.log('Extracted SAP IDs:', sapid_list);
+  //               fetchStudentData(sapid_list, true);
+  //             }
+  //             else
+  //             {
+  //               currStudentsLength.current = 0;
+  //               setLetterUploadFlipFlop((prev) => !prev);
+  //               setErrorMessage(`Failed to extract valid SAP IDs from the image${pluralstr}.`);
+  //             }
+  //           }
+  //           else
+  //           {
+  //             setErrorMessage(`Failed to extract text from the image${pluralstr}.`);
+  //           }
+  //         }
+  //         catch (error)
+  //         {
+  //           console.log('Error parsing response:', error);
+  //           setErrorMessage(`Failed to extract text from the image${pluralstr}.`);
+  //         }
+  //         finally
+  //         {
+  //           setSafeToUpload(true);
+  //         }
+  //     }
+  //     catch (error)
+  //     {
+  //         console.log('Error processing image:', error);
+  //         setErrorMessage('Error processing image.');
+  //     }
+  //     finally
+  //     {
+  //       setSafeToUpload(true);
+  //       event.target.value = '';
+  //     }
+  //   }
+  // };
 
-  const checkIfDateWithinTwoMonthsFromToday = (date: Date) : number => {
-    const normalizedToday: Date = new Date();
-    const normalizedThatDay: Date = new Date(date);
-    const normalizedTwoMonthsFromNow: Date = new Date();
+  // const checkIfDateWithinTwoMonthsFromToday = (date: Date) : number => {
+  //   const normalizedToday: Date = new Date();
+  //   const normalizedThatDay: Date = new Date(date);
+  //   const normalizedTwoMonthsFromNow: Date = new Date();
 
-    normalizedTwoMonthsFromNow.setDate(normalizedToday.getDate() + 30 * 2);
-    normalizedToday.setHours(0, 0, 0, 0);
-    normalizedThatDay.setHours(0, 0, 0, 0);
-    normalizedTwoMonthsFromNow.setHours(0, 0, 0, 0);
+  //   normalizedTwoMonthsFromNow.setDate(normalizedToday.getDate() + 30 * 2);
+  //   normalizedToday.setHours(0, 0, 0, 0);
+  //   normalizedThatDay.setHours(0, 0, 0, 0);
+  //   normalizedTwoMonthsFromNow.setHours(0, 0, 0, 0);
 
-    if(normalizedThatDay < normalizedToday)
-    {
-      return -1; // past
-    }
-    else if(normalizedThatDay < normalizedTwoMonthsFromNow)
-    {
-      return 0; // within two months from today
-    }
-    else
-    {
-      return 1; // more than two months into the future
-    }
-  }
+  //   if(normalizedThatDay < normalizedToday)
+  //   {
+  //     return -1; // past
+  //   }
+  //   else if(normalizedThatDay < normalizedTwoMonthsFromNow)
+  //   {
+  //     return 0; // within two months from today
+  //   }
+  //   else
+  //   {
+  //     return 1; // more than two months into the future
+  //   }
+  // }
 
 
-  const convertPdfToImage = async (pdfFile: File): Promise<File[]> => {
+  // const convertPdfToImage = async (pdfFile: File): Promise<File[]> => {
 
-    const pdf = await pdfjsLib.getDocument(URL.createObjectURL(pdfFile)).promise;
-    const filename = pdfFile.name;
-    const noOfPages = pdf.numPages;
+  //   const pdf = await pdfjsLib.getDocument(URL.createObjectURL(pdfFile)).promise;
+  //   const filename = pdfFile.name;
+  //   const noOfPages = pdf.numPages;
 
-    const pdfPagesAsImages: File[] = [];
+  //   const pdfPagesAsImages: File[] = [];
 
-    setLoadingMessage('Converting PDF to images');
+  //   setLoadingMessage('Converting PDF to images');
 
-    for(let pageNumber = 1; pageNumber <= noOfPages; pageNumber++)
-    {
-      const page: pdfjsLib.PDFPageProxy = await pdf.getPage(pageNumber);
-      const canvas: HTMLCanvasElement = document.createElement('canvas');
+  //   for(let pageNumber = 1; pageNumber <= noOfPages; pageNumber++)
+  //   {
+  //     const page: pdfjsLib.PDFPageProxy = await pdf.getPage(pageNumber);
+  //     const canvas: HTMLCanvasElement = document.createElement('canvas');
       
-      const context = canvas.getContext('2d');
-      const viewport = page.getViewport({scale: 1.5});
+  //     const context = canvas.getContext('2d');
+  //     const viewport = page.getViewport({scale: 1.5});
       
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
+  //     canvas.height = viewport.height;
+  //     canvas.width = viewport.width;
 
-      if(context)
-      await page.render({
-        canvasContext: context,
-        viewport: viewport
-      }).promise;
+  //     if(context)
+  //     await page.render({
+  //       canvasContext: context,
+  //       viewport: viewport
+  //     }).promise;
 
-      const blob = await new Promise<Blob>((resolve, reject) => {
-        canvas.toBlob((result) => {
-            if (result) {
-                resolve(result);
-            } else {
-                reject(new Error('Failed to create blob from canvas'));
-            }
-        }, 'image/png');
-      });
+  //     const blob = await new Promise<Blob>((resolve, reject) => {
+  //       canvas.toBlob((result) => {
+  //           if (result) {
+  //               resolve(result);
+  //           } else {
+  //               reject(new Error('Failed to create blob from canvas'));
+  //           }
+  //       }, 'image/png');
+  //     });
       
-      const image = new File([blob], `${filename}-image-${pageNumber}`, {type: 'image/png'});
-      pdfPagesAsImages.push(image);
-    }
+  //     const image = new File([blob], `${filename}-image-${pageNumber}`, {type: 'image/png'});
+  //     pdfPagesAsImages.push(image);
+  //   }
 
-    return pdfPagesAsImages;
-  };
+  //   return pdfPagesAsImages;
+  // };
 
   const fetchStudentData = async (sapid_list: Array<number>, isnew: boolean = false, manual: boolean = false) => {
     try
@@ -844,22 +845,22 @@ const HomePage = () => {
     setNoLetterSuccessMessage('');
   }
 
-  const getManuallyEnteredDates = (): Date[] => {
-    dates.forEach((date) => {
-      date.setHours(5, 30, 0, 0)
-    });
+  // const getManuallyEnteredDates = (): Date[] => {
+  //   dates.forEach((date) => {
+  //     date.setHours(5, 30, 0, 0)
+  //   });
     
-    dates.sort((a: Date, b: Date) => a.getTime() - b.getTime());
+  //   dates.sort((a: Date, b: Date) => a.getTime() - b.getTime());
     
-    const manuallyEnteredDates = dates.filter(date => 
-      !originallyExtractedDates.some(extractedDate => 
-          new Date(date).getTime() === new Date(extractedDate).getTime()
-      )
-    );
+  //   const manuallyEnteredDates = dates.filter(date => 
+  //     !originallyExtractedDates.some(extractedDate => 
+  //         new Date(date).getTime() === new Date(extractedDate).getTime()
+  //     )
+  //   );
     
 
-    return manuallyEnteredDates;
-  }
+  //   return manuallyEnteredDates;
+  // }
 
   const checkIfImageExists = async (url: string): Promise<boolean> => {
     try {
@@ -871,113 +872,122 @@ const HomePage = () => {
     }
   }
 
-  const handleSubmit = async (force_reupload: boolean = false): Promise<number> => {
-    const currDate = (new Date());
-    if(!force_reupload)
-    {
-      console.log('Date of cache update', dateOfCacheUpdate);
-      if(dateOfCacheUpdate !== null)
-      {
-        console.log('Checking dates');
-        console.log(dateOfCacheUpdate.getDate(), currDate.getDate());
-        if(dateOfCacheUpdate.getDate() !== currDate.getDate() || 
-          dateOfCacheUpdate.getMonth() !== currDate.getMonth() || 
-          dateOfCacheUpdate.getFullYear() !== currDate.getFullYear())
-        {
-          console.log('Mismatch');
-          return handleSubmit(true);
-        }
-      }
-    }
+  // const handleSubmit = async (force_reupload: boolean = false): Promise<number> => {
+  //   const currDate = (new Date());
+  //   if(!force_reupload)
+  //   {
+  //     console.log('Date of cache update', dateOfCacheUpdate);
+  //     if(dateOfCacheUpdate !== null)
+  //     {
+  //       console.log('Checking dates');
+  //       console.log(dateOfCacheUpdate.getDate(), currDate.getDate());
+  //       if(dateOfCacheUpdate.getDate() !== currDate.getDate() || 
+  //         dateOfCacheUpdate.getMonth() !== currDate.getMonth() || 
+  //         dateOfCacheUpdate.getFullYear() !== currDate.getFullYear())
+  //       {
+  //         console.log('Mismatch');
+  //         return handleSubmit(true);
+  //       }
+  //     }
+  //   }
 
-    setDateOfCacheUpdate(currDate);
+  //   setDateOfCacheUpdate(currDate);
 
-    const selectedSAPIDs = students.filter(student => selectedRows[Number(student.sapid)]);
+  //   const selectedSAPIDs = students.filter(student => selectedRows[Number(student.sapid)]);
 
-    dates.sort((a: Date, b: Date) => a.getTime() - b.getTime());
+  //   dates.sort((a: Date, b: Date) => a.getTime() - b.getTime());
 
-    const manuallyEnteredDates = getManuallyEnteredDates();
+  //   const manuallyEnteredDates = getManuallyEnteredDates();
 
-    console.log('Originally extracted dates: ', originallyExtractedDates)
-    console.log('All dates: ', dates)
-    console.log('Manually entered dates: ', manuallyEnteredDates)
+  //   console.log('Originally extracted dates: ', originallyExtractedDates)
+  //   console.log('All dates: ', dates)
+  //   console.log('Manually entered dates: ', manuallyEnteredDates)
 
-    console.log('Submitting SAP IDs:', selectedSAPIDs, 'Reason:', reason, 'Dates:', dates);
-    //
-    try
-    {
-      let imageLinks: string[];
+  //   console.log('Submitting SAP IDs:', selectedSAPIDs, 'Reason:', reason, 'Dates:', dates);
+  //   //
+  //   try
+  //   {
+  //     let imageLinks: string[];
 
-      if(imagesUploadedToCloudinary.length === 0 || force_reupload)
-      {
-        const NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  //     if(imagesUploadedToCloudinary.length === 0 || force_reupload)
+  //     {
+  //       const NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   
-        const promises = uploadedFiles.map(async (image) => {
-          const formData = new FormData();
-          formData.append('file', image);
-          formData.append('upload_preset', 'AttendanceManager');
-          const response = await fetch(
-            `https://api.cloudinary.com/v1_1/${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
-              method: 'POST',
-              body: formData
-            }
-          );
-          const link = await response.json();
-          console.log('Link', link);
-          return link.url;
-        });
+  //       const promises = uploadedFiles.map(async (image) => {
+  //         const formData = new FormData();
+  //         formData.append('file', image);
+  //         formData.append('upload_preset', 'AttendanceManager');
+  //         const response = await fetch(
+  //           `https://api.cloudinary.com/v1_1/${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+  //             method: 'POST',
+  //             body: formData
+  //           }
+  //         );
+  //         const link = await response.json();
+  //         console.log('Link', link);
+  //         return link.url;
+  //       });
   
-        imageLinks = await Promise.all(promises);
-      }
-      else
-      {
-        imageLinks = imagesUploadedToCloudinary;
-      }
+  //       imageLinks = await Promise.all(promises);
+  //     }
+  //     else
+  //     {
+  //       imageLinks = imagesUploadedToCloudinary;
+  //     }
 
-      const attendance_response = await fetch('/api/post-attendance', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          studentDetails: selectedSAPIDs,
-          letterDetails: {imageLinks: imageLinks, reason: reason},
-          attendanceDates: dates,
-          manuallyEnteredDates: manuallyEnteredDates
-        })
-      });
+  //     const attendance_response = await fetch('/api/post-attendance', {
+  //       method: 'POST',
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         studentDetails: selectedSAPIDs,
+  //         letterDetails: {imageLinks: imageLinks, reason: reason},
+  //         attendanceDates: dates,
+  //         manuallyEnteredDates: manuallyEnteredDates
+  //       })
+  //     });
 
-      console.log(attendance_response);
+  //     console.log(attendance_response);
 
-      if(!force_reupload && imagesUploadedToCloudinary.length!==0 && attendance_response.status===200)
-      {
-        console.log('Checking if cached images still exist...');
+  //     if(!force_reupload && imagesUploadedToCloudinary.length!==0 && attendance_response.status===200)
+  //     {
+  //       console.log('Checking if cached images still exist...');
   
-        const imageExistsPrmoises: Promise<boolean>[] = imageLinks.map(async (image) => {
-          return checkIfImageExists(image);
-        });
+  //       const imageExistsPrmoises: Promise<boolean>[] = imageLinks.map(async (image) => {
+  //         return checkIfImageExists(image);
+  //       });
 
-        const imageExists = await Promise.all(imageExistsPrmoises);
+  //       const imageExists = await Promise.all(imageExistsPrmoises);
   
-        const allImagesExist = imageExists.reduce((acc, curr) => (acc && curr), true);
+  //       const allImagesExist = imageExists.reduce((acc, curr) => (acc && curr), true);
   
-        console.log('All Images Exist?', allImagesExist);
+  //       console.log('All Images Exist?', allImagesExist);
   
-        if(!allImagesExist)
-        {
-          const forced_reupload_attendance_response = await handleSubmit(true);
-          return forced_reupload_attendance_response;
-        }
-      }
+  //       if(!allImagesExist)
+  //       {
+  //         const forced_reupload_attendance_response = await handleSubmit(true);
+  //         return forced_reupload_attendance_response;
+  //       }
+  //     }
 
-      setImagesUploadedToCloudinary(imageLinks);
+  //     setImagesUploadedToCloudinary(imageLinks);
 
-      return attendance_response.status;
-    }
-    catch (error)
-    {
-      console.log(`Error sending student data: ${error}`);
-      return -1;
-    }
-  };
+  //     return attendance_response.status;
+  //   }
+  //   catch (error)
+  //   {
+  //     console.log(`Error sending student data: ${error}`);
+  //     return -1;
+  //   }
+  // };
+
+  const getISTNoon = (pureDateString: string): DateTime => {
+    return DateTime.fromISO(pureDateString, { zone: 'Asia/Kolkata' }).set({
+      hour: 12,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    });
+  }
 
   const handleSubmitNoLetter = async (): Promise<number> => {
     try
@@ -986,13 +996,17 @@ const HomePage = () => {
         date.setHours(5, 30, 0, 0);
       });
 
+      const ISTNoonNoLetterDates: Date[] = noLetterDates.map((noLetterDate) => {
+        return getISTNoon(noLetterDate.toISOString().split('T')[0]).toJSDate();
+      });
+
       const attendance_response = await fetch('/api/post-attendance-without-letters', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           studentDetails: noLetterStudents,
           letterDetails: {reason: noLetterReason},
-          attendanceDates: noLetterDates
+          attendanceDates: ISTNoonNoLetterDates
         })
       });
 

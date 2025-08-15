@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Student {
@@ -95,14 +96,14 @@ model Department {
 }
 
 model AttendanceRequest {
-  requestid                 String      @db.Uuid          @id               @default(uuid())
-  requesttime               DateTime    @db.Timestamptz   @default(now())
+  requestid                 String      @db.Uuid              @id               @default(uuid())
+  requesttime               DateTime    @db.Timestamptz(3)    @default(now())
   sapid                     BigInt      
   letterstatus              Int
-  date                      DateTime    @db.Date
+  date                      DateTime    @db.Timestamptz
   weekday                   String
-  starttime                 DateTime    @db.Time          @default("1970-01-01T00:00:00Z")
-  endtime                   DateTime    @db.Time          @default("1970-01-01T23:59:59Z")
+  starttime                 DateTime    @db.Time              @default("1970-01-01T00:00:00Z")
+  endtime                   DateTime    @db.Time              @default("1970-01-01T23:59:59Z")
   Student                   Student     @relation(fields: [sapid], references: [sapid])
   AttendanceRequestToMedia  AttendanceRequestToMedia[]
 
