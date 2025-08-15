@@ -13,6 +13,7 @@
   
   h1.home-page.title {
     font-size: 2.5rem;
+    /* margin-top: 10px; */
   }
 
   h1.home-page.title-desc {
@@ -20,15 +21,17 @@
     margin-bottom: 10px;
   }
 
-  h1.home-page.title {
+  /* h1.home-page.title {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-  }
+  } */
   
   .description, .extra-addition {
     font-size: 1.2rem;
     color: #555;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   /* .title-button-side-by-side {
@@ -79,10 +82,6 @@
   .upload-button:hover {
     background-color: #005bb5;
     transition: background-color 0.2s ease-in;
-  }
-  
-  .upload-section {
-    margin-top: 1.8rem;
   }
   
   .error {
@@ -388,7 +387,7 @@
     padding: 10px;
     margin-top: 20px;
     font-size: 22px;
-    color: #000041;
+    color: #000060;
     background-color: azure;
     background-image: linear-gradient(to bottom, azure, rgb(185, 255, 255));
     border-radius: 5px;
@@ -407,7 +406,7 @@
     padding: 10px;
     margin-top: 20px;
     font-size: 22px;
-    color: #000041;
+    color: #000060;
     background-color: azure;
     background-image: linear-gradient(to bottom, azure, rgb(185, 255, 255));
     border-radius: 5px;
@@ -576,12 +575,12 @@
 
 
 @media (max-width: 800px) {
-  h1.home-page.title {
-    margin-top: 40px;
-  }
+  /* h1.home-page.title {
+    margin-top: 10px;
+  } */
   
   h1.home-page.title-desc {
-    margin-top: 50px;
+    margin-top: 10px;
   }
   
   .view-requests-button {
@@ -778,9 +777,9 @@
     transition: background-color 0.2s ease-in;
   }
 
-  h1.home-page, p.home-page {
+  /* h1.home-page, p.home-page {
     font-size: 6vw;
-  }
+  } */
 
 
   label {
@@ -788,11 +787,11 @@
   }
 
   .description {
-    font-size: 5vw;
+    font-size: 2vw;
   }
 
   .extra-addition {
-    font-size: 5vw;
+    font-size: 2vw;
   }
 
   table {

@@ -54,8 +54,8 @@ export async function POST(req: NextRequest) {
             return attendanceDates.map((attendanceDate) => ({
                 sapid: student.sapid,
                 letterstatus: manuallyEnteredDates.includes(attendanceDate) ? 2 : student.letterstatus,
-                date: new Date(attendanceDate),
-                weekday: days[(new Date(attendanceDate)).getDay()] // needs to be removed
+                date: attendanceDate,
+                weekday: "N/A"
             }))
         });
 

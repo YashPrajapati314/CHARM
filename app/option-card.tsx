@@ -56,21 +56,15 @@ const OptionCard = ({title, image_src, page}: CardProps) => {
   
   return (
       <div className='flex flex-row justify-center p-2 gap-1 rounded-sm w-64 bg-slate-500 hover:bg-slate-400 transition-colors duration-300' onClick={() => {goToPage(page)}}>
-        <div className='flex justify-center items-center w-32'>
-          <img src={image_src} className='w-32 object-contain'></img>
+        <div className='flex justify-center items-center w-32 h-24'>
+          <img src={image_src} className='max-w-full max-h-full object-contain'></img>
         </div>
-        <div className='flex flex-col justify-center'>
-          <div>
-            {title}
-          </div>
-          {/* <div>
-            {description}
-          </div> */}
+        <div className="flex w-36 items-center justify-center">
+          <p>{title}</p>
         </div>
       </div>
   );
 }
-
 
 
 export default OptionCard;

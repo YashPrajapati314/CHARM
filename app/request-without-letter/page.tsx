@@ -1060,15 +1060,13 @@ const HomePage = () => {
               View requests as a teacher
           </button>
         </div> */}
-        <Header></Header>
+        {/* <Header></Header> */}
+        <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
         <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
       </div>
-
-      
       <br/>
       {safeToUpload && (<div className='no-letter' id='no-letter-div'>
         <h1 className='home-page'>Make a request without a letter</h1>
-        <br/>
         <p className='home-page description'>
           If you don't have a letter available for the day and can't attend for a genuine reason,
           you can make a letterless request.

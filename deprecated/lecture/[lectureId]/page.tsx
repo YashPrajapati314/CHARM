@@ -1,3 +1,5 @@
+/* Deprecated */
+
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -44,17 +46,17 @@ const AttendancesForLecture = () => {
         lectureDetails: Lecture[];
     }
 
-    const {lectureIds} = useParams<{lectureIds: string}>();
+    const {lectureId} = useParams<{lectureId: string}>();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [listOfStudentsWithRequests, setlistOfStudentsWithRequests] = useState<StudentWithRequests[]>([]);
     const [selectedStudent, setSelectedStudent] = useState<StudentWithRequests | null>(null);
-    const [lectures, setLectures] = useState<Lecture[] | null>();
+    const [lecture, setLecture] = useState<Lecture | null>();
     const [loadedTitle, setLoadedTitle] = useState<boolean>(false);
     const [loadedRequests, setLoadedRequests] = useState<boolean>(false);
-    const [invalidDayScenario, setInvalidDayScenario] = useState<boolean>(false);
-    const [invalidRequestScenario, setInvalidRequestScenario] = useState<boolean>(false);
     const [errorScenario1, setErrorScenario1] = useState<boolean>(false);
     const [errorScenario2, setErrorScenario2] = useState<boolean>(false);
+    const [invalidDayScenario, setInvalidDayScenario] = useState<boolean>(false);
+    const [invalidRequestScenario, setInvalidRequestScenario] = useState<boolean>(false);
     const today = actualDateHereNowAndJustTheDate();
     const [dateToday, ordinalSuffixForToday, monthToday, yearToday] = formatDate(today);
     const router = useRouter();
@@ -62,19 +64,12 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const fetchAttendanceRequests = async () => {
             try {
-                const today = actualDateHereNowAndJustTheDate();
-
-                const convertedLectureIds = decodeURIComponent(lectureIds);
-                const currentlyOngoingLectures: string[] = convertedLectureIds.split('&');
-
-                console.log('Get Requests');
-                console.log(currentlyOngoingLectures);
-
                 const response = await fetch('/api/get-requests', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ lectureIds: currentlyOngoingLectures, today })
-                });
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ lectureIds: [lectureId], today })
+                    }
+                );
 
                 console.log(response.status);
 
@@ -84,7 +79,7 @@ const AttendancesForLecture = () => {
                     setInvalidRequestScenario(false);
                     setInvalidDayScenario(false);
                     console.log('Response', response);
-                    const {requests} = await response.json() as AttendanceRequestResponse;
+                    const {requests} = await response?.json() as AttendanceRequestResponse;
                     sortRequests(requests);
                     setlistOfStudentsWithRequests(requests);
                     console.log('Requests', requests);
@@ -108,6 +103,7 @@ const AttendancesForLecture = () => {
                 }
             }
             catch (error) {
+                setErrorScenario2(true);
                 console.error("Error fetching attendance requests:", error);
             }
         };
@@ -117,24 +113,18 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const getLectureDetails = async() => {
             try {
-                const convertedLectureIds = decodeURIComponent(lectureIds);
-                const currentlyOngoingLectures: string[] = convertedLectureIds.split('&');
-
-                console.log(currentlyOngoingLectures);
-
                 const response = await fetch('/api/get-lecture-details', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({lectureIds: currentlyOngoingLectures})
-                });
-
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({lectureIds: [lectureId]})
+                    }
+                );
                 if(response.status === 200)
                 {
                     setErrorScenario1(false);
                     console.log(response);
                     const {lectureDetails} = await response.json() as LectureResponse;
-                    sortLectures(lectureDetails)
-                    setLectures(lectureDetails);
+                    setLecture(lectureDetails[0]);
                     console.log(lectureDetails);
                     setLoadedTitle(true);
                 }
@@ -145,6 +135,7 @@ const AttendancesForLecture = () => {
                 }
             }
             catch (error) {
+                setErrorScenario1(true);
                 console.error("Error fetching lecture details:", error);
             }
         };
@@ -156,8 +147,8 @@ const AttendancesForLecture = () => {
     }, [listOfStudentsWithRequests]);
 
     useEffect(() => {
-        console.log(lectures);
-    }, [lectures]);
+        console.log(lecture);
+    }, [lecture]);
 
     useEffect(() => {
         if(selectedStudent)
@@ -184,24 +175,16 @@ const AttendancesForLecture = () => {
     {
         const time = new Date();
         const date = new Date(`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`);
-        date.setHours(5, 30, 0, 0);
+        // date.setHours(5, 30, 0, 0);
+        const localDate = new Date("1970-01-01T00:00:00")
+        const utcDate = new Date("1970-01-01T00:00:00Z")
+        console.log(localDate.getTime() - utcDate.getTime())
         return date;
-    }
-
-    function sortLectures(lectureList: Lecture[]): void
-    {
-        lectureList.sort((a, b) => {
-            if (a.batchid < b.batchid) return -1;
-            if (a.batchid > b.batchid) return 1;
-            return 0;
-        })
     }
 
     function sortRequests(requestList: StudentWithRequests[]): void
     {
         requestList?.sort((a, b) => {
-            if (a.batchid < b.batchid) return -1;
-            if (a.batchid > b.batchid) return 1;
             if (a.rollno < b.rollno) return -1;
             if (a.rollno > b.rollno) return 1;
             return 0;
@@ -282,14 +265,12 @@ const AttendancesForLecture = () => {
                     invalidRequestScenario ?
                     <>
                         <div className="invalid-request">
-                            <h1 className='request-page'>Hmmm</h1>
                             <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
                             <h1 className='request-page'>No such lecture found... Perhaps you have lost your way</h1>
                         </div>
                     </> :
                     <>
                         <div className="invalid-day">
-                            <h1 className='request-page'>Hmmm</h1>
                             <img className="invalid-day-image" src={fischl_folded_arms.src}></img>
                             <h1 className='request-page'>The requested lecture exists but is not scheduled for today</h1>
                         </div>
@@ -307,13 +288,13 @@ const AttendancesForLecture = () => {
                             {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} 
                         </h1> : 
                         <>
-                            <h1 className='request-page'>Attendance Requests for <br></br> {lectures && lectures[0]?.Module?.course_name}</h1>
+                            <h1 className='request-page'>Attendance Requests for <br></br> {lecture?.Module.course_name}</h1>
                             <h1 className='request-page'>
-                                {lectures && lectures.map((lecture) => (lecture.batchid)).join(', ')} 
+                                {lecture?.batchid} 
                                 <br></br>
                                 {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} 
                                 <br></br>
-                                ({lectures && formatTime(lectures[0]?.starttime)}-{lectures && formatTime(lectures[0]?.endtime)})
+                                ({formatTime(lecture?.starttime)}-{formatTime(lecture?.endtime)})
                             </h1>
                         </>
                     }
@@ -361,7 +342,6 @@ const AttendancesForLecture = () => {
                                             <tr>
                                                 <th>SAP ID</th>
                                                 <th>Name</th>
-                                                <th>Batch</th>
                                                 <th>Roll No</th>
                                                 <th>Reason</th>
                                             </tr>
@@ -385,7 +365,6 @@ const AttendancesForLecture = () => {
                                                         >
                                                             <td>{std.sapid}</td>
                                                             <td>{std.name}</td>
-                                                            <td>{std.batchid}</td>
                                                             <td>{std.rollno}</td>
                                                             <td className={(std.listofrequests[0].reason?.split(/\s+/).every(word => word.length < 12) && std.listofrequests[0].reason?.split(/\s+/).length < 5) ? `` : `truncatable`}>{std.listofrequests[0].reason} {std.listofrequests.length > 1 ? `& ${std.listofrequests.length - 1} other${std.listofrequests.length > 2 ? 's' : ''}` : ``}</td>
                                                         </tr>

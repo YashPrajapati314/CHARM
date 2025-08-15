@@ -10,6 +10,7 @@ import '../../styles/RequestPage.css';
 import qiqi_fallen from '../../../images/qiqi-fallen.png'
 import yanfei_thinking from '../../../images/yanfei-thinking.png'
 import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
+import { DateTime } from 'luxon';
 
 const AttendancesForLecture = () => {
 
@@ -44,9 +45,9 @@ const AttendancesForLecture = () => {
     //     lectureDetails: Lecture[];
     // }
 
-    const {batchIds} = useParams<{batchIds: string}>();
-    const convBatchIds = decodeURIComponent(batchIds);
-    const selectedBatches = convBatchIds.split('&');
+    const { batchIds } = useParams<{batchIds: string}>();
+    const decodedBatchIds = decodeURIComponent(batchIds);
+    const selectedBatches = decodedBatchIds.split('&');
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [listOfStudentsWithRequests, setlistOfStudentsWithRequests] = useState<StudentWithRequests[]>([]);
     const [selectedStudent, setSelectedStudent] = useState<StudentWithRequests | null>(null);
@@ -57,17 +58,16 @@ const AttendancesForLecture = () => {
     const [errorScenario2, setErrorScenario2] = useState<boolean>(false);
     const [invalidDayScenario, setInvalidDayScenario] = useState<boolean>(false);
     const [invalidRequestScenario, setInvalidRequestScenario] = useState<boolean>(false);
-    const today = actualDateHereNowAndJustTheDate();
-    const [dateToday, ordinalSuffixForToday, monthToday, yearToday] = formatDate(today);
+    const [dateToday, ordinalSuffixForToday, monthToday, yearToday] = getFormattedDate();
     const router = useRouter();
 
     useEffect(() => {
         const fetchAttendanceRequests = async () => {
             try {
-                const response = await fetch('/api/get-requests-by-batches', {
-                    method: 'POST',
+                const response = await fetch(`/api/get-requests-by-batches?batchIds=${batchIds}`, {
+                    method: 'GET',
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ batchIds: selectedBatches, today })
+                    // body: JSON.stringify({ batchIds: selectedBatches })
                 });
 
                 console.log(response.status);
@@ -172,6 +172,7 @@ const AttendancesForLecture = () => {
 
     function actualDateHereNowAndJustTheDate(): Date
     {
+        const ISTNow = DateTime.now().setZone("Asia/Kolkata");
         const time = new Date();
         const date = new Date(`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`);
         // date.setHours(5, 30, 0, 0);
@@ -184,6 +185,8 @@ const AttendancesForLecture = () => {
     function sortRequests(requestList: StudentWithRequests[]): void
     {
         requestList?.sort((a, b) => {
+            // if (a.batchid < b.batchid) return -1;
+            // if (a.batchid > b.batchid) return 1;
             if (a.rollno < b.rollno) return -1;
             if (a.rollno > b.rollno) return 1;
             return 0;
@@ -207,14 +210,15 @@ const AttendancesForLecture = () => {
         return '';
     }
 
-    function formatDate(input_date: Date): Array<string>
+    function getFormattedDate(): Array<string>
     {
-        if(input_date)
+        const ISTNow = DateTime.now().setZone("Asia/Kolkata");
+        if(ISTNow)
         {
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            const date = input_date.getDate();
-            const month = input_date.getMonth();
-            const year = input_date.getFullYear();
+            const date = ISTNow.day;
+            const month = ISTNow.month;
+            const year = ISTNow.year;
             let ordinal_suffix: string;
             switch(date % 100)
             {
@@ -340,6 +344,7 @@ const AttendancesForLecture = () => {
                                             <tr>
                                                 <th>SAP ID</th>
                                                 <th>Name</th>
+                                                <th>Batch</th>
                                                 <th>Roll No</th>
                                                 <th>Reason</th>
                                             </tr>
@@ -363,6 +368,7 @@ const AttendancesForLecture = () => {
                                                         >
                                                             <td>{std.sapid}</td>
                                                             <td>{std.name}</td>
+                                                            <td>{std.batchid}</td>
                                                             <td>{std.rollno}</td>
                                                             <td className={(std.listofrequests[0].reason?.split(/\s+/).every(word => word.length < 12) && std.listofrequests[0].reason?.split(/\s+/).length < 5) ? `` : `truncatable`}>{std.listofrequests[0].reason} {std.listofrequests.length > 1 ? `& ${std.listofrequests.length - 1} other${std.listofrequests.length > 2 ? 's' : ''}` : ``}</td>
                                                         </tr>

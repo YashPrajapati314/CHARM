@@ -79,7 +79,7 @@ const Departments = () => {
         (<div className='teacher-view'>
             {listOfDepartments && (
                 <div className="department-list">
-                    <h2 className='teacher-page-open'>Please Select Your Department ({studyYear})</h2>
+                    <h2 className='teacher-page-open'>Please Select The Department ({studyYear})</h2>
                     {loadedDepartments ? listOfDepartments.map((dept, index) => (
                         <motion.button 
                             key={dept.departmentname} 

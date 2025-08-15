@@ -34,44 +34,40 @@ const checkIfAllBatchesAreValid = async (batches: string[]) => {
     }
 }
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     try
     {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         
-        const { batchIds, today } = await req.json() as Request;
+        const searchParams = req.nextUrl.searchParams;
 
-        console.log('Timezone Debug Info Get Requests');
-        const indiaTime = DateTime.now().setZone("Asia/Kolkata");
-        const utcTime = indiaTime.toUTC();
-        console.log(`${indiaTime} vs ${utcTime}`);
-        console.log(`${indiaTime.toISO()} vs ${utcTime.toISO()}`);
-        // const currentTime = DateTime.now().setZone("Asia/Kolkata");
-        // console.log(`Current Time: ${currentTime.toISO()}`);
-        // console.log(`Current Time in UTC: ${currentTime.toUTC().toISO()}`);
-        // console.log(`Current Time in Local: ${currentTime.toLocal().toISO()}`);
-        console.log(`...`);
-        console.log(today);
-        console.log(new Date(today));
-        console.log(days[(new Date(today)).getDay()]);
-        console.log(batchIds);
+        const batchIds = searchParams.get('batchIds') || '';
 
-        const allBatchesExist = await checkIfAllBatchesAreValid(batchIds);
+        const decodedBatchIds = decodeURIComponent(batchIds);
+        const selectedBatches = decodedBatchIds.split('&');
 
-        if(!allBatchesExist)
+        const allBatchesExist = await checkIfAllBatchesAreValid(selectedBatches);
+
+        if(!batchIds || !allBatchesExist)
         {
             return NextResponse.json({ error: `One or more of the requested batches do not exist` }, { status: 400 });
         }
         
-        // There was no need to add5hours30mins before this
+        const IST = DateTime.now().setZone("Asia/Kolkata");
+
+        const ISTMidnightToday = IST.startOf('day');
+        const ISTMidnightTomorrow = ISTMidnightToday.plus({ days: 1 });
+        
         const attendanceRequests = await prisma.attendanceRequest.findMany({
             where: {
-                date: add5hours30minutes(new Date(today)),
-                weekday: days[add5hours30minutes(new Date(today)).getDay()],
+                date: {
+                    gte: ISTMidnightToday.toJSDate(),
+                    lt: ISTMidnightTomorrow.toJSDate()
+                },
                 Student: {
                     Batch: {
                         batchid: {
-                            in: batchIds
+                            in: selectedBatches
                         }
                     }
                 }
@@ -127,7 +123,7 @@ export async function POST(req: NextRequest) {
         });
 
 
-        // console.dir({finalAttendanceRequests},{depth:null});
+        // console.dir({finalAttendanceRequests}, {depth:null});
 
         console.log(finalAttendanceRequests);
 

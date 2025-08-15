@@ -77,49 +77,55 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                     {letter ? 
                     <div className="popup-content popup-content-letter">
                         <h2 className='are-you-sure'>Are you sure you want to submit these names with the attached letter?</h2>
-                        {(studentsExtractedFromLetter!.length > 0) && 
-                        <div className='names-from-the-letter'>
-                            {/* <h2 className='confirmation-table-title extracted-names'>Names we were able to extract from the letter</h2> */}
-                            <table className='confirmation-table extracted-names'>
-                                <thead>
-                                    <tr>
-                                        <th>Extracted from the letter</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {studentsExtractedFromLetter!.map(student => 
-                                        (<tr key={student.sapid}>
-                                            <td>{student.name}</td>
-                                        </tr>)
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                        {
+                            (studentsExtractedFromLetter!.length > 0) && 
+                            <div className='names-from-the-letter'>
+                                {/* <h2 className='confirmation-table-title extracted-names'>Names we were able to extract from the letter</h2> */}
+                                <table className='confirmation-table extracted-names'>
+                                    <thead>
+                                        <tr>
+                                            <th>Extracted from the letter</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {studentsExtractedFromLetter!.map(student => 
+                                            (<tr key={student.sapid}>
+                                                <td>{student.name}</td>
+                                            </tr>)
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         }
-                        {(studentsManuallyAddedWithLetter!.length > 0) && 
-                        <div className='names-added-with-the-letter'>
-                            {/* <h2 className='confirmation-table-title added-names'>Names manually added to the list</h2> */}
-                            <table className='confirmation-table added-names'>
-                                <thead>
-                                    <tr>
-                                        <th>Manually added to the list</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {studentsManuallyAddedWithLetter!.map(student => 
-                                        (<tr key={student.sapid}>
-                                            <td>{student.name}</td>
-                                        </tr>)
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                        {
+                            (studentsManuallyAddedWithLetter!.length > 0) && 
+                            <div className='names-added-with-the-letter'>
+                                {/* <h2 className='confirmation-table-title added-names'>Names manually added to the list</h2> */}
+                                <table className='confirmation-table added-names'>
+                                    <thead>
+                                        <tr>
+                                            <th>Manually added to the list</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {studentsManuallyAddedWithLetter!.map(student => 
+                                            (<tr key={student.sapid}>
+                                                <td>{student.name}</td>
+                                            </tr>)
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         }
-                        {(studentsManuallyAddedWithLetter!.length > 0) && 
-                        <div className='warning yellow-warning'>
-                            Manually added names could not be detected by the model and will be distinctly highlighted
-                        </div>}
-                        <br></br>
+                        {
+                            (studentsManuallyAddedWithLetter!.length > 0) && 
+                            <>
+                                <div className='warning yellow-warning'>
+                                    Manually added names could not be detected by the model and will be distinctly highlighted
+                                </div>
+                                <br></br>
+                            </>
+                        }
                         <div className="letter-dates-confirmation">
                             The request will be made for <br></br>
                             {extractedDates!.length > 0 && <>The following dates extracted from the letter: <div className="extracted-ones">{extractedDates!.map((date: Date) => formattedDate(date)).join(', ')}</div></>}

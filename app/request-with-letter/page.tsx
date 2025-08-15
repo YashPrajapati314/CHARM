@@ -1071,13 +1071,13 @@ const HomePage = () => {
               View requests as a teacher
           </button>
         </div> */}
-        <Header></Header>
+        {/* <Header></Header> */}
+        <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
         <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
       </div>
       <br/>
       {/* <strong><h1 className='home-page'>Make a request with a letter</h1></strong> */}
       <h1 className='home-page'>Make a request with a letter</h1>
-      <br/>
       <p className='home-page description'>
         Upload an image/PDF of your letter to send along with the request. Multiple pages for the same letter can be uploaded together, select as many files as necessary.
       </p>
