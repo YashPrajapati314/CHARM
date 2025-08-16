@@ -62,7 +62,7 @@ const Departments = () => {
         <div className="server-error">
             <img className="server-error-image" src={keqing_sleeping.src}></img>
             <p className='teacher-page-open'>This feature is deprecated</p>
-            <p className='teacher-page-open'>If needed, it might be brought up again, but for now, <a className='text-blue-500 hover:text-blue-700 underline' onClick={() => redirectToBatchRequests('view-requests')}>this</a> gets the task done</p>
+            <p className='teacher-page-open'>If needed, it might be brought up again, but for now, <a className='text-blue-500 hover:text-blue-700 underline cursor-pointer' onClick={() => redirectToBatchRequests('view-requests')}>this</a> gets the task done</p>
         </div>
     );
 }

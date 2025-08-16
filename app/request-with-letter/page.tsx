@@ -1079,7 +1079,7 @@ const HomePage = () => {
       {/* <strong><h1 className='home-page'>Make a request with a letter</h1></strong> */}
       <h1 className='home-page'>Make a request with a letter</h1>
       <p className='home-page description'>
-        Upload an image/PDF of your letter to send along with the request. Multiple pages for the same letter can be uploaded together, select as many files as necessary.
+        Upload an image / PDF of your letter to send along with the request. Multiple pages for the same letter can be uploaded together, select as many files as necessary.
       </p>
       <div className='upload-section'>
         <input type='file' multiple ref={fileInputRef} style={{display: 'none'}} onChange={handleFileUpload} />
