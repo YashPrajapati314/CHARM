@@ -77,6 +77,7 @@ const Batches = () => {
     const handleBatchSubmit = () => {
         const listOfSelectedBatches = Object.entries(selectedBatches).filter(([batchId, isChecked]) => (isChecked)).map(([batchId]) => batchId);
         console.log("Batch Selected:", listOfSelectedBatches);
+        listOfSelectedBatches.sort();
         fetchLectures(listOfSelectedBatches.join('&'));      
     }
 

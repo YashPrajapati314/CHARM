@@ -425,7 +425,7 @@ const AttendancesForLecture = () => {
                         :
                         <div className="no-requests">
                             <img className="no-requests-image" src={yanfei_thinking.src}></img>
-                            <p>No attendance requests for this lecture...</p>
+                            <p>No attendance requests for {selectedBatches.length > 1 ? `these batches` : `this batch`}...</p>
                             <p>Quite surprising</p>
                         </div> ) :
                         <>
