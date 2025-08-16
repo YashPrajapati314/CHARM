@@ -6,6 +6,16 @@ import '../styles/TeacherPage.css';
 import qiqi_fallen from '../../images/qiqi-fallen.png'
 import fischl_folded_arms from '../../images/fischl-folded-arms.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
+import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
+
+const plwrtITModerna = Playwrite_IT_Moderna({
+  variable: "--font-dancing-script"
+});
+
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing-script",
+  subsets: ["latin"],
+});
 
 interface studyYearFormat {
     studyYear: number,
@@ -85,6 +95,8 @@ const Years = () => {
             </div>
         </> :
         (<div className='teacher-view'>
+            <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
+            {/* <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1> */}
             {listOfYears && (
                 <div className="year-list">
                     <h2 className='teacher-page-open'>Please Select The Year Of Study</h2>

@@ -11,6 +11,16 @@ import qiqi_fallen from '../../../images/qiqi-fallen.png'
 import yanfei_thinking from '../../../images/yanfei-thinking.png'
 import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
 import { DateTime } from 'luxon';
+import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
+
+const plwrtITModerna = Playwrite_IT_Moderna({
+  variable: "--font-dancing-script"
+});
+
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing-script",
+  subsets: ["latin"],
+});
 
 const AttendancesForLecture = () => {
 
@@ -287,6 +297,7 @@ const AttendancesForLecture = () => {
                 } */}
             </> :
             (<div className="request-list">
+                <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
                 {
                     (<div className='title-and-table-container'>
                     {

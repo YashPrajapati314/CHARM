@@ -7,6 +7,16 @@ import '../../styles/RequestPage.css'
 import qiqi_fallen from '../../../images/qiqi-fallen.png'
 import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
+import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
+
+const plwrtITModerna = Playwrite_IT_Moderna({
+  variable: "--font-dancing-script"
+});
+
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing-script",
+  subsets: ["latin"],
+});
 
 const Departments = () => {
     const [listOfDepartments, setListOfDepartments] = useState<any[]>([]);
@@ -77,6 +87,7 @@ const Departments = () => {
             </div>
         </> :
         (<div className='teacher-view'>
+            <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
             {listOfDepartments && (
                 <div className="department-list">
                     <h2 className='teacher-page-open'>Please Select The Department ({studyYear})</h2>

@@ -15,9 +15,14 @@
     font-size: 2.5rem;
     /* margin-top: 10px; */
   }
-
+  
   h1.home-page.title-desc {
     font-size: 2.5vw;
+    margin-bottom: 10px;
+  }
+  
+  .charm {
+    font-size: 2.5rem;
     margin-bottom: 10px;
   }
 
@@ -736,13 +741,26 @@
 
 .hyper-final-submit {
   background-color: #0070f3;
-  width: 300px;
+  width: 200px;
   height: 35px;
   color: white;
   border: none;
   border-radius: 50px;
   font-size: 18px;
   cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.25s ease;
+}
+
+.hyper-final-submit:disabled {
+  background-color: grey;
+  width: 200px;
+  height: 35px;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  cursor: not-allowed;
   margin-top: 20px;
 }
 
@@ -899,14 +917,19 @@
   }
 
   .final-submit {
-    width: 300px;
+    width: 250px;
     height: 35px;
   }
 
-  .hyper-final-submit {
+  /* .hyper-final-submit {
     width: 200px;
     height: 35px;
   }
+
+  .hyper-final-submit:disabled {
+    width: 200px;
+    height: 35px;
+  } */
 
   .are-you-sure, .final-success-or-error-message {
     font-size: 20px;

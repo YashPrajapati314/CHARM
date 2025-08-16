@@ -1,8 +1,10 @@
 // import { PrismaClient } from "@prisma/client";
 // import { v2 as cloudinary } from 'cloudinary'
+// import { DateTime } from 'luxon';
 
 const { PrismaClient } = require('@prisma/client');
 const { v2: cloudinary } = require('cloudinary');
+const { DateTime } = require('luxon');
 
 const prisma = new PrismaClient();
 
@@ -41,14 +43,16 @@ function add5hours30minutes (date: Date): Date
 
 const deleteUnrequiredFilesAndData = async () => {
     try {
-        const date = new Date();
-        date.setHours(0, 0, 0, 0);
-        console.log(add5hours30minutes(date));
+        const ISTNow = DateTime.now().setZone('Asia/Kolkata');
+        const ISTTodayMidnight = ISTNow.startOf('day');
+        const ISTTodayMidnightToUTC = ISTTodayMidnight.toJSDate();
+
+        console.log(`Deleting requests before ${ISTTodayMidnightToUTC}`);
     
         const deletedRequests = await prisma.attendanceRequest.deleteMany({
             where: {
                 date: {
-                    lt: add5hours30minutes(date)
+                    lt: ISTTodayMidnightToUTC
                 }
             }
         });

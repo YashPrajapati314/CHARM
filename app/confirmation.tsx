@@ -20,6 +20,7 @@ interface ConfirmationPopupProps {
 const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, closePopup, letter, studentsExtractedFromLetter, studentsManuallyAddedWithLetter, noLetterStudents, extractedDates, manuallyAddedDates, noLetterDates, submitFunction }) => {
     console.log(studentsExtractedFromLetter, studentsManuallyAddedWithLetter, noLetterStudents);
     console.log(extractedDates, manuallyAddedDates, noLetterDates);
+    const [consent, setConsent] = useState<boolean>(false);
     const NOT_SUBMITTED = 0;
     const SUBMITTING = 1;
     const SUCCESSFUL = 2;
@@ -60,6 +61,10 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
     const formattedDate = (date: Date): string => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    const handleConsentChange = () => {
+        setConsent((prev) => !(prev));
     }
 
     return (
@@ -135,8 +140,17 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className="final-info">
                             On sending this request, your attached images will be publicly visible until they are deleted. 
                             Please ensure you consent to making your request and attached media files visible to everyone before submitting.
+                            <div className="flex flex-row items-center justify-center gap-1.5">
+                                <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
+                                    // style={ consent ? {} : { borderColor: '#006bad' }} 
+                                    onClick={handleConsentChange}
+                                >
+                                    {consent ? '✔' : ''}
+                                </div>
+                                <div>I agree</div>
+                            </div>
                         </div>
-                        <button className='btn hyper-final-submit' onClick={() => {submitter()}}>Submit Requests</button>
+                        <button className='btn hyper-final-submit' disabled={!consent} onClick={() => {submitter()}}>Submit Requests</button>
                     </div> : 
                     <div className="popup-content popup-content-no-letter">
                         <h2 className='are-you-sure'>Are you sure you want to submit these names without any letter attached?</h2>
@@ -173,8 +187,17 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className="final-info">
                             On sending this request, your attached images will be publicly visible until they are deleted. 
                             Please ensure you consent to making your request and attached media files visible to everyone before submitting.
+                            <div className="flex flex-row items-center justify-center gap-1.5">
+                                <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
+                                    // style={ consent ? {} : { borderColor: '#006bad' }} 
+                                    onClick={handleConsentChange}
+                                >
+                                    {consent ? '✔' : ''}
+                                </div>
+                                <div>I agree</div>
+                            </div>
                         </div>
-                        <button className='btn hyper-final-submit' onClick={() => {submitter()}}>Submit Requests</button>
+                        <button className='btn hyper-final-submit' disabled={!consent} onClick={() => {submitter()}}>Submit Requests</button>
                     </div>
                     }
                 </div>

@@ -2,6 +2,11 @@
     scroll-behavior: smooth;
 }
 
+.charm {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
 .teacher-view {
     text-align: center;
     padding: 20px;
@@ -17,7 +22,7 @@
 
 h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open, h1.batches-page-open, h2.batches-page-open, p.batches-page-open {
     color: #333;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .department-button, .year-button {

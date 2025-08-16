@@ -72,7 +72,7 @@ const HomePage = () => {
       
       <br/>
       
-      <div className='flex flex-col items-center gap-2'>
+      <div className='flex flex-col items-center gap-3'>
         <OptionCard
           title={'Make a request with a letter'}
           image_src={letter_envelop.src}

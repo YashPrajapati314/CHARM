@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
         
         if(extractedText)
         {
-          console.log(`Llama OCR responded: ${extractedText}`);
+          console.log(`Llama OCR responded for SAP IDs: \n${extractedText}\n`);
           const SAPID_REGEX = /[0-9]{11}/g;          
           sapids = extractedText.match(SAPID_REGEX)?.map((id) => parseInt(id, 10)) || [];
           return sapids;
@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
         {
           const data = await paddleResponse.json();
           sapids = data?.list || [];
-          console.log(`Paddle responded: ${sapids}`);
+          console.log(`Paddle responded with SAP IDs: \n${sapids}\n`);
           return sapids;
         }
         else
@@ -192,7 +192,7 @@ export async function POST(req: NextRequest) {
         const extractedText = completion?.choices[0].message?.content;
         if(extractedText)
         {
-          console.log(`GPT responded: ${extractedText}`);
+          console.log(`GPT responded with dates and reason: \n${extractedText}\n`);
           const parsedDetails = JSON.parse(extractedText);
           if(parsedDetails)
           {
@@ -254,7 +254,7 @@ export async function POST(req: NextRequest) {
           const extractedText = response?.text;
           if(extractedText)
           {
-            console.log(`Gemini responded: ${extractedText}`);
+            console.log(`Gemini responded with dates and reason: \n${extractedText}\n`);
             const parsedDetails = JSON.parse(extractedText);
             if(parsedDetails)
             {
@@ -332,9 +332,9 @@ export async function POST(req: NextRequest) {
     );
 
 
-    console.log('Final SAP IDs\n', sapidset);
-    console.log('Dates:', dates);
-    console.log('Reason:', reasons);
+    console.log('\nFinal SAP IDs\n', sapidset);
+    console.log('\nDates:', dates);
+    console.log('\nReason:', reasons);
 
     const finalSAPList = Array.from(sapidset);
     const finalDates = Array.from(dates);
