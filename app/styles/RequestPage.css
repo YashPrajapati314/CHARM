@@ -268,7 +268,7 @@ table.request-table th {
 }
 
 .yellow-square {
-    background-color: rgb(255, 217, 0);
+    background-color: rgb(255, 204, 0);
 }
 
 .orange-square {
@@ -284,7 +284,7 @@ table.request-table th {
 }
 
 .yellow-text {
-    color: rgb(255, 217, 0);
+    color: rgb(255, 204, 0);
 }
 
 .orange-text {
