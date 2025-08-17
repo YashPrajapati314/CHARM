@@ -137,9 +137,10 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                             {manuallyAddedDates!.length > 0 && <>The following dates added manually: <div className="added-ones">{manuallyAddedDates!.map((date: Date) => formattedDate(date)).join(', ')}</div></>}
                             Rest assured, everything will be handled by itself
                         </div>
+                        <br></br>
                         <div className="final-info">
-                            On sending this request, your attached images will be publicly visible until they are deleted. 
-                            Please ensure you consent to making your request and attached media files visible to everyone before submitting.
+                            On sending this request, your attached images will be publicly visible until they are deleted. <br></br>
+                            Please ensure you consent to making your request and attached media files visible to everyone before submitting. <br></br>
                             If you wish to have your data deleted, please contact the creator of this website.
                             <div className="flex flex-row items-center justify-center gap-1.5">
                                 <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
@@ -151,6 +152,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                                 <div>I agree</div>
                             </div>
                         </div>
+                        <br></br>
                         <button className='btn hyper-final-submit' disabled={!consent} onClick={() => {submitter()}}>Submit Requests</button>
                     </div> : 
                     <div className="popup-content popup-content-no-letter">
@@ -180,14 +182,16 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                             <br></br>
                             <b>If you have a letter or any other valid image proof, please attach it.</b>
                         </div>}
+                        <br></br>
                         <div className="no-letter-dates-confirmation">
                             The request will be made for the following dates: <br></br>{noLetterDates!.map((date: Date) => formattedDate(date)).join(', ')}
                             <br></br>
                             Rest assured, everything will be handled by itself
                         </div>
+                        <br></br>
                         <div className="final-info">
-                            On sending this request, your attached images will be publicly visible until they are deleted. 
-                            Please ensure you consent to making your request and attached media files visible to everyone before submitting.
+                            On sending this request, your attached images will be publicly visible until they are deleted. <br></br>
+                            Please ensure you consent to making your request and attached media files visible to everyone before submitting. <br></br>
                             If you wish to have your data deleted, please contact the creator of this website.
                             <div className="flex flex-row items-center justify-center gap-1.5">
                                 <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
@@ -199,6 +203,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                                 <div>I agree</div>
                             </div>
                         </div>
+                        <br></br>
                         <button className='btn hyper-final-submit' disabled={!consent} onClick={() => {submitter()}}>Submit Requests</button>
                     </div>
                     }
