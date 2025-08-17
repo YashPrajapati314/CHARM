@@ -140,6 +140,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className="final-info">
                             On sending this request, your attached images will be publicly visible until they are deleted. 
                             Please ensure you consent to making your request and attached media files visible to everyone before submitting.
+                            If you wish to have your data deleted, please contact the creator of this website.
                             <div className="flex flex-row items-center justify-center gap-1.5">
                                 <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
                                     // style={ consent ? {} : { borderColor: '#006bad' }} 
@@ -187,6 +188,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className="final-info">
                             On sending this request, your attached images will be publicly visible until they are deleted. 
                             Please ensure you consent to making your request and attached media files visible to everyone before submitting.
+                            If you wish to have your data deleted, please contact the creator of this website.
                             <div className="flex flex-row items-center justify-center gap-1.5">
                                 <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
                                     // style={ consent ? {} : { borderColor: '#006bad' }} 
