@@ -68,7 +68,6 @@ const HomePage = () => {
   const [noLetterReason, setNoLetterReason] = useState<string>('');
   const [originallyExtractedDates, setOriginallyExtractedDates] = useState<Date[]>([]);
   const [dates, setDates] = useState<Date[]>([]);
-  const [noLetterDates, setNoLetterDates] = useState<Date[]>([]);
   const [pastDates, setPastDates] = useState<Date[]>([]);
   const [farFutureDates, setFutureDates] = useState<Date[]>([]);
   const [safeToUpload, setSafeToUpload] = useState<boolean>(true);
@@ -104,18 +103,12 @@ const HomePage = () => {
 
   useEffect(() => {
     dates.forEach((date) => {
-      console.log('Hi', date, date.toISOString());
+      // console.log('Hi', date, date.toISOString());
       date.setHours(5, 30, 0, 0);
-      console.log('Hi', date, date.toISOString());
+      // console.log('Hi', date, date.toISOString());
     });
   }, [dates]);
 
-
-  useEffect(() => {
-    noLetterDates.forEach((date) => {
-      date.setHours(5, 30, 0, 0)
-    });
-  }, [noLetterDates])
 
 
   useEffect(() => {
@@ -850,7 +843,7 @@ const HomePage = () => {
 
   const getManuallyEnteredDates = (): Date[] => {
     dates.forEach((date) => {
-      date.setHours(5, 30, 0, 0)
+      date.setHours(5, 30, 0, 0);
     });
     
     dates.sort((a: Date, b: Date) => a.getTime() - b.getTime());
@@ -861,8 +854,27 @@ const HomePage = () => {
       )
     );
     
-
     return manuallyEnteredDates;
+  }
+
+  const getSelectedOriginallyExtractedDates = (): Date[] => {
+    originallyExtractedDates.forEach((date) => {
+      date.setHours(5, 30, 0, 0);
+    })
+
+    dates.forEach((date) => {
+      date.setHours(5, 30, 0, 0);
+    });
+
+    const originallyExtractedTimestamps: Set<number> = new Set(
+      originallyExtractedDates.map(date => date.getTime())
+    );
+
+    const selectedOriginallyExtractedDates: Date[] = dates.filter(date =>
+      originallyExtractedTimestamps.has(date.getTime())
+    );
+
+    return selectedOriginallyExtractedDates;
   }
 
   const checkIfImageExists = async (url: string): Promise<boolean> => {
@@ -1237,7 +1249,7 @@ const HomePage = () => {
                 {/* <br/> */}
               </div>
               <button className='btn final-submit' onClick={() => {submittingWithLetter.current = true; setIsPopupOpen(true);}} disabled={!reason.trim() || dates.length === 0} style={(!reason.trim() || dates.length === 0) ? {backgroundColor: 'grey', cursor: 'default'} : {}}>Submit all selected rows</button>
-              {isPopupOpen && submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} studentsExtractedFromLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===0))} studentsManuallyAddedWithLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===1))} extractedDates={originallyExtractedDates} manuallyAddedDates={getManuallyEnteredDates()} submitFunction={handleSubmit} />}
+              {isPopupOpen && submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} studentsExtractedFromLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===0))} studentsManuallyAddedWithLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===1))} extractedDates={getSelectedOriginallyExtractedDates()} manuallyAddedDates={getManuallyEnteredDates()} submitFunction={handleSubmit} />}
             </div>
             {pastDates.length !== 0 ? 
             <div>
