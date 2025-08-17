@@ -259,7 +259,7 @@ const AttendancesForLecture = () => {
                     }
                     break;
             }
-            return [date.toString(), ordinal_suffix, months[month], year.toString()];
+            return [date.toString(), ordinal_suffix, months[month - 1], year.toString()];
         }
         return ['', '', '', ''];
     }
