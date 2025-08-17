@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Student } from "@prisma/client";
-import kaeya_shrug from '../images/kaeya-shrug.png';
-import venti_happy from '../images/venti-happy.png';
+import kaeya_shrug from '../images/webp/kaeya-shrug.webp';
+import venti_happy from '../images/webp/venti-happy.webp';
 
 interface ConfirmationPopupProps {
   isPopupOpen: boolean;

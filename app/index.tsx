@@ -27,9 +27,9 @@ import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-rend
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import OptionCard from './option-card';
 import letter_envelop from '../images/letter.svg'
-import no_letter_envelop from '../images/no-letter.png'
-import classroom from '../images/classroom.png'
-import timetable from '../images/timetable.png'
+import no_letter_envelop from '../images/webp/no-letter.webp'
+import classroom from '../images/webp/classroom.webp'
+import timetable from '../images/webp/timetable.webp'
 
 
 const plwrtITModerna = Playwrite_IT_Moderna({

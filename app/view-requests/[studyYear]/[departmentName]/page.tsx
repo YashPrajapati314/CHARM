@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import '../../../styles/TeacherPage.css';
 import '../../../styles/RequestPage.css';
-import qiqi_fallen from '../../../../images/qiqi-fallen.png'
-import fischl_folded_arms from '../../../../images/fischl-folded-arms.png'
-import sucrose_clipboard from '../../../../images/sucrose-clipboard.png'
+import qiqi_fallen from '../../../../images/webp/qiqi-fallen.webp'
+import fischl_folded_arms from '../../../../images/webp/fischl-folded-arms.webp'
+import sucrose_clipboard from '../../../../images/webp/sucrose-clipboard.webp'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { SrvRecord } from "dns";
 import { buffer } from "stream/consumers";

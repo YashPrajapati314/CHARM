@@ -7,9 +7,9 @@ import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Skeleton } from "@/components/ui/skeleton"
 import TableSkeleton from '../../table-loading-skeleton'
 import '../../styles/RequestPage.css';
-import qiqi_fallen from '../../../images/qiqi-fallen.png'
-import yanfei_thinking from '../../../images/yanfei-thinking.png'
-import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
+import qiqi_fallen from '../../../images/webp/qiqi-fallen.webp'
+import yanfei_thinking from '../../../images/webp/yanfei-thinking.webp'
+import fischl_folded_arms from '../../../images/webp/fischl-folded-arms.webp'
 import { DateTime } from 'luxon';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 
@@ -347,7 +347,7 @@ const AttendancesForLecture = () => {
                                         </div>
                                     </details>
                                 </div>
-                                <h1 className='request-page desc'>Click on a row to view the student's letter/request details</h1>
+                                <h1 className='request-page desc'>Click on a row to view the student's letter / request details</h1>
                                 <div className='request-table-container-container'>
                                     <div className='request-table-container'>
                                         <table className='request-table'>

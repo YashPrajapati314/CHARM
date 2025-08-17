@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import '../../styles/TeacherPage.css';
-import qiqi_fallen from '../../../images/qiqi-fallen.png'
-import sucrose_clipboard from '../../../images/sucrose-clipboard.png'
+import qiqi_fallen from '../../../images/webp/qiqi-fallen.webp'
+import sucrose_clipboard from '../../../images/webp/sucrose-clipboard.webp'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 
 const Teachers = () => {

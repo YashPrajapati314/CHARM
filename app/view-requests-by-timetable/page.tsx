@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import '../styles/TeacherPage.css';
-import qiqi_fallen from '../../images/qiqi-fallen.png'
-import keqing_sleeping from '../../images/keqing-sleeping.png'
+import qiqi_fallen from '../../images/webp/qiqi-fallen.webp'
+import keqing_sleeping from '../../images/webp/keqing-sleeping.webp'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 
 const Departments = () => {
