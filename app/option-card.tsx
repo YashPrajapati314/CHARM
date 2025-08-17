@@ -55,7 +55,7 @@ const OptionCard = ({title, image_src, page}: CardProps) => {
   }
   
   return (
-      <div className='flex flex-row justify-center p-2 gap-1 rounded-xl w-64 bg-blue-200 hover:bg-blue-100 transition-colors duration-300' onClick={() => {goToPage(page)}}>
+      <div className='flex flex-row justify-center p-2 gap-1 rounded-xl w-64 bg-blue-200 hover:bg-blue-100 transition-colors duration-300 cursor-pointer' onClick={() => {goToPage(page)}}>
         <div className='flex justify-center items-center w-20 h-24'>
           <img src={image_src} className='max-w-full max-h-full object-contain'></img>
         </div>
