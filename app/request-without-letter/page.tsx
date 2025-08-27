@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import '../styles/HomePage.css';
+import '@/app/styles/HomePage.css';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import * as pdfjsLib from 'pdfjs-dist';
@@ -11,8 +11,7 @@ import TableSkeleton from '../table-loading-skeleton';
 // import heic2any from 'heic2any';
 import { Student } from '@prisma/client';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
-import Header from '../header';
-import ConfirmationPopup from '../confirmation';
+import ConfirmationPopup from '@/app/confirmation';
 import { Skeleton } from "@/components/ui/skeleton"
 import SkeletonTable from "@patternfly/react-component-groups/dist/dynamic/SkeletonTable";
 import imageCompression from 'browser-image-compression';
@@ -46,7 +45,7 @@ interface StudentWithLetterStatus extends Student {
 };
 
 
-const HomePage = () => {
+const RequestWithoutLetterPage = () => {
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -1181,4 +1180,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default RequestWithoutLetterPage;

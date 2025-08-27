@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import '../styles/TeacherPage.css';
-import qiqi_fallen from '../../images/webp/qiqi-fallen.webp'
-import fischl_folded_arms from '../../images/webp/fischl-folded-arms.webp'
+import '@/app/styles/TeacherPage.css';
+import qiqi_fallen from '@/images/webp/qiqi-fallen.webp'
+import fischl_folded_arms from '@/images/webp/fischl-folded-arms.webp'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 

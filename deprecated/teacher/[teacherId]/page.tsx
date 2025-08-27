@@ -6,9 +6,9 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
-import '../../styles/LecturePage.css';
-import qiqi_fallen from '../../../images/qiqi-fallen.png'
-import keqing_sleeping from '../../../images/keqing-sleeping.png'
+import '@/app/styles/LecturePage.css';
+import qiqi_fallen from '@/images/qiqi-fallen.png'
+import keqing_sleeping from '@/images/keqing-sleeping.png'
 import { end } from "@patternfly/react-core/dist/esm/helpers/Popper/thirdparty/popper-core";
 
 const TeacherProfile = () => {

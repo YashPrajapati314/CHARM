@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Skeleton } from "@/components/ui/skeleton"
-import TableSkeleton from '../../table-loading-skeleton'
-import '../../styles/RequestPage.css';
-import qiqi_fallen from '../../../images/webp/qiqi-fallen.webp'
-import yanfei_thinking from '../../../images/webp/yanfei-thinking.webp'
-import fischl_folded_arms from '../../../images/webp/fischl-folded-arms.webp'
+import TableSkeleton from '@/app/table-loading-skeleton'
+import '@/app/styles/RequestPage.css';
+import qiqi_fallen from '@/images/webp/qiqi-fallen.webp'
+import yanfei_thinking from '@/images/webp/yanfei-thinking.webp'
+import fischl_folded_arms from '@/images/webp/fischl-folded-arms.webp'
 import { DateTime } from 'luxon';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 

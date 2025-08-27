@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import '../styles/TeacherPage.css';
-import qiqi_fallen from '../../images/qiqi-fallen.png'
+import '@/app/styles/TeacherPage.css';
+import qiqi_fallen from '@/images/qiqi-fallen.png'
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 
 const Departments = () => {

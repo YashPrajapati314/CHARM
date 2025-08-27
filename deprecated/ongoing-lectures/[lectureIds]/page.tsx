@@ -7,11 +7,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Skeleton } from "@/components/ui/skeleton"
-import TableSkeleton from '../../table-loading-skeleton'
-import '../../styles/RequestPage.css';
-import qiqi_fallen from '../../../images/qiqi-fallen.png'
-import yanfei_thinking from '../../../images/yanfei-thinking.png'
-import fischl_folded_arms from '../../../images/fischl-folded-arms.png'
+import TableSkeleton from '@/app/table-loading-skeleton'
+import '@/app/styles/RequestPage.css';
+import qiqi_fallen from '@/images/qiqi-fallen.png'
+import yanfei_thinking from '@/images/yanfei-thinking.png'
+import fischl_folded_arms from '@/images/fischl-folded-arms.png'
 
 const AttendancesForLecture = () => {
 

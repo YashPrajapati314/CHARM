@@ -2,17 +2,17 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import './styles/HomePage.css';
+import '@/app/styles/HomePage.css';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import * as pdfjsLib from 'pdfjs-dist';
 import { fileTypeFromBlob } from 'file-type';
-import TableSkeleton from './table-loading-skeleton';
+import TableSkeleton from '@/app/table-loading-skeleton';
 // import heic2any from 'heic2any';
 import { Student } from '@prisma/client';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import Header from './header';
-import ConfirmationPopup from './confirmation';
+import ConfirmationPopup from '@/app/confirmation';
 import { Skeleton } from "@/components/ui/skeleton"
 import SkeletonTable from "@patternfly/react-component-groups/dist/dynamic/SkeletonTable";
 import imageCompression from 'browser-image-compression';
@@ -26,10 +26,11 @@ import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import OptionCard from './option-card';
-import letter_envelop from '../images/letter.svg'
-import no_letter_envelop from '../images/webp/no-letter.webp'
-import classroom from '../images/webp/classroom.webp'
-import timetable from '../images/webp/timetable.webp'
+import letter_envelop from '@/images/letter.svg'
+import no_letter_envelop from '@/images/webp/no-letter.webp'
+import classroom from '@/images/webp/classroom.webp'
+import timetable from '@/images/webp/timetable.webp'
+import question_mark from '@/images/webp/question-mark.webp'
 
 
 const plwrtITModerna = Playwrite_IT_Moderna({
@@ -95,6 +96,12 @@ const HomePage = () => {
           title={'View requests by timetable'}
           image_src={timetable.src}
           page='view-requests-by-timetable'
+        />
+
+        <OptionCard
+          title={'Help and About'}
+          image_src={question_mark.src}
+          page='about'
         />
       </div>
 

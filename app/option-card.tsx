@@ -2,28 +2,12 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import './styles/HomePage.css';
+import '@/app/styles/HomePage.css';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import * as pdfjsLib from 'pdfjs-dist';
 import { fileTypeFromBlob } from 'file-type';
-import TableSkeleton from './table-loading-skeleton';
 // import heic2any from 'heic2any';
-import { Student } from '@prisma/client';
-import { AnimatePresence, easeInOut, motion } from 'framer-motion';
-import Header from './header';
-import ConfirmationPopup from './confirmation';
-import { Skeleton } from "@/components/ui/skeleton"
-import SkeletonTable from "@patternfly/react-component-groups/dist/dynamic/SkeletonTable";
-import imageCompression from 'browser-image-compression';
-import jsPDF from 'jspdf';
-import { CldImage, getCldImageUrl } from 'next-cloudinary';
-import ConvertApi from 'convertapi-js';
-import { PDFDocument } from 'pdf-lib'
-import PDFMerger from 'pdf-merger-js/browser';
-import { deflateSync } from 'zlib';
-import { resolve } from 'path/posix';
-import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 
 const plwrtITModerna = Playwrite_IT_Moderna({

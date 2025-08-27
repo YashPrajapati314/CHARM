@@ -7,12 +7,12 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import * as pdfjsLib from 'pdfjs-dist';
 import { fileTypeFromBlob } from 'file-type';
-import TableSkeleton from './table-loading-skeleton';
+import TableSkeleton from '@/app/table-loading-skeleton';
 // import heic2any from 'heic2any';
 import { Student } from '@prisma/client';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
-import Header from './header';
-import ConfirmationPopup from './confirmation';
+import Header from '@/app/header';
+import ConfirmationPopup from '@/app/confirmation';
 import { Skeleton } from "@/components/ui/skeleton"
 import SkeletonTable from "@patternfly/react-component-groups/dist/dynamic/SkeletonTable";
 import imageCompression from 'browser-image-compression';

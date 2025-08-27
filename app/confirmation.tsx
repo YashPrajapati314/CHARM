@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Student } from "@prisma/client";
-import kaeya_shrug from '../images/webp/kaeya-shrug.webp';
-import venti_happy from '../images/webp/venti-happy.webp';
+import kaeya_shrug from '@/images/webp/kaeya-shrug.webp';
+import venti_happy from '@/images/webp/venti-happy.webp';
 
 interface ConfirmationPopupProps {
   isPopupOpen: boolean;
@@ -141,7 +141,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className="final-info">
                             On sending this request, your attached images will be publicly visible until they are deleted. <br></br>
                             Please ensure you consent to making your request and attached media files visible to everyone before submitting. <br></br>
-                            If you wish to have your data deleted, please contact the creator of this website.
+                            If you wish to have your data deleted, please <a className='text-blue-600 underline' href="mailto:yashprajapati.professionalmail@gmail.com">contact the creator of this website</a>.
                             <div className="flex flex-row items-center justify-center gap-1.5">
                                 <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
                                     // style={ consent ? {} : { borderColor: '#006bad' }} 
@@ -192,7 +192,7 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                         <div className="final-info">
                             On sending this request, your attached images will be publicly visible until they are deleted. <br></br>
                             Please ensure you consent to making your request and attached media files visible to everyone before submitting. <br></br>
-                            If you wish to have your data deleted, please contact the creator of this website.
+                            If you wish to have your data deleted, please <a className='text-blue-600 underline' href="mailto:yashprajapati.professionalmail@gmail.com">contact the creator of this website</a>.
                             <div className="flex flex-row items-center justify-center gap-1.5">
                                 <div className={`h-5 w-5 justify-center items-center border border-blue-800 rounded-md text-sm text-white ${consent ? `bg-blue-800` : `border-blue-900`} select-none cursor-pointer`} 
                                     // style={ consent ? {} : { borderColor: '#006bad' }} 
