@@ -10,6 +10,8 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+ocr = PaddleOCR(use_angle_cls=True, lang='en')
+
 @app.route('/process-image', methods=['POST'])
 def process_image():
     if 'file' not in request.files:
@@ -19,8 +21,6 @@ def process_image():
     filename = secure_filename(file.filename)
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
-
-    ocr = PaddleOCR(use_angle_cls=True, lang='en')
 
     image = cv2.imread(file_path)
 
