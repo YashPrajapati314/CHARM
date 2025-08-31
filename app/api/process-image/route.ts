@@ -127,11 +127,13 @@ export async function POST(req: NextRequest) {
         }
         else
         {
+          console.log(`Llama OCR didn't respond: \n${JSON.stringify(completion, null, 2)}\n`);
           return undefined;
         }
       }
-      catch
+      catch (error)
       {
+        console.log(`Llama Vision failed: ${error}\n`);
         return undefined;
       }
     }
@@ -143,12 +145,12 @@ export async function POST(req: NextRequest) {
         formDataToSend.append("file", img, "image.png");
 
         const PADDLE_ENDPOINT = process.env.PADDLE_ENDPOINT || '';
-
+        
         const paddleResponse = await fetch(PADDLE_ENDPOINT, {
           method: "POST",
           body: formDataToSend
-        }); 
-
+        });
+        
         let sapids: number[] = [];
 
         if(paddleResponse.ok)
@@ -160,11 +162,13 @@ export async function POST(req: NextRequest) {
         }
         else
         {
+          console.log(`Paddle Response Error: ${paddleResponse.statusText}`);
           return undefined;
         }
       }
-      catch
+      catch (error)
       {
+        console.log(`Paddle OCR failed: ${error}\n`);
         return undefined;
       }
     }
