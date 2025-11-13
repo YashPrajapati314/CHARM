@@ -64,12 +64,13 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const fetchAttendanceRequests = async () => {
             try {
-                const response = await fetch('/api/get-requests', {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ lectureIds: [lectureId], today })
-                    }
-                );
+                const params = new URLSearchParams();
+                params.append('lectureId', lectureId);
+                params.append('today', today.toUTCString());
+
+                const response = await fetch(`/api/requests?${params.toString()}`, {
+                    method: 'GET',
+                });
 
                 console.log(response.status);
 
@@ -113,12 +114,14 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const getLectureDetails = async() => {
             try {
-                const response = await fetch('/api/get-lecture-details', {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({lectureIds: [lectureId]})
-                    }
-                );
+                const params = new URLSearchParams();
+                
+                params.append('lectureId', lectureId);
+
+                const response = await fetch(`/api/lecture-details?${params.toString()}`, {
+                    method: 'GET'
+                });
+
                 if(response.status === 200)
                 {
                     setErrorScenario1(false);

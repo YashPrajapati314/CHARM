@@ -39,9 +39,13 @@ const Departments = () => {
     const fetchDepartments = async () => {
         try 
         {
-            const response = await fetch(`/api/get-departments-for-year?year=${studyYear}`, {
+            const params = new URLSearchParams();
+            params.append('studyYear', studyYear);
+            
+            const response = await fetch(`/api/departments?${params.toString()}`, {
                 method: 'GET'
             });
+
             if(response.status === 200)
             {
                 setErrorScenario(false);

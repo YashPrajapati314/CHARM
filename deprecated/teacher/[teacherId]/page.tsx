@@ -41,12 +41,9 @@ const TeacherProfile = () => {
     useEffect(() => {
         const fetchLectures = async () => {
             try {
-                const response = await fetch('/api/get-lectures', {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ teacherId, today })
-                    }
-                );
+                const response = await fetch(`/api/lectures?teacherId=${teacherId}&today=${today}`, {
+                    method: 'GET'
+                });
                 if(response.status === 200)
                 {
                     setErrorScenario(false);

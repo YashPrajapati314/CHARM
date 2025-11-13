@@ -5,11 +5,6 @@ import { CldImage, getCldImageUrl } from 'next-cloudinary';
 
 const prisma = new PrismaClient();
 
-const add5hours30minutes = (date: Date) => {
-    const noOfMillisecondsIn5hours30minutes = 5.5 * 60 * 60 * 1000;
-    return new Date(date.getTime() + noOfMillisecondsIn5hours30minutes);
-}
-
 export async function POST(req: NextRequest) {
     try
     {

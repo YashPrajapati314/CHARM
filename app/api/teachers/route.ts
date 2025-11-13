@@ -1,3 +1,5 @@
+// deprecated
+
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -6,7 +8,8 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest) {
     try
     {
-        const {searchParams} = new URL(req.url);
+        const searchParams = req.nextUrl.searchParams;
+
         const department = searchParams.get('department');
 
         if (!department) {

@@ -65,7 +65,6 @@ const RequestWithLetterPage = () => {
   const [noLetterSuccessMessage, setNoLetterSuccessMessage] = useState<string>('');
   const [showNoLetterErrorMessageWithoutTable, setShowNoLetterErrorMessageWithoutTable] = useState<boolean>(true);
   const [reason, setReason] = useState<string>('');
-  const [noLetterReason, setNoLetterReason] = useState<string>('');
   const [originallyExtractedDates, setOriginallyExtractedDates] = useState<Date[]>([]);
   const [dates, setDates] = useState<Date[]>([]);
   const [pastDates, setPastDates] = useState<Date[]>([]);
@@ -590,17 +589,32 @@ const RequestWithLetterPage = () => {
   const fetchStudentData = async (sapid_list: Array<number>, isnew: boolean = false, manual: boolean = false) => {
     try
     {
+      
       prevStudentsLength.current = students.length;
       const original_length = sapid_list.length;
       sapid_list = [...new Set(sapid_list)];
 
-      const response = await fetch('/api/get-students', 
-        {
+      const params = new URLSearchParams();
+
+      sapid_list.forEach((sapid) => {
+        params.append('sapid', String(sapid));
+      });
+      
+      let tempResponse = await fetch(`/api/students?${params.toString()}`, {
+        method: 'GET'
+      });
+      
+      if (tempResponse.status === 431) {
+        console.log('Request Header too large for GET, trying POST request instead');
+
+        tempResponse = await fetch('/api/students', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ sapid_list })
-        }
-      );
+          body: JSON.stringify({ sapid_list: sapid_list })
+        });
+      }
+    
+      const response = tempResponse;
 
       if(response.status !== 200)
       {
@@ -701,84 +715,6 @@ const RequestWithLetterPage = () => {
       setSafeToUpload(true);
     }
   }
-
-  // const fetchNoLetterStudents = async (event: React.FormEvent) => {
-  //   event?.preventDefault();
-  //   setNoLetterFlipFlop((prev) => !prev);
-  //   setNoLetterErrorMessage('');
-  //   setNoLetterSuccessMessage('');
-  //   console.log(noLetterSAPIDs);
-  //   const noLetterSAPIDArray = noLetterSAPIDs.match(/[0-9]{11}/g)?.map((id) => parseInt(id, 10)) || [];
-  //   const noLetterSet = [...new Set(noLetterSAPIDArray)];
-
-  //   if(noLetterSet.length === 0)
-  //   {
-  //     setShowNoLetterErrorMessageWithoutTable(true);
-  //     setNoLetterErrorMessage('No valid SAP IDs were entered.');
-  //     if(noLetterStudents.length > 0)
-  //     {
-  //       setShowNoLetterErrorMessageWithoutTable(false);
-  //     }
-  //     return;
-  //   }
-
-  //   const response = await fetch('/api/get-students', 
-  //     {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({ sapid_list: noLetterSet })
-  //     }
-  //   );
-
-  //   if(response.status !== 200)
-  //   {
-  //     setNoLetterErrorMessage(`Error fetching student data.`);
-  //     return;
-  //   }
-
-  //   const result = await response.json();
-
-  //   if(!response.ok)
-  //   {
-  //     return;
-  //   }
-
-  //   if(result.students.length === 0)
-  //   {
-  //     setShowNoLetterErrorMessageWithoutTable(true);
-  //     setNoLetterErrorMessage('Couldn\'t find any records for any of the entered SAP IDs.');
-  //   }
-
-  //   result.students.forEach((student: any, index: number, arr: any[]) => {
-  //     student.letterstatus = 3;
-  //   });
-
-  //   const ideal_length = noLetterStudents.length + result.students.length;
-  //   let updatedStudents = [...noLetterStudents];
-  //   let count = 0;
-  //   for(let studentObject of result.students)
-  //   {
-  //     if(!noLetterStudents.some(existingStudent => existingStudent.sapid === studentObject.sapid))
-  //     {
-  //       updatedStudents.push(studentObject);
-  //       count = count + 1;
-  //     }
-  //   }
-  //   setNoLetterStudents(updatedStudents);
-  //   if(ideal_length!==updatedStudents.length)
-  //   {
-  //     setShowNoLetterErrorMessageWithoutTable(false);
-  //     setNoLetterErrorMessage('Ignored one or more records that were repetitive.');
-  //   }
-  //   if(count > 0)
-  //   {
-  //     setNoLetterSuccessMessage(`Added ${count} row${count > 1 ? 's' : ''}.`);
-  //   }
-  //   if(noLetterStudents.length > 0)
-  //   {
-  //     setShowNoLetterErrorMessageWithoutTable(false);
-  //   }
-  // }
 
 
   const handleManualInputSubmit = async (event: React.FormEvent) => {
@@ -971,12 +907,20 @@ const RequestWithLetterPage = () => {
       console.log('IST Noon DateTimes:', ISTNoonAllDates);
       console.log('IST Noon DateTimes:', ISTNoonManuallyEnteredDates);
 
-      const attendance_response = await fetch('/api/post-attendance', {
+      const reasonTrimmed = reason.trim();
+
+      const truncatedReason: string = reasonTrimmed.length > 256 ? reasonTrimmed.slice(0, 256) + '...' : reasonTrimmed;
+
+      const attendance_response = await fetch('/api/attendance-requests', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          hasLetters: true,
           studentDetails: selectedSAPIDs,
-          letterDetails: {imageLinks: imageLinks, reason: reason},
+          letterDetails: {
+            imageLinks: imageLinks, 
+            reason: truncatedReason
+          },
           attendanceDates: ISTNoonAllDates,
           manuallyEnteredDates: ISTNoonManuallyEnteredDates
         })
@@ -1016,33 +960,6 @@ const RequestWithLetterPage = () => {
     }
   };
 
-  // const handleSubmitNoLetter = async (): Promise<number> => {
-  //   try
-  //   {
-  //     noLetterDates.forEach((date: Date) => {
-  //       date.setHours(5, 30, 0, 0);
-  //     });
-
-  //     const attendance_response = await fetch('/api/post-attendance-without-letters', {
-  //       method: 'POST',
-  //       headers: {"Content-Type": "application/json"},
-  //       body: JSON.stringify({
-  //         studentDetails: noLetterStudents,
-  //         letterDetails: {reason: noLetterReason},
-  //         attendanceDates: noLetterDates
-  //       })
-  //     });
-
-  //     console.log(attendance_response);
-
-  //     return attendance_response.status;
-  //   }
-  //   catch (error)
-  //   {
-  //     console.log(`Error sending student data: ${error}`);
-  //     return -1;
-  //   }
-  // }
 
   const goToSAPIDEntering = () => {
     // if(typeof window === 'undefined') return;

@@ -138,6 +138,50 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    async function getSAPIDsFromGemma(API_KEY: string, imgBase64: FormDataEntryValue) {
+      try
+      {
+        const together = new Together({
+          apiKey: API_KEY
+        });
+
+        const completion = await together.chat.completions.create({
+          model: '',
+          messages: [
+            {role: 'system', content: SYSTEM_PROMPT_FOR_LLAMA},
+            {role: 'user', content: [{  // @ts-ignore
+              'text': 'Please extract all the 11 digit numbers from the given image', 
+              'type': 'image_url', // @ts-ignore
+              'image_url': {'url': imgBase64}
+            }]} 
+          ],
+          temperature: 0
+        });
+
+        const extractedText = completion?.choices[0].message?.content;
+
+        let sapids: number[] = [];
+        
+        if(extractedText)
+        {
+          console.log(`Gemma responded for SAP IDs: \n${extractedText}\n`);
+          const SAPID_REGEX = /[0-9]{11}/g;          
+          sapids = extractedText.match(SAPID_REGEX)?.map((id) => parseInt(id, 10)) || [];
+          return sapids;
+        }
+        else
+        {
+          console.log(`Gemma didn't respond: \n${JSON.stringify(completion, null, 2)}\n`);
+          return undefined;
+        }
+      }
+      catch (error)
+      {
+        console.log(`Gemma failed: ${error}\n`);
+        return undefined;
+      }
+    }
+
     async function getSAPIDsFromPaddleOCR(img: Blob) {
       try
       {

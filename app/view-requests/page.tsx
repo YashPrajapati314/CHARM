@@ -47,7 +47,7 @@ const Years = () => {
     const fetchYears = async () => {
         try 
         {
-            const response = await fetch('/api/get-years', {
+            const response = await fetch('/api/years', {
                 method: 'GET'
             });
             if(response.status === 200)

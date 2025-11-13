@@ -1,3 +1,5 @@
+// deprecated
+
 import { NextResponse, NextRequest } from "next/server";
 import { Prisma, PrismaClient } from "@prisma/client";
 
@@ -5,10 +7,12 @@ interface Request {
     lectureIds: string[];
 }
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     try
     {
-        const {lectureIds} = await req.json() as Request;
+        const searchParams = req.nextUrl.searchParams;
+
+        const lectureIds = searchParams.getAll('lectureId') || '';
         
         const prisma = new PrismaClient();
         

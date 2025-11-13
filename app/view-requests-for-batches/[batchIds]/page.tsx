@@ -74,10 +74,14 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const fetchAttendanceRequests = async () => {
             try {
-                const response = await fetch(`/api/get-requests-by-batches?batchIds=${batchIds}`, {
-                    method: 'GET',
-                    headers: { "Content-Type": "application/json" },
-                    // body: JSON.stringify({ batchIds: selectedBatches })
+                const params = new URLSearchParams();
+
+                selectedBatches.forEach((batchId) => {
+                    params.append('batchId', batchId);
+                });
+
+                const response = await fetch(`/api/requests?${params.toString()}`, {
+                    method: 'GET'
                 });
 
                 console.log(response.status);
@@ -119,37 +123,6 @@ const AttendancesForLecture = () => {
         fetchAttendanceRequests();
     }, []);
 
-    // useEffect(() => {
-    //     const getLectureDetails = async() => {
-    //         try {
-    //             const response = await fetch('/api/get-lecture-details', {
-    //                     method: 'POST',
-    //                     headers: { "Content-Type": "application/json" },
-    //                     body: JSON.stringify({lectureIds: [lectureId]})
-    //                 }
-    //             );
-    //             if(response.status === 200)
-    //             {
-    //                 setErrorScenario1(false);
-    //                 console.log(response);
-    //                 const {lectureDetails} = await response.json() as LectureResponse;
-    //                 setLecture(lectureDetails[0]);
-    //                 console.log(lectureDetails);
-    //                 setLoadedTitle(true);
-    //             }
-    //             else
-    //             {
-    //                 setLoadedTitle(true);
-    //                 setErrorScenario1(true);
-    //             }
-    //         }
-    //         catch (error) {
-    //             setErrorScenario1(true);
-    //             console.error("Error fetching lecture details:", error);
-    //         }
-    //     };
-    //     getLectureDetails();
-    // }, []);
 
     useEffect(() => {
         console.log(listOfStudentsWithRequests);

@@ -41,12 +41,9 @@ export async function GET(req: NextRequest) {
         
         const searchParams = req.nextUrl.searchParams;
 
-        const batchIds = searchParams.get('batchIds') || '';
+        const batchIds = searchParams.getAll('batchId') || '';
 
-        const decodedBatchIds = decodeURIComponent(batchIds);
-        const selectedBatches = decodedBatchIds.split('&');
-
-        const allBatchesExist = await checkIfAllBatchesAreValid(selectedBatches);
+        const allBatchesExist = await checkIfAllBatchesAreValid(batchIds);
 
         if(!batchIds || !allBatchesExist)
         {
@@ -67,7 +64,7 @@ export async function GET(req: NextRequest) {
                 Student: {
                     Batch: {
                         batchid: {
-                            in: selectedBatches
+                            in: batchIds
                         }
                     }
                 }

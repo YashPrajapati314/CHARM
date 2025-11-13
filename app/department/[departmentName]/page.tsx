@@ -28,14 +28,20 @@ const Teachers = () => {
     
 
     const fetchTeachers = async (department: string) => {
+
         console.log('Selected department:', department)
         setSelectedDepartment(department);
         setListOfTeachers([]);
+
+        const params = new URLSearchParams();
+        params.append('department', department);
+
         try
         {
-            const response = await fetch(`/api/get-teachers?department=${department}`, {
+            const response = await fetch(`/api/teachers?${params.toString()}`, {
                 method: 'GET'
             });
+            
             if(response.status === 200)
             {
                 setErrorScenario(false);

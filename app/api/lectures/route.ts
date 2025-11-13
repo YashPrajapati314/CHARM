@@ -1,13 +1,19 @@
+// deprecated
+
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     try
     {
-        const { teacherId, today } = await req.json();
+        const searchParams = req.nextUrl.searchParams;
 
+        const teacherId = searchParams.get('teacherId') || '';
+
+        const today = searchParams.get('today') || ''; 
+        
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         console.log('Timezone Debug Info Get Lectures');

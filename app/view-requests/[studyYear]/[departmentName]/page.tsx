@@ -87,9 +87,14 @@ const Batches = () => {
         setListOfBatches([]);
         try
         {
-            const response = await fetch(`/api/get-batches?year=${year}&department=${department}`, {
+            const params = new URLSearchParams();
+            params.append('year', year);
+            params.append('department', department);
+
+            const response = await fetch(`/api/batches?${params.toString()}`, {
                 method: 'GET'
             });
+            
             if(response.status === 200)
             {
                 setErrorScenario(false);

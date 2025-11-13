@@ -69,13 +69,19 @@ const AttendancesForLecture = () => {
                 const convertedLectureIds = decodeURIComponent(lectureIds);
                 const currentlyOngoingLectures: string[] = convertedLectureIds.split('&');
 
+                const params = new URLSearchParams();
+
                 console.log('Get Requests');
                 console.log(currentlyOngoingLectures);
 
-                const response = await fetch('/api/get-requests', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ lectureIds: currentlyOngoingLectures, today })
+                currentlyOngoingLectures.forEach(lectureId => {
+                    params.append('lectureId', lectureId);
+                });
+
+                params.append('today', today.toUTCString());
+
+                const response = await fetch(`/api/requests?${params.toString()}`, {
+                    method: 'GET'
                 });
 
                 console.log(response.status);
@@ -119,15 +125,16 @@ const AttendancesForLecture = () => {
     useEffect(() => {
         const getLectureDetails = async() => {
             try {
+                const params = new URLSearchParams();
                 const convertedLectureIds = decodeURIComponent(lectureIds);
                 const currentlyOngoingLectures: string[] = convertedLectureIds.split('&');
+                
+                currentlyOngoingLectures.forEach(lectureId => {
+                    params.append('lectureId', lectureId);
+                });
 
-                console.log(currentlyOngoingLectures);
-
-                const response = await fetch('/api/get-lecture-details', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({lectureIds: currentlyOngoingLectures})
+                const response = await fetch(`/api/lecture-details?${params.toString()}`, {
+                    method: 'GET'
                 });
 
                 if(response.status === 200)

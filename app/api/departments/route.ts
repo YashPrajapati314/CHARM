@@ -20,16 +20,14 @@ export async function GET(req: NextRequest) {
     {
         const searchParams = req.nextUrl.searchParams;
         
-        const year = searchParams.get('year') || '';
-
-        console.log('hi year');
-        console.log(year);
-        console.log('hi year');
+        const year = searchParams.get('studyYear') || '';
         
         if(!validYear(year))
         {
             return NextResponse.json({ error: `Invalid Year` }, { status: 400 });
         }
+
+        // needs some changes
 
         const departments = await prisma.department.findMany(
             {

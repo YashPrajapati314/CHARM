@@ -16,12 +16,15 @@ interface Request {
     today: string;
 }
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     try
     {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         
-        const { lectureIds, today } = await req.json() as Request;
+        const searchParams = req.nextUrl.searchParams;
+
+        const lectureIds = searchParams.getAll('lectureId');
+        const today = searchParams.get('today') || '';
 
         console.log('Timezone Debug Info Get Requests');
         console.log(today);

@@ -25,7 +25,7 @@ const Departments = () => {
     const fetchDepartments = async () => {
         try 
         {
-            const response = await fetch('/api/get-departments', {
+            const response = await fetch('/api/departments', {
                 method: 'GET'
             });
             if(response.status === 200)
