@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "firstname" DROP NOT NULL,
+ALTER COLUMN "lastname" DROP NOT NULL,
+ALTER COLUMN "otphash" DROP NOT NULL,
+ALTER COLUMN "otpexpiration" DROP NOT NULL;
