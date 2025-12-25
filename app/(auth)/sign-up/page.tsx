@@ -395,6 +395,8 @@ const SignUp = () => {
                     <div className="flex justify-center">
                       Account created successfully! Please login to your account with the password you just set.
                     </div>
+                    <div className="flex justify-center text-blue-600" onClick={() => {router.push('/sign-in')}}>Sign in</div>
+                    <div className="flex justify-center text-blue-600" onClick={() => {router.push('/')}}>Go to home page</div>
                     <div className="about-image-container">
                       <img className="about-image" src={ganyu_happy.src}></img>
                       <p className="text-lg text-gray-600">Thank you for using CHARM!</p>

@@ -92,6 +92,7 @@ const SignIn = () => {
               session?.user?.email ? session?.user?.email :
               ''
             } <br />
+            {/* University ID: {session.user?.universityid} */}
           </div>
           <div className="flex flex-row justify-between max-w-96">
             <div className="text-blue-600" onClick={() => {router.push('/')}}>Go to home page</div>
@@ -112,9 +113,9 @@ const SignIn = () => {
         <div className="m-2">
           <div className="p-2 justify-center text-center text-lg">
             Sign in to your account <br />
-            {/* <div className="p-2 justify-center text-center text-sm">
-              Don't have an account? Sign up instead <br />
-            </div> */}
+            <div className="justify-center text-center text-sm">
+              Don't have an account? <span className="text-blue-600" onClick={() => {router.push('/sign-up')}}>Sign up instead</span> <br />
+            </div>
           </div>
           <div>
             <div className="p-2 flex flex-col gap-4 justify-center text-base">
