@@ -435,7 +435,8 @@ const RequestWithLetterPage = () => {
 
           if(response.status !== 200)
           {
-            setErrorMessage(`Error processing image`);
+            setErrorMessage(`Error processing image. Please enter the details manually below`);
+            setReceivedResponse(true);
             setSafeToUpload(true);
             return;
           }
