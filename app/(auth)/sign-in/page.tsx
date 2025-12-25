@@ -95,7 +95,9 @@ const SignIn = () => {
             {/* University ID: {session.user?.universityid} */}
           </div>
           <div className="flex flex-row justify-between max-w-96">
-            <div className="text-blue-600" onClick={() => {router.push('/')}}>Go to home page</div>
+            <div className="text-blue-600">
+              <a href="/" className="text-blue-600 visited:text-blue-600">Go to home page</a>
+            </div>
             <button className="text-base bg-red-600 text-white p-1 w-20 rounded-full active:bg-red-800" onClick={() => signOut()}>
               Sign out
             </button>
@@ -114,7 +116,7 @@ const SignIn = () => {
           <div className="p-2 justify-center text-center text-lg">
             Sign in to your account <br />
             <div className="justify-center text-center text-sm">
-              Don't have an account? <span className="text-blue-600" onClick={() => {router.push('/sign-up')}}>Sign up instead</span> <br />
+              Don't have an account? <span className="text-blue-600"><a href="/sign-up" className="text-blue-600 visited:text-blue-600">Sign up instead</a></span> <br />
             </div>
           </div>
           <div>
@@ -160,8 +162,8 @@ const SignIn = () => {
                 </div>
                 <div className="text-sm text-gray-800">Show Password</div>
               </div>
-              <div className="text-sm text-blue-600" onClick={() => {router.push('/reset-password')}}>
-                Forgot Password?
+              <div className="text-sm text-blue-600">
+                <a href="/reset-password" className="text-blue-600 visited:text-blue-600">Forgot Password?</a>
               </div>
               {error && <div className="text-sm text-red-600">{error}</div>}
               <div className="flex justify-end">

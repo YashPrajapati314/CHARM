@@ -215,7 +215,7 @@ const SignUp = () => {
             } <br />
           </div>
           <div className="flex flex-row justify-between max-w-96">
-            <div className="text-blue-600" onClick={() => {router.push('/')}}>Go to home page</div>
+            <div className="text-blue-600"> <a href="/" className="text-blue-600 visited:text-blue-600"> Go to home page </a> </div>
             <button className="text-base bg-red-600 text-white p-1 w-20 rounded-full active:bg-red-800" onClick={() => signOut()}>
               Sign out
             </button>
