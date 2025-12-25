@@ -205,21 +205,42 @@ const SignUp = () => {
         <div className="text-center">
           <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
         </div>
-        <div className="m-2 flex flex-col gap-2">
-          <div>
+        <div className="m-2 flex flex-col gap-4">
+            <div>
             Signed in as {
-              (session?.user?.name && session?.user?.email) ? `${session?.user?.name} (${session?.user?.email})` :
-              session?.user?.name ? session?.user?.name :
-              session?.user?.email ? session?.user?.email :
-              ''
+                session.user.name ? `${session.user.name}` : `${session.user.universityid}`
             } <br />
-          </div>
-          <div className="flex flex-row justify-between max-w-96">
-            <div className="text-blue-600"> <a href="/" className="text-blue-600 visited:text-blue-600"> Go to home page </a> </div>
+            {/* University ID: {session.user?.universityid} <br /> */}
+
+            <div className='table-div-container'>
+                <div className='table-div'>
+                    <table className='user-details-table'>
+                    <tbody>
+                        <tr>
+                        <td><b>University ID</b></td>
+                        <td>{session.user.universityid}</td>
+                        </tr>
+                        {session.user.name && <tr>
+                        <td><b>Name</b></td>
+                        <td>{session.user.name}</td>
+                        </tr>}
+                        {session.user.email && <tr>
+                        <td><b>Email</b></td>
+                        <td>{session.user.email}</td>
+                        </tr>}
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+            <div className="flex flex-row justify-between max-w-96">
+            <div className="text-blue-600">
+                <a href="/" className="text-blue-600 visited:text-blue-600">Go to home page</a>
+            </div>
             <button className="text-base bg-red-600 text-white p-1 w-20 rounded-full active:bg-red-800" onClick={() => signOut()}>
-              Sign out
+                Sign out
             </button>
-          </div>
+            </div>
         </div>
       </>
     )

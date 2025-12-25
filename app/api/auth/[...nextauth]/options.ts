@@ -26,24 +26,27 @@ export const authOptions: NextAuthOptions = {
                     const user = await prisma.user.findFirst({
                         where: {
                             universityid: credentials.universityid
+                        },
+                        select: {
+                            universityid: true,
+                            name: true,
+                            email: true,
+                            password: true
                         }
                     })
                     if (!user) {
                         throw new Error(SignInError.USER_DOESNT_EXIST);
-                        throw new Error("User with the specified ID doesn't exist");
                     }
                     if (!user.password) {
                         throw new Error(SignInError.ACCOUNT_NOT_INITIALIZED);
-                        throw new Error("User account not yet initialized. Please create a new account with this ID and set a password");
                     }
                     const passwordCorrect = await bcrypt.compare(credentials.password, user.password);
                     if (passwordCorrect) {
-                        const {password, otphash, otpexpiration, ...userDetails} = user;
+                        const {password, ...userDetails} = user;
                         return userDetails;
                     }
                     else {
                         throw new Error(SignInError.INCORRECT_PASSWORD);
-                        throw new Error("Incorrect Password");
                     }
                 }
                 catch (error: any) {
@@ -63,12 +66,18 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user) {
                 token._id = user.id;
+                token.name = user.name;
+                token.email = user.email;
+                token.universityid = user.universityid;
             }
             return token
         },
         async session({ session, token }) {
             if (token) {
-                
+
+            }
+            if (session.user) {
+                session.user.universityid = token.universityid;
             }
             return session
         },

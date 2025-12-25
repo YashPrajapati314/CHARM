@@ -226,6 +226,21 @@
     background-color: rgb(95, 158, 160, 0.6); /* cadetblue at 0.6 opacity */
   }
 
+  table.user-details-table {
+    margin-top: 5px;
+    width: 100%;
+    /* min-width: 420px; */
+  }
+
+  table.user-details-table th, table.user-details-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+    color: white;
+    white-space: nowrap;
+    background-color: rgba(131, 8, 202, 0.811);
+  }
+
   .table-title {
     color: darkslategrey;
     font-size: 20px;
@@ -852,11 +867,11 @@
     font-size: 1rem;
   }
 
-  table.main-table th, table.main-table-no-letter th {
+  table.main-table th, table.main-table-no-letter th, table.user-details-table th {
     font-size: 1.05rem;
   }
 
-  table.main-table td, table.main-table-no-letter td {
+  table.main-table td, table.main-table-no-letter td, table.user-details-table td {
     font-size: 0.95rem;
   }
 
