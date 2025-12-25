@@ -1,0 +1,7 @@
+export enum PasswordConstraints {
+  UPPERCASE_LETTER = 0,
+  LOWERCASE_LETTER = 1,
+  NUMBER = 2,
+  SPECIAL_CHARACTER = 3,
+  MINIMUM_8_CHARACTERS = 4,
+}

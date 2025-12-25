@@ -133,8 +133,7 @@ model Media {
 model User {
   universityid              String          @id                     @unique
   password                  String?    
-  firstname                 String?
-  lastname                  String?
+  name                      String?
   email                     String?         @unique
   otphash                   String?
   otpexpiration             DateTime?       @db.Timestamptz(3)

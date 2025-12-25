@@ -2,6 +2,8 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { SignInError } from '@/enums/errors-and-statuses';
+
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -27,17 +29,20 @@ export const authOptions: NextAuthOptions = {
                         }
                     })
                     if (!user) {
+                        throw new Error(SignInError.USER_DOESNT_EXIST);
                         throw new Error("User with the specified ID doesn't exist");
                     }
                     if (!user.password) {
+                        throw new Error(SignInError.ACCOUNT_NOT_INITIALIZED);
                         throw new Error("User account not yet initialized. Please create a new account with this ID and set a password");
                     }
                     const passwordCorrect = await bcrypt.compare(credentials.password, user.password);
                     if (passwordCorrect) {
-                        const {password, ...userWithoutPassword} = user;
-                        return userWithoutPassword;
+                        const {password, otphash, otpexpiration, ...userDetails} = user;
+                        return userDetails;
                     }
                     else {
+                        throw new Error(SignInError.INCORRECT_PASSWORD);
                         throw new Error("Incorrect Password");
                     }
                 }

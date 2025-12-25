@@ -16,8 +16,7 @@ const Component = () => {
       </>
     )
   }
-  let universityid = "60004220099";
-  let password = "60004220099";
+  
   return (
     <>
       Not signed in <br />

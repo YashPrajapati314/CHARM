@@ -98,7 +98,7 @@ const SignUp = () => {
       setEmailStatus(EmailStatus.NO_ERROR);
       setPageState(PageStatus.BASE_PAGE);
 
-      const response = await fetch('/api/auth/send-email-for-registration', {
+      const response = await fetch('/api/auth/send-email-for-password-change', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ universityId: universityId.trim() })
@@ -238,7 +238,7 @@ const SignUp = () => {
                   (pageState === PageStatus.BASE_PAGE || pageState === PageStatus.EMAIL_ERROR) ? 
                   <>
                     <div className="p-2 justify-center text-center text-lg">
-                      Create an account to view and upload requests <br />
+                      Change your password <br />
                     </div>
                     <label className="text-base" htmlFor="universityid">Enter your University ID</label>
                     <input
@@ -253,6 +253,19 @@ const SignUp = () => {
                         // ${universityIdError ? `border-red-600 ` : `border-blue-600 `}
                       }
                     />
+                    {/* <label className="text-base" htmlFor="universityid">Enter the Email ID associated with it</label>
+                    <input
+                      type="text"
+                      id="universityid"
+                      value={universityId}
+                      onChange={(e) => setUniversityId(e.target.value)}
+                      placeholder="Registered Email ID"
+                      className={
+                        `p-2 border-2 rounded-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-300 
+                        `
+                        // ${universityIdError ? `border-red-600 ` : `border-blue-600 `}
+                      }
+                    /> */}
                     <div className="flex justify-center">
                       {(pageState === PageStatus.EMAIL_ERROR) && <div className="text-sm text-red-600">
                         {
@@ -262,10 +275,6 @@ const SignUp = () => {
                           `Your University Profile is not linked with any Email ID. 
                           Please contact the university officials to update your email address with a desired one, 
                           or contact the creator of this website if this seems to be a mistake.` :
-                          emailStatus === EmailStatus.ACCOUNT_ALREADY_EXISTS ? 
-                          `An account has already been created with this University ID. 
-                          If this is your University ID and this was not done by you, 
-                          and you don't have access to your account, please contact the creator of this website.` :
                           emailStatus === EmailStatus.OTHER ? 
                           `An error occurred while sending the email. Please check your internet connection and retry.` : 
                           emailStatus === EmailStatus.NO_ERROR ?
@@ -329,7 +338,7 @@ const SignUp = () => {
                   ((pageState === PageStatus.OTP_VERIFIED) || (pageState === PageStatus.PASSWORD_CHANGE_FAILED)) ? 
                   <>
                     <div className="flex">
-                      OTP Verified! Please set up your account by setting a password. <br/>
+                      OTP Verified! You can now change your password by entering a new one below. <br/>
                       {/* Passwords must contain atleast 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and should be a minimum of 8 characters long. <br/> */}
                     </div>
                     <div className="flex">
@@ -378,13 +387,13 @@ const SignUp = () => {
                     <div className={`text-base ${lengthConstraintMet ? `text-green-600` : `text-red-600`}`}>                          {lengthConstraintMet ? '✔' : '✘'}                           At least 8 characters </div>
                     <div className={`text-base ${(userPassword === userConfirmationPassword) ? `text-green-600` : `text-red-600`}`}>  {(userPassword === userConfirmationPassword) ? '✔' : '✘'}   Passwords match </div>
                     <div className="flex justify-center">
-                      {!submissionState ? <button className="text-base bg-blue-600 text-white p-1 w-32 rounded-full active:bg-blue-800" onClick={() => functionPerformer(submitPassword)} disabled={!(allPasswordConstraintsMet && (userPassword === userConfirmationPassword))}>
-                        Set Password
+                      {!submissionState ? <button className="text-base bg-blue-600 text-white p-1 w-40 rounded-full active:bg-blue-800" onClick={() => functionPerformer(submitPassword)} disabled={!(allPasswordConstraintsMet && (userPassword === userConfirmationPassword))}>
+                        Change Password
                       </button> : <div className="sign-in-loader"></div>}
                     </div>
                     <div className="flex">
                       {(pageState === PageStatus.PASSWORD_CHANGE_FAILED) && <div className="text-base text-red-600">
-                        Failed to create your account. This might be due to a server error or loss of internet connection. Please try again. If this error persists, please report it.
+                        Failed to change your password. This might be due to a server error or loss of internet connection. Please try again. If this error persists, please report it.
                       </div>}
                     </div>
                   </> :
@@ -393,7 +402,7 @@ const SignUp = () => {
                   pageState === PageStatus.PASSWORD_CHANGED ? 
                   <>
                     <div className="flex justify-center">
-                      Account created successfully! Please login to your account with the password you just set.
+                      Password changed successfully! Please login to your account with the password you just set.
                     </div>
                     <div className="about-image-container">
                       <img className="about-image" src={ganyu_happy.src}></img>

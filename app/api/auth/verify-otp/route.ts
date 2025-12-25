@@ -4,15 +4,8 @@ import bcrypt from "bcryptjs";
 import { User } from "@prisma/client";
 import { DateTime } from "luxon";
 import { error } from "console";
+import { OtpStatus } from "@/enums/errors-and-statuses";
 
-enum OtpStatus {
-    NO_ERROR = 0,
-    OTP_INVALID = 1,
-    OTP_EXPIRED = 2,
-    NO_REQUEST = 3,
-    BAD_REQUEST = 4,
-    OTHER = 5
-}
 
 const prisma = new PrismaClient();
 
@@ -48,7 +41,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: true, errorType: OtpStatus.NO_ERROR });
         }
         else {
-            return NextResponse.json({ error: "Invalid OTP", errorType: OtpStatus.OTP_INVALID }, { status: 400 });
+            return NextResponse.json({ error: "Invalid OTP", errorType: OtpStatus.OTP_INVALID });
         }
     }
     catch (err: any) {

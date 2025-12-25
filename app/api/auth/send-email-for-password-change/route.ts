@@ -39,10 +39,6 @@ export async function POST(req: NextRequest) {
     if (!existingUser) {
       return NextResponse.json({ error: "University ID not found.", errorType: EmailStatus.USER_NOT_FOUND }, { status: 404 });
     }
-
-    if (existingUser.password) {
-      return NextResponse.json({ error: "Account already exists.", errorType: EmailStatus.ACCOUNT_ALREADY_EXISTS }, { status: 400 });
-    }
     
     if (!receiverEmail) {
       return NextResponse.json({ success: false, errorType: EmailStatus.USER_HAS_NO_EMAIL, message: "No email associated with the account." });
@@ -55,14 +51,14 @@ export async function POST(req: NextRequest) {
     const CHARM_MAIL = process.env.CHARM_MAIL;
     const CHARM_PASS = process.env.CHARM_PASS;
 
-    const mailSubject = `Verify Your Account – CHARM`
+    const mailSubject = `Change Your Password – CHARM`
 
     const mailContent = `
     <html>
       <body>
         <p>
-          Someone appears to be attempting to create an account with your DJSCE University ID to CHARM (Centralized Home for Attendance Request Management) <br>
-          The 6-digit One Time Password for your registration is <b>${otp}</b>. <br>
+          Someone appears to be attempting to change your password on CHARM (Centralized Home for Attendance Request Management) <br>
+          The 6-digit One Time Password for your password update is <b>${otp}</b>. <br>
           Please do not share this OTP with anyone. If this request was not made by you, please ignore this email.
         </p>
         <p>
@@ -70,7 +66,7 @@ export async function POST(req: NextRequest) {
           If you wish to change your registered email address, please contact the university officials.
         </p>
         <p>
-          Thank you for signing up to CHARM!
+          Thank you for using CHARM!
         </p>
       </body>
     </html>
