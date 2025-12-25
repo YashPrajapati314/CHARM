@@ -25,6 +25,7 @@ import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import { DateTime } from 'luxon';
+import { useSession } from 'next-auth/react';
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -46,6 +47,7 @@ interface StudentWithLetterStatus extends Student {
 
 
 const RequestWithoutLetterPage = () => {
+  const { data: session } = useSession();
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -327,7 +329,8 @@ const RequestWithoutLetterPage = () => {
             imageLinks: process.env.NO_LETTER_MEDIA_LINK ? [process.env.NO_LETTER_MEDIA_LINK] : [],
             reason: truncatedReason
           },
-          attendanceDates: ISTNoonNoLetterDates
+          attendanceDates: ISTNoonNoLetterDates,
+          uploaderId: session?.user.universityid
         })
       });
 
@@ -371,135 +374,153 @@ const RequestWithoutLetterPage = () => {
   const twoMonthsFromNow = new Date();
   twoMonthsFromNow.setDate(twoMonthsFromNow.getDate() + 30 * 2);
 
-
-  return (
-    <div className='homepage'>
-      <div className='top-container'>
-        {/* <div className='title-button-side-by-side'>
-          <h1 className='home-page title'>CHARM</h1>
-          <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
-              View requests as a teacher
-          </button>
-        </div> */}
-        {/* <Header></Header> */}
-        <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
-      </div>
-      <br/>
-      {safeToUpload && (<div className='no-letter' id='no-letter-div'>
-        <h1 className='home-page'>Make a request without a letter</h1>
-        <p className='home-page description'>
-          If you don't have a letter available for the day and can't attend for a genuine reason,
-          you can make a letterless request.
-          Only go for this option if you have talked to the teachers about it before and they have agreed to mark
-          you present without a letter being needed.
-        </p>
-          <AnimatePresence>
-            {safeToUpload && (<div>
-              {noLetterStudents.length!==0 && (
-                <motion.div className='table-div-container'
-                initial={{ opacity: 0, scale: 1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-                >
-                  <h1 className='home-page main-table-info-text'>Scroll horizontally to view all the details</h1>
-                  <h1 className='home-page main-table-info-text'>Click on the last cell ✘ of a row to remove it</h1>
-                  <b><h1 className='home-page table-title-no-letter'>Names (Without Letter)</h1></b>
-                  <div className='table-div'>
-                    <table className='main-table-no-letter'>
-                      <thead>
-                        <tr>
-                          <th className='redth'>SAP ID</th>
-                          <th className='redth'>Name</th>
-                          <th className='redth'>Roll No</th>
-                          <th className='redth'>Batch</th>
-                          <th className='redth'>
-                            Remove Rows
-                            <br></br>
-                          </th>
-                        </tr>
-                      </thead>
-                        <tbody>
-                          {
-                          <AnimatePresence>
-                            {noLetterStudents.map((student) => (
-                              <motion.tr key={student.sapid}
-                                initial={{ opacity: 0, scale: 1 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1 }}
-                                transition={{ duration: 0.25, ease: "easeInOut" }}
-                              >
-                                <td className='redtd'>{student.sapid}</td>
-                                <td className='redtd'>{student.name}</td>
-                                <td className='redtd'>{student.rollno}</td>
-                                <td className='redtd'>{student.batchid}</td>
-                                <td onClick={() => removeRow(Number(student.sapid))} className='row-bt redtd' style={{color: 'red'}}>
-                                  ✘
-                                </td>
-                              </motion.tr>
-                            ))}
-                          </AnimatePresence>
-                          }
-                        </tbody>
-                    </table>
-                  </div>
-                  <div>
-                    <button className='remove-all-btn' onClick={removeAll}>Remove All</button>
-                    {noLetterSuccessMessage && <p className='home-page no-letter-success' id='no-letter-success-message'>{noLetterSuccessMessage}</p>}
-                    {noLetterErrorMessage && !showNoLetterErrorMessageWithoutTable && <p className='home-page no-letter-error' id='no-letter-error-with-table'>{noLetterErrorMessage}</p>}
-                  </div>
-                </motion.div>
-              )}
-              <form className='sapid-form' onSubmit={fetchNoLetterStudents}>
-                <input
-                  type='text'
-                  id='no-letter-enter'
-                  className='sapid-input'
-                  placeholder='Enter SAP IDs (space separated)'
-                  value={noLetterSAPIDs}
-                  onChange={(e) => setNoLetterSAPIDs(e.target.value)}
-                />
-                <button className='btn add-extra-sapids' type='submit'>Add SAP ID(s)</button>
-              </form>
-              {noLetterErrorMessage && showNoLetterErrorMessageWithoutTable && <p className='home-page no-letter-error' id='no-letter-error-without-table'>{noLetterErrorMessage}</p>}
-                {noLetterStudents.length!==0 && 
-                  <motion.div className='reason-date-container-container'
-                    initial={{ opacity: 0, scale: 1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
+  if (session) {
+    return (
+      <div className='homepage'>
+        <div className='top-container'>
+          {/* <div className='title-button-side-by-side'>
+            <h1 className='home-page title'>CHARM</h1>
+            <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
+                View requests as a teacher
+            </button>
+          </div> */}
+          {/* <Header></Header> */}
+          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
+        </div>
+        <br/>
+        {safeToUpload && (<div className='no-letter' id='no-letter-div'>
+          <h1 className='home-page'>Make a request without a letter</h1>
+          <p className='home-page description'>
+            If you don't have a letter available for the day and can't attend for a genuine reason,
+            you can make a letterless request.
+            Only go for this option if you have talked to the teachers about it before and they have agreed to mark
+            you present without a letter being needed.
+          </p>
+            <AnimatePresence>
+              {safeToUpload && (<div>
+                {noLetterStudents.length!==0 && (
+                  <motion.div className='table-div-container'
+                  initial={{ opacity: 0, scale: 1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
                   >
-                    <div className='reason-date-container grid grid-cols-[1fr_2.5fr] w-1/2 place-content-center'>
-                      <label>Enter the reason:</label>
-                      <input type='text' className='enter-reason' placeholder='Enter Reason' value={noLetterReason} onChange={e => setNoLetterReason(e.target.value)} />
-                      {/* <br/> */}
-                      <label>Pick attendance dates:</label>
-                      <Flatpickr
-                        options={{
-                          mode: 'multiple',
-                          minDate: 'today',
-                          maxDate: twoMonthsFromNow,
-                          animate: true
-                          // formatDate: 
-                        }}
-                        className='calendar-date-picker'
-                        // placeholder='Upto two months into the future...'
-                        placeholder='Within next 2 months...'
-                        value={noLetterDates}
-                        onChange={setNoLetterDates}
-                      />
-                      {/* <br/> */}
+                    <h1 className='home-page main-table-info-text'>Scroll horizontally to view all the details</h1>
+                    <h1 className='home-page main-table-info-text'>Click on the last cell ✘ of a row to remove it</h1>
+                    <b><h1 className='home-page table-title-no-letter'>Names (Without Letter)</h1></b>
+                    <div className='table-div'>
+                      <table className='main-table-no-letter'>
+                        <thead>
+                          <tr>
+                            <th className='redth'>SAP ID</th>
+                            <th className='redth'>Name</th>
+                            <th className='redth'>Roll No</th>
+                            <th className='redth'>Batch</th>
+                            <th className='redth'>
+                              Remove Rows
+                              <br></br>
+                            </th>
+                          </tr>
+                        </thead>
+                          <tbody>
+                            {
+                            <AnimatePresence>
+                              {noLetterStudents.map((student) => (
+                                <motion.tr key={student.sapid}
+                                  initial={{ opacity: 0, scale: 1 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  exit={{ opacity: 0, scale: 1 }}
+                                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                                >
+                                  <td className='redtd'>{student.sapid}</td>
+                                  <td className='redtd'>{student.name}</td>
+                                  <td className='redtd'>{student.rollno}</td>
+                                  <td className='redtd'>{student.batchid}</td>
+                                  <td onClick={() => removeRow(Number(student.sapid))} className='row-bt redtd' style={{color: 'red'}}>
+                                    ✘
+                                  </td>
+                                </motion.tr>
+                              ))}
+                            </AnimatePresence>
+                            }
+                          </tbody>
+                      </table>
                     </div>
-                    <button className='btn final-submit' onClick={() => {submittingWithLetter.current = false; setIsPopupOpen(true)}} disabled={!noLetterReason.trim() || noLetterDates.length === 0} style={(!noLetterReason.trim() || noLetterDates.length === 0) ? {backgroundColor: 'grey', cursor: 'default'} : {}}>Submit all letterless rows</button>
-                    {isPopupOpen && !submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} noLetterStudents={noLetterStudents} noLetterDates={noLetterDates} submitFunction={handleSubmitNoLetter} />}
+                    <div>
+                      <button className='remove-all-btn' onClick={removeAll}>Remove All</button>
+                      {noLetterSuccessMessage && <p className='home-page no-letter-success' id='no-letter-success-message'>{noLetterSuccessMessage}</p>}
+                      {noLetterErrorMessage && !showNoLetterErrorMessageWithoutTable && <p className='home-page no-letter-error' id='no-letter-error-with-table'>{noLetterErrorMessage}</p>}
+                    </div>
                   </motion.div>
-                }
-            </div>)}
-          </AnimatePresence>
-      </div>)}
-    </div>
-  );
+                )}
+                <form className='sapid-form' onSubmit={fetchNoLetterStudents}>
+                  <input
+                    type='text'
+                    id='no-letter-enter'
+                    className='sapid-input'
+                    placeholder='Enter SAP IDs (space separated)'
+                    value={noLetterSAPIDs}
+                    onChange={(e) => setNoLetterSAPIDs(e.target.value)}
+                  />
+                  <button className='btn add-extra-sapids' type='submit'>Add SAP ID(s)</button>
+                </form>
+                {noLetterErrorMessage && showNoLetterErrorMessageWithoutTable && <p className='home-page no-letter-error' id='no-letter-error-without-table'>{noLetterErrorMessage}</p>}
+                  {noLetterStudents.length!==0 && 
+                    <motion.div className='reason-date-container-container'
+                      initial={{ opacity: 0, scale: 1 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                    >
+                      <div className='reason-date-container grid grid-cols-[1fr_2.5fr] w-1/2 place-content-center'>
+                        <label>Enter the reason:</label>
+                        <input type='text' className='enter-reason' placeholder='Enter Reason' value={noLetterReason} onChange={e => setNoLetterReason(e.target.value)} />
+                        {/* <br/> */}
+                        <label>Pick attendance dates:</label>
+                        <Flatpickr
+                          options={{
+                            mode: 'multiple',
+                            minDate: 'today',
+                            maxDate: twoMonthsFromNow,
+                            animate: true
+                            // formatDate: 
+                          }}
+                          className='calendar-date-picker'
+                          // placeholder='Upto two months into the future...'
+                          placeholder='Within next 2 months...'
+                          value={noLetterDates}
+                          onChange={setNoLetterDates}
+                        />
+                        {/* <br/> */}
+                      </div>
+                      <button className='btn final-submit' onClick={() => {submittingWithLetter.current = false; setIsPopupOpen(true)}} disabled={!noLetterReason.trim() || noLetterDates.length === 0} style={(!noLetterReason.trim() || noLetterDates.length === 0) ? {backgroundColor: 'grey', cursor: 'default'} : {}}>Submit all letterless rows</button>
+                      {isPopupOpen && !submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} noLetterStudents={noLetterStudents} noLetterDates={noLetterDates} submitFunction={handleSubmitNoLetter} />}
+                    </motion.div>
+                  }
+              </div>)}
+            </AnimatePresence>
+        </div>)}
+      </div>
+    );
+  }
+  else {
+    return (
+      <>
+        <div className="text-center">
+          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+        </div>
+        <div className="m-2 flex flex-col gap-4">
+          <div className="p-2 justify-center text-center text-lg">
+            You aren't signed in! <br />
+            <div className="justify-center text-center text-lg">
+              Please <a href="/sign-in" className="text-blue-600 visited:text-blue-600">sign in</a> to continue
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 };
 
 export default RequestWithoutLetterPage;

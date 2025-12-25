@@ -19,13 +19,14 @@ interface Response {
     letterDetails: LetterDetails;
     attendanceDates: Date[];
     manuallyEnteredDates?: Date[];
+    uploaderId: string;
 }
 
 
 const prisma = new PrismaClient();
 
 
-const postWithLetters = async (studentDetails: StudentWithLetterStatus[], letterDetails: LetterDetails, attendanceDates: Date[], manuallyEnteredDates: Date[]): Promise<number> => {
+const postWithLetters = async (studentDetails: StudentWithLetterStatus[], letterDetails: LetterDetails, attendanceDates: Date[], manuallyEnteredDates: Date[], uploaderId: string): Promise<number> => {
     const imageLinks: string[] = letterDetails.imageLinks;
     const reason: string = letterDetails.reason;
     
@@ -47,7 +48,8 @@ const postWithLetters = async (studentDetails: StudentWithLetterStatus[], letter
             sapid: student.sapid,
             letterstatus: manuallyEnteredDates.includes(attendanceDate) ? 2 : student.letterstatus,
             date: attendanceDate,
-            weekday: "N/A"
+            weekday: "N/A",
+            uploadedby: uploaderId
         }))
     });
 
@@ -74,7 +76,7 @@ const postWithLetters = async (studentDetails: StudentWithLetterStatus[], letter
 }
 
 
-const postWithoutLetters = async (studentDetails: StudentWithLetterStatus[], letterDetails: LetterDetails, attendanceDates: Date[]): Promise<number> => {
+const postWithoutLetters = async (studentDetails: StudentWithLetterStatus[], letterDetails: LetterDetails, attendanceDates: Date[], uploaderId: string): Promise<number> => {
     const NO_LETTER_MEDIA_LINK = process.env.NO_LETTER_MEDIA_LINK || letterDetails.imageLinks[0] || '';
     
     const reason: string = letterDetails.reason;
@@ -95,7 +97,8 @@ const postWithoutLetters = async (studentDetails: StudentWithLetterStatus[], let
             sapid: student.sapid,
             letterstatus: student.letterstatus,
             date: attendanceDate,
-            weekday: "N/A"
+            weekday: "N/A",
+            uploadedby: uploaderId
         }));
     });
 
@@ -124,16 +127,16 @@ export async function POST(req: NextRequest) {
     {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         
-        const {hasLetters, studentDetails, letterDetails, attendanceDates, manuallyEnteredDates} = await req.json() as Response;
+        const {hasLetters, studentDetails, letterDetails, attendanceDates, manuallyEnteredDates, uploaderId} = await req.json() as Response;
 
         let uploadedPairCount;
 
         if (hasLetters) {
             const manuallyEnteredDatesArray: Date[] = manuallyEnteredDates || [];
-            uploadedPairCount = await postWithLetters(studentDetails, letterDetails, attendanceDates, manuallyEnteredDatesArray);
+            uploadedPairCount = await postWithLetters(studentDetails, letterDetails, attendanceDates, manuallyEnteredDatesArray, uploaderId);
         }
         else {
-            uploadedPairCount = await postWithoutLetters(studentDetails, letterDetails, attendanceDates);
+            uploadedPairCount = await postWithoutLetters(studentDetails, letterDetails, attendanceDates, uploaderId);
         }
         
         return NextResponse.json({uploadedRequestImagePairs: uploadedPairCount});

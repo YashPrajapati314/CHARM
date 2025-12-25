@@ -88,6 +88,7 @@ export async function GET(req: NextRequest) {
                 letterstatus: number;
                 reason: string;
                 imagelinks: string[];
+                uploadedby: string;
             }[];
         }
 
@@ -100,7 +101,8 @@ export async function GET(req: NextRequest) {
                 existingStudent.listofrequests.push({
                     letterstatus: request.letterstatus,
                     reason: request.AttendanceRequestToMedia[0]?.Media?.reason,
-                    imagelinks: request.AttendanceRequestToMedia?.map(mediaObject => mediaObject?.Media?.mediaurl)
+                    imagelinks: request.AttendanceRequestToMedia?.map(mediaObject => mediaObject?.Media?.mediaurl),
+                    uploadedby: request.uploadedby
                 });
             }
             else
@@ -113,7 +115,8 @@ export async function GET(req: NextRequest) {
                     listofrequests: [{
                         letterstatus: request.letterstatus,
                         reason: request.AttendanceRequestToMedia[0]?.Media?.reason,
-                        imagelinks: request.AttendanceRequestToMedia?.map(mediaObject => mediaObject?.Media?.mediaurl)
+                        imagelinks: request.AttendanceRequestToMedia?.map(mediaObject => mediaObject?.Media?.mediaurl),
+                        uploadedby: request.uploadedby
                     }]
                 });
             }

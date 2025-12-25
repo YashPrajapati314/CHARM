@@ -27,6 +27,7 @@ import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-rend
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import { DateTime } from 'luxon';
 import { get } from 'http';
+import { useSession } from "next-auth/react"
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -48,6 +49,7 @@ interface StudentWithLetterStatus extends Student {
 
 
 const RequestWithLetterPage = () => {
+  const { data: session } = useSession();
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -922,7 +924,8 @@ const RequestWithLetterPage = () => {
             reason: truncatedReason
           },
           attendanceDates: ISTNoonAllDates,
-          manuallyEnteredDates: ISTNoonManuallyEnteredDates
+          manuallyEnteredDates: ISTNoonManuallyEnteredDates,
+          uploaderId: session?.user.universityid
         })
       });
 
@@ -990,227 +993,245 @@ const RequestWithLetterPage = () => {
   const twoMonthsFromNow = new Date();
   twoMonthsFromNow.setDate(twoMonthsFromNow.getDate() + 30 * 2);
 
-
-  return (
-    <div className='homepage'>
-      <div className='top-container'>
-        {/* <div className='title-button-side-by-side'>
-          <h1 className='home-page title'>CHARM</h1>
-          <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
-              View requests as a teacher
-          </button>
-        </div> */}
-        {/* <Header></Header> */}
-        <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
-      </div>
-      <br/>
-      {/* <strong><h1 className='home-page'>Make a request with a letter</h1></strong> */}
-      <h1 className='home-page'>Make a request with a letter</h1>
-      <p className='home-page description'>
-        Upload an image / PDF of your letter to send along with the request. Multiple pages for the same letter can be uploaded together, select as many files as necessary.
-      </p>
-      <div className='upload-section'>
-        <input type='file' multiple ref={fileInputRef} style={{display: 'none'}} onChange={handleFileUpload} />
-        {
-          safeToUpload ?
-          <button className='btn upload-button' disabled={!safeToUpload} style={safeToUpload ? {} : {backgroundColor: 'grey'}} onClick={handleButtonClick}>
-            Upload Images/PDF of the Letter
-          </button> :
-          <>
-            <b><h1 className='home-page loading-text'>{loadingMessage}</h1></b>
-            <br></br>
-          </>
-        }
-        {uploadedFiles.length !==0 && <p className='home-page'><b>Uploaded File{plural}:</b> {uploadedFileNamesToDisplay}</p>} {/* */}
-      </div>
-      {errorMessage && <p className='home-page error'>{errorMessage}</p>}
-      {sizeLimitExceededMessage && <p className='home-page size-limit-exceeded'>{sizeLimitExceededMessage}</p>}
-      {mediaFilesLimitExceededMessage && <p className='home-page media-files-limit-exceeded'>{mediaFilesLimitExceededMessage}</p>}
-      {uploadedFiles?.length !== 0 && (
-        <div className='preview-section-container'>
-          <div className='preview-section'>
-            {previewImages.map((imgLink) => (
-              <img key={imgLink} src={imgLink} className='preview-img' alt='Image Preview' />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {
-        !safeToUpload ? 
-        <>
-          {/* <div className='table-skeleton-container'>
-            <br></br>
-            <br></br>
-            <TableSkeleton />
+  if (session) {
+    return (
+      <div className='homepage'>
+        <div className='top-container'>
+          {/* <div className='title-button-side-by-side'>
+            <h1 className='home-page title'>CHARM</h1>
+            <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
+                View requests as a teacher
+            </button>
           </div> */}
-        </>
-        : 
-        <AnimatePresence>
+          {/* <Header></Header> */}
+          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
+        </div>
+        <br/>
+        {/* <strong><h1 className='home-page'>Make a request with a letter</h1></strong> */}
+        <h1 className='home-page'>Make a request with a letter</h1>
+        <p className='home-page description'>
+          Upload an image / PDF of your letter to send along with the request. Multiple pages for the same letter can be uploaded together, select as many files as necessary.
+        </p>
+        <div className='upload-section'>
+          <input type='file' multiple ref={fileInputRef} style={{display: 'none'}} onChange={handleFileUpload} />
           {
-            (!(students.length === 0 && !receivedResponse) &&
+            safeToUpload ?
+            <button className='btn upload-button' disabled={!safeToUpload} style={safeToUpload ? {} : {backgroundColor: 'grey'}} onClick={handleButtonClick}>
+              Upload Images/PDF of the Letter
+            </button> :
+            <>
+              <b><h1 className='home-page loading-text'>{loadingMessage}</h1></b>
+              <br></br>
+            </>
+          }
+          {uploadedFiles.length !==0 && <p className='home-page'><b>Uploaded File{plural}:</b> {uploadedFileNamesToDisplay}</p>} {/* */}
+        </div>
+        {errorMessage && <p className='home-page error'>{errorMessage}</p>}
+        {sizeLimitExceededMessage && <p className='home-page size-limit-exceeded'>{sizeLimitExceededMessage}</p>}
+        {mediaFilesLimitExceededMessage && <p className='home-page media-files-limit-exceeded'>{mediaFilesLimitExceededMessage}</p>}
+        {uploadedFiles?.length !== 0 && (
+          <div className='preview-section-container'>
+            <div className='preview-section'>
+              {previewImages.map((imgLink) => (
+                <img key={imgLink} src={imgLink} className='preview-img' alt='Image Preview' />
+              ))}
+            </div>
+          </div>
+        )}
+  
+        {
+          !safeToUpload ? 
+          <>
+            {/* <div className='table-skeleton-container'>
+              <br></br>
+              <br></br>
+              <TableSkeleton />
+            </div> */}
+          </>
+          : 
+          <AnimatePresence>
+            {
+              (!(students.length === 0 && !receivedResponse) &&
+              <motion.div 
+                id="table-animated-root-container"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >  
+                {(students.length > 0 ?
+                  <div className='table-div-container' id='letter-table-div-container'>
+                      <div className='main-table-info'>
+                        <h1 className='home-page main-table-info-text'>Scroll horizontally to view all the details</h1>
+                        <h1 className='home-page main-table-info-text'>Click on a row to select it</h1>
+                        <div className='two-button-container'>
+                          <button className='select-all-btn' onClick={selectOrDeselectAll}>{Object.values(selectedRows).every(val => val) ? 'Deselect All' : 'Select All'}</button>
+                          <button className='invert-selection-btn' onClick={invertSelection}>Invert Selection</button>
+                        </div>
+                      </div>
+                      {
+                        (manuallyEnteredSAPIDs.length > 0) ?
+                        <b><h1 className='home-page table-title'>Retrieved/Added Names</h1></b> :
+                        <b><h1 className='home-page table-title'>Retrieved Names</h1></b>
+                      }
+                      <div className='table-div'>
+                          <table className='main-table' id='letter-table'>
+                            <thead>
+                              <tr>
+                                <th className='sapid'>SAP ID</th>
+                                <th>Name</th>
+                                <th>Roll No</th>
+                                <th>Batch</th>
+                                <th>
+                                  Select Rows
+                                </th>
+                              </tr>
+                            </thead>
+                            <AnimatePresence>
+                              <tbody>
+                                {
+                                  students.map((student, index) => (
+                                    <motion.tr onClick={() => toggleSelection(Number(student.sapid))} className='clickable' id={`letter-row-${index}`} key={student.sapid} style={{ backgroundColor: selectedRows[Number(student.sapid)] ? '#c3e6cb' : 'white' }}
+                                      initial={{ opacity: 0, scale: 1 }}
+                                      animate={{ opacity: 1, scale: 1 }}
+                                      exit={{ opacity: 0, scale: 1 }}
+                                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                                    >
+                                      <td>{student.sapid}</td>
+                                      <td>{student.name}</td>
+                                      <td>{student.rollno}</td>
+                                      <td>{student.batchid}</td>
+                                      <td className='row-bt' style={selectedRows[Number(student.sapid)] ? {color: 'green'} : {}}>
+                                        {selectedRows[Number(student.sapid)] ? '✔' : 'Click to Select'}
+                                      </td>
+                                    </motion.tr>
+                                  ))
+                                }
+                              </tbody>
+                            </AnimatePresence>
+                          </table>
+                      </div>
+                      <div id='letter-success-error-message'>
+                        {successMessage2 && <p className='home-page success'>{successMessage2}</p>}
+                        {errorMessage2 && <p className='home-page error'>{errorMessage2}</p>}
+                      </div>
+                      <div id='select-add-info'>
+                        <p className='home-page'>Select all the rows you wanna submit for the request</p>
+                          <div id='add-sap-ids-redirector' onClick={() => {goToSAPIDEntering()}}>
+                            <p className='home-page'>If your name is in the letter and you don't find it in the table</p>
+                            <p className='home-page'>Click here to add it manually</p>
+                          </div>
+                      </div>
+                  </div> :
+                  <div className='notfound' id='letter-no-sap'>
+                    <h1 className='home-page'>Sorry, we could not retrieve any valid student details from the given image{plural}</h1>
+                    <div id='letter-success-error-message'>
+                        {errorMessage2 && <p className='home-page error'>{errorMessage2}</p>}
+                    </div>
+                  </div>
+                )}
+              </motion.div>)
+            }
+          </AnimatePresence>
+        }
+        
+  
+        <AnimatePresence>
+          {!(students.length === 0 && !receivedResponse) && Object.values(selectedRows).some(val => val) && (
             <motion.div 
-              id="table-animated-root-container"
+              id="reason-date-animated-root-container"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-            >  
-              {(students.length > 0 ?
-                <div className='table-div-container' id='letter-table-div-container'>
-                    <div className='main-table-info'>
-                      <h1 className='home-page main-table-info-text'>Scroll horizontally to view all the details</h1>
-                      <h1 className='home-page main-table-info-text'>Click on a row to select it</h1>
-                      <div className='two-button-container'>
-                        <button className='select-all-btn' onClick={selectOrDeselectAll}>{Object.values(selectedRows).every(val => val) ? 'Deselect All' : 'Select All'}</button>
-                        <button className='invert-selection-btn' onClick={invertSelection}>Invert Selection</button>
-                      </div>
-                    </div>
-                    {
-                      (manuallyEnteredSAPIDs.length > 0) ?
-                      <b><h1 className='home-page table-title'>Retrieved/Added Names</h1></b> :
-                      <b><h1 className='home-page table-title'>Retrieved Names</h1></b>
-                    }
-                    <div className='table-div'>
-                        <table className='main-table' id='letter-table'>
-                          <thead>
-                            <tr>
-                              <th className='sapid'>SAP ID</th>
-                              <th>Name</th>
-                              <th>Roll No</th>
-                              <th>Batch</th>
-                              <th>
-                                Select Rows
-                              </th>
-                            </tr>
-                          </thead>
-                          <AnimatePresence>
-                            <tbody>
-                              {
-                                students.map((student, index) => (
-                                  <motion.tr onClick={() => toggleSelection(Number(student.sapid))} className='clickable' id={`letter-row-${index}`} key={student.sapid} style={{ backgroundColor: selectedRows[Number(student.sapid)] ? '#c3e6cb' : 'white' }}
-                                    initial={{ opacity: 0, scale: 1 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 1 }}
-                                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                                  >
-                                    <td>{student.sapid}</td>
-                                    <td>{student.name}</td>
-                                    <td>{student.rollno}</td>
-                                    <td>{student.batchid}</td>
-                                    <td className='row-bt' style={selectedRows[Number(student.sapid)] ? {color: 'green'} : {}}>
-                                      {selectedRows[Number(student.sapid)] ? '✔' : 'Click to Select'}
-                                    </td>
-                                  </motion.tr>
-                                ))
-                              }
-                            </tbody>
-                          </AnimatePresence>
-                        </table>
-                    </div>
-                    <div id='letter-success-error-message'>
-                      {successMessage2 && <p className='home-page success'>{successMessage2}</p>}
-                      {errorMessage2 && <p className='home-page error'>{errorMessage2}</p>}
-                    </div>
-                    <div id='select-add-info'>
-                      <p className='home-page'>Select all the rows you wanna submit for the request</p>
-                        <div id='add-sap-ids-redirector' onClick={() => {goToSAPIDEntering()}}>
-                          <p className='home-page'>If your name is in the letter and you don't find it in the table</p>
-                          <p className='home-page'>Click here to add it manually</p>
-                        </div>
-                    </div>
-                </div> :
-                <div className='notfound' id='letter-no-sap'>
-                  <h1 className='home-page'>Sorry, we could not retrieve any valid student details from the given image{plural}</h1>
-                  <div id='letter-success-error-message'>
-                      {errorMessage2 && <p className='home-page error'>{errorMessage2}</p>}
-                  </div>
+            >
+              <div className='reason-date-container-container'>
+                {/* <br></br> */}
+                <div className='reason-date-container grid grid-cols-[1fr_2.5fr] w-1/2 place-content-center'>
+                  <label>Enter the reason:</label>
+                  <input type='text' className='enter-reason' placeholder='Enter Reason' value={reason} onChange={e => setReason(e.target.value)} />
+                  <label>Pick attendance dates:</label>
+                  <Flatpickr
+                    options={{
+                      mode: 'multiple',
+                      minDate: 'today',
+                      maxDate: twoMonthsFromNow,
+                      animate: true
+                      // formatDate: 
+                    }}
+                    className='calendar-date-picker'
+                    // placeholder='Upto two months into the future...'
+                    placeholder='Within next 2 months...'
+                    value={dates}
+                    onChange={setDates}
+                  />
+                  {/* <br/> */}
                 </div>
-              )}
-            </motion.div>)
-          }
-        </AnimatePresence>
-      }
-      
-
-      <AnimatePresence>
-        {!(students.length === 0 && !receivedResponse) && Object.values(selectedRows).some(val => val) && (
-          <motion.div 
-            id="reason-date-animated-root-container"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <div className='reason-date-container-container'>
-              {/* <br></br> */}
-              <div className='reason-date-container grid grid-cols-[1fr_2.5fr] w-1/2 place-content-center'>
-                <label>Enter the reason:</label>
-                <input type='text' className='enter-reason' placeholder='Enter Reason' value={reason} onChange={e => setReason(e.target.value)} />
-                <label>Pick attendance dates:</label>
-                <Flatpickr
-                  options={{
-                    mode: 'multiple',
-                    minDate: 'today',
-                    maxDate: twoMonthsFromNow,
-                    animate: true
-                    // formatDate: 
-                  }}
-                  className='calendar-date-picker'
-                  // placeholder='Upto two months into the future...'
-                  placeholder='Within next 2 months...'
-                  value={dates}
-                  onChange={setDates}
-                />
-                {/* <br/> */}
+                <button className='btn final-submit' onClick={() => {submittingWithLetter.current = true; setIsPopupOpen(true);}} disabled={!reason.trim() || dates.length === 0} style={(!reason.trim() || dates.length === 0) ? {backgroundColor: 'grey', cursor: 'default'} : {}}>Submit all selected rows</button>
+                {isPopupOpen && submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} studentsExtractedFromLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===0))} studentsManuallyAddedWithLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===1))} extractedDates={getSelectedOriginallyExtractedDates()} manuallyAddedDates={getManuallyEnteredDates()} submitFunction={handleSubmit} />}
               </div>
-              <button className='btn final-submit' onClick={() => {submittingWithLetter.current = true; setIsPopupOpen(true);}} disabled={!reason.trim() || dates.length === 0} style={(!reason.trim() || dates.length === 0) ? {backgroundColor: 'grey', cursor: 'default'} : {}}>Submit all selected rows</button>
-              {isPopupOpen && submittingWithLetter.current && <ConfirmationPopup isPopupOpen={isPopupOpen} closePopup={() =>  setIsPopupOpen(false)} letter={submittingWithLetter.current} studentsExtractedFromLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===0))} studentsManuallyAddedWithLetter={students.filter((student) => (selectedRows[Number(student.sapid)] && student.letterstatus===1))} extractedDates={getSelectedOriginallyExtractedDates()} manuallyAddedDates={getManuallyEnteredDates()} submitFunction={handleSubmit} />}
+              {pastDates.length !== 0 ? 
+              <div>
+                <br></br>
+                <p className='home-page past-dates'>
+                  Date{pastDates.length > 1 ? 's' : ''} {pastDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {pastDates.length > 1 ? 'are' : 'is'} of the past now and can no longer be requested for
+                </p>
+              </div> : <></>}
+              {farFutureDates.length !== 0 ? 
+              <div>
+                <br></br>
+                <p className='home-page far-future-dates'>
+                  Date{farFutureDates.length > 1 ? 's' : ''} {farFutureDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {farFutureDates.length > 1 ? 'are' : 'is'} more than 2 months into the future from today and can't be requested for now
+                </p>
+              </div> : <></>}
+            </motion.div>
+          )}
+        </AnimatePresence>
+  
+        {!(students.length === 0 && !receivedResponse) &&
+          (
+            <div className='sapid-entering' id='enter-sap-ids'>
+              {/* <br></br> */}
+              {/* {successMessage2 && errorMessage2 && <br></br>} */}
+              <h1 className='home-page'>Can't find your name in the list?</h1>
+              <h1 className='home-page'>Enter it manually!</h1>
+              <p className='home-page extra-addition'>If the OCR model couldn't detect your SAP ID from the image, you can enter one or more SAP IDs (separated by a whitespace) below to add them to the list.</p>
+              {/* <br></br> */}
+              <form className='sapid-form' onSubmit={handleManualInputSubmit}>
+                <input
+                  type='text'
+                  id='extra-enter'
+                  className='sapid-input'
+                  placeholder='Enter SAP IDs (space separated)'
+                  value={enteredSAPIDs}
+                  onChange={(e) => setEnteredSAPIDs(e.target.value)}
+                />
+                <button className='btn add-extra-sapids' type='submit'>Add SAP ID(s)</button>
+              </form>
             </div>
-            {pastDates.length !== 0 ? 
-            <div>
-              <br></br>
-              <p className='home-page past-dates'>
-                Date{pastDates.length > 1 ? 's' : ''} {pastDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {pastDates.length > 1 ? 'are' : 'is'} of the past now and can no longer be requested for
-              </p>
-            </div> : <></>}
-            {farFutureDates.length !== 0 ? 
-            <div>
-              <br></br>
-              <p className='home-page far-future-dates'>
-                Date{farFutureDates.length > 1 ? 's' : ''} {farFutureDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {farFutureDates.length > 1 ? 'are' : 'is'} more than 2 months into the future from today and can't be requested for now
-              </p>
-            </div> : <></>}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {!(students.length === 0 && !receivedResponse) &&
-        (
-          <div className='sapid-entering' id='enter-sap-ids'>
-            {/* <br></br> */}
-            {/* {successMessage2 && errorMessage2 && <br></br>} */}
-            <h1 className='home-page'>Can't find your name in the list?</h1>
-            <h1 className='home-page'>Enter it manually!</h1>
-            <p className='home-page extra-addition'>If the OCR model couldn't detect your SAP ID from the image, you can enter one or more SAP IDs (separated by a whitespace) below to add them to the list.</p>
-            {/* <br></br> */}
-            <form className='sapid-form' onSubmit={handleManualInputSubmit}>
-              <input
-                type='text'
-                id='extra-enter'
-                className='sapid-input'
-                placeholder='Enter SAP IDs (space separated)'
-                value={enteredSAPIDs}
-                onChange={(e) => setEnteredSAPIDs(e.target.value)}
-              />
-              <button className='btn add-extra-sapids' type='submit'>Add SAP ID(s)</button>
-            </form>
+          )
+        }
+      </div>
+    );
+  }
+  else {
+    return (
+      <>
+        <div className="text-center">
+          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+        </div>
+        <div className="m-2 flex flex-col gap-4">
+          <div className="p-2 justify-center text-center text-lg">
+            You aren't signed in! <br />
+            <div className="justify-center text-center text-lg">
+              Please <a href="/sign-in" className="text-blue-600 visited:text-blue-600">sign in</a> to continue
+            </div>
           </div>
-        )
-      }
-    </div>
-  );
+        </div>
+      </>
+    );
+  }
 };
 
 export default RequestWithLetterPage;

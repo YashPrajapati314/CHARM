@@ -104,7 +104,9 @@ model AttendanceRequest {
   weekday                   String
   starttime                 DateTime    @db.Time              @default("1970-01-01T00:00:00Z")
   endtime                   DateTime    @db.Time              @default("1970-01-01T23:59:59Z")
+  uploadedby                String
   Student                   Student     @relation(fields: [sapid], references: [sapid])
+  User                      User        @relation(fields: [uploadedby], references: [universityid])
   AttendanceRequestToMedia  AttendanceRequestToMedia[]
 
   @@map("attendancerequest")
@@ -137,4 +139,5 @@ model User {
   email                     String?         @unique
   otphash                   String?
   otpexpiration             DateTime?       @db.Timestamptz(3)
+  AttendanceRequest         AttendanceRequest[]
 }

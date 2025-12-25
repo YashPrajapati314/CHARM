@@ -44,6 +44,7 @@ const AttendancesForLecture = () => {
             letterstatus: number;
             reason: string;
             imagelinks: string[];
+            uploadedby: string;
         }[];
     }
 
@@ -387,6 +388,8 @@ const AttendancesForLecture = () => {
                                                                     return <a id={`${imageIndex}`} key={imageIndex} href={imageLink} target='_blank'><img src={imageLink} id={`${imageIndex}`} key={imageIndex} className='letter-image' alt='Deleted Image'></img></a>
                                                                 })}
                                                             </>
+                                                            Uploaded by {request.uploadedby}
+                                                            {/* //// */}
                                                         </div>
                                                     ))
                                                 }
