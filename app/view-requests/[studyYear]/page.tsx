@@ -130,7 +130,7 @@ const Departments = () => {
                 <div className="text-center">
                 <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
                 </div>
-                <div className="m-2 flex flex-col gap-4">
+                <div className="m-4 flex flex-col gap-4">
                     <div className="p-2 justify-center text-center text-lg">
                         You aren't signed in! <br />
                         <div className="justify-center text-center text-lg">

@@ -3,8 +3,9 @@
 }
 
 .charm {
-    font-size: 2.5rem;
+    /* margin-top: 10px; */
     margin-bottom: 10px;
+    font-size: 2.5rem;
 }
 
 .teacher-view {

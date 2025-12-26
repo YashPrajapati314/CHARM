@@ -26,11 +26,13 @@ import { resolve } from 'path/posix';
 import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-render/dynamic-rendering';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import OptionCard from './option-card';
-import letter_envelop from '@/images/letter.svg'
-import no_letter_envelop from '@/images/webp/no-letter.webp'
-import classroom from '@/images/webp/classroom.webp'
-import timetable from '@/images/webp/timetable.webp'
-import question_mark from '@/images/webp/question-mark.webp'
+import letter_envelop from '@/images/letter.svg';
+import no_letter_envelop from '@/images/webp/no-letter.webp';
+import classroom from '@/images/webp/classroom.webp';
+import timetable from '@/images/webp/timetable.webp';
+import question_mark from '@/images/webp/question-mark.webp';
+import standard_profile_picture from '@/images/webp/account-profile-user-avatar-icon.webp';
+import { useSession } from 'next-auth/react';
 
 
 const plwrtITModerna = Playwrite_IT_Moderna({
@@ -52,77 +54,88 @@ interface StudentWithLetterStatus extends Student {
 };
 
 const HomePage = () => {
-  return (
-    <div className='homepage'>
-      <div className='top-container'>
-        {/* <div className='title-button-side-by-side'>
-          <h1 className='home-page title'>CHARM</h1>
-          <button className='btn view-requests-button' onClick={() => router.push('/teacher-view')}>
-              View requests as a teacher
-          </button>
-        </div> */}
-        {/* <Header></Header> */}
-        <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
-      </div>
+  const router = useRouter();
+  const { data: session, status } = useSession();
 
-      <p className='home-page description'>
-        Post your attendance requests for one or more days and have it viewed by the teachers and granted!
-        No more overhead of communication and workload on others
-      </p>
-      
-      <br/>
-      
-      <div className='flex flex-col items-center gap-3'>
-        <OptionCard
-          title={'Make a request with a letter'}
-          image_src={letter_envelop.src}
-          page='request-with-letter'
-        />
-
-        <OptionCard
-          title={'Make a request without a letter'}
-          image_src={no_letter_envelop.src}
-          page='request-without-letter'
-        />
-
-        <OptionCard
-          title={'View requests by class'}
-          image_src={classroom.src}
-          page='view-requests'
-        />
-
-        <OptionCard
-          title={'View requests by timetable'}
-          image_src={timetable.src}
-          page='view-requests-by-timetable'
-        />
-
-        <OptionCard
-          title={'Help and About'}
-          image_src={question_mark.src}
-          page='about'
-        />
-      </div>
-
-
-      
-      <br/>
-
-
-      {/* {(
-        <div className='no-letter' id='no-letter-div'>
-          <h1 className='home-page'>Make a request without a letter</h1>
-          <p className='home-page description'>
-            If you don't have a letter available for the day and can't attend for a genuine reason,
-            you can make a letterless request.
-            Only go for this option if you have talked to the teachers about it before and they have agreed to mark
-            you present without a letter being needed.
-          </p>
-        </div>
-      )} */}
+  if (status === 'loading') {
+    <div className="loader-div">
+      <div className="loader"></div>
     </div>
-  );
+  }
+  else {
+    return (
+      <div className='relative'>
+        {
+          session ? 
+          <img 
+            className='absolute top-0 right-2 z-50 w-10 h-10 cursor-pointer object-contain' 
+            onClick={() => router.push('sign-in')}
+            src={standard_profile_picture.src}
+          /> :
+          <button 
+            className="
+            absolute top-0 right-2 px-3 py-2 border-none cursor-pointer 
+            text-sm bg-blue-600 text-white w-20 rounded-full 
+            hover:bg-blue-800 transition-colors duration-300 ease-in-out
+            max-[520px]:w-16
+            max-[520px]:text-xs
+            z-50"
+            onClick={() => router.push('/sign-in')}
+          >
+            Sign In
+          </button>
+        }
+  
+        <div className='homepage'>
+          <div className='top-container'>
+            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+            <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
+          </div>
+  
+          <p className='home-page description'>
+            Post your attendance requests for one or more days and have it viewed by the teachers and granted!
+            No more overhead of communication and workload on others
+          </p>
+          
+          {/* <br/> */}
+          
+          <div className='flex flex-col items-center gap-3'>
+            <OptionCard
+              title={'Make a request with a letter'}
+              image_src={letter_envelop.src}
+              page='request-with-letter'
+            />
+  
+            <OptionCard
+              title={'Make a request without a letter'}
+              image_src={no_letter_envelop.src}
+              page='request-without-letter'
+            />
+  
+            <OptionCard
+              title={'View requests by class'}
+              image_src={classroom.src}
+              page='view-requests'
+            />
+  
+            <OptionCard
+              title={'View requests by timetable'}
+              image_src={timetable.src}
+              page='view-requests-by-timetable'
+            />
+  
+            <OptionCard
+              title={'Help and About'}
+              image_src={question_mark.src}
+              page='about'
+            />
+          </div>
+          
+          <br/>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default HomePage;

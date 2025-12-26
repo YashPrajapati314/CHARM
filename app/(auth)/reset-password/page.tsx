@@ -207,11 +207,11 @@ const SignUp = () => {
   else if (session) {
     return (
       <>
-        <div className="text-center">
-          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        </div>
-        <div className="m-2 flex flex-col gap-4">
-            <div>
+        <div className="m-4 flex flex-col gap-4">
+          <div className="text-center">
+            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          </div>
+          <div>
             Signed in as {
                 session.user.name ? `${session.user.name}` : `${session.user.universityid}`
             } <br />
@@ -237,15 +237,15 @@ const SignUp = () => {
                     </table>
                 </div>
             </div>
-            </div>
-            <div className="flex flex-row justify-between max-w-96">
+          </div>
+          <div className="flex flex-row justify-between max-w-96">
             <div className="text-blue-600">
                 <a href="/" className="text-blue-600 visited:text-blue-600">Go to home page</a>
             </div>
             <button className="text-base bg-red-600 text-white p-1 w-20 rounded-full active:bg-red-800" onClick={() => signOut()}>
                 Sign out
             </button>
-            </div>
+          </div>
         </div>
       </>
     )
@@ -253,10 +253,10 @@ const SignUp = () => {
   else {
     return (
       <>
-        <div className="text-center">
-          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        </div>
-        <div className="m-2">
+        <div className="m-4">
+          <div className="text-center">
+            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          </div>
           {
             <div className="p-2 flex flex-col gap-4 justify-center text-base">
               <div className="flex flex-col gap-2 justify-center text-base">

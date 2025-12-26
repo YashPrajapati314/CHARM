@@ -86,10 +86,10 @@ const SignIn = () => {
   else if (session) {
     return (
       <>
-        <div className="text-center">
-          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        </div>
-        <div className="m-2 flex flex-col gap-4">
+        <div className="m-4 flex flex-col gap-4">
+          <div className="text-center">
+            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          </div>
           <div>
             Signed in as {
               session.user.name ? `${session.user.name}` : `${session.user.universityid}`
@@ -132,10 +132,10 @@ const SignIn = () => {
   else {
     return (
       <>
-        <div className="text-center">
-          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
-        </div>
-        <div className="m-2">
+        <div className="m-4">
+          <div className="text-center">
+            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          </div>
           <div className="p-2 justify-center text-center text-lg">
             Sign in to your account <br />
             <div className="justify-center text-center text-sm">
