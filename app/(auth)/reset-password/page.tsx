@@ -21,7 +21,7 @@ const plwrtITModerna = Playwrite_IT_Moderna({
 });
 
 const SignUp = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [universityId, setUniversityId] = useState<string>('');
   const [pageState, setPageState] = useState<PageStatus>(PageStatus.BASE_PAGE);
   const [otpStatus, setOtpStatus] = useState<OtpStatus>(OtpStatus.NO_ERROR);
@@ -199,7 +199,12 @@ const SignUp = () => {
   }
 
 
-  if (session) {
+  if (status === 'loading') {
+    <div className="loader-div">
+      <div className="loader"></div>
+    </div>
+  }
+  else if (session) {
     return (
       <>
         <div className="text-center">

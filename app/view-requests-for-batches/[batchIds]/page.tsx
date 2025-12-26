@@ -245,7 +245,7 @@ const AttendancesForLecture = () => {
 
     if (status === 'loading') {
         <div className="loader-div">
-        <div className="loader"></div>
+            <div className="loader"></div>
         </div>
     }
     else if (session) {

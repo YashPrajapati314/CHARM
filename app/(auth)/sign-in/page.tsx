@@ -18,7 +18,7 @@ const plwrtITModerna = Playwrite_IT_Moderna({
 });
 
 const SignIn = () => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [universityId, setUniversityId] = useState<string>('');
   const [enteredPassword, setEnteredPassword] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -78,7 +78,12 @@ const SignIn = () => {
     setLoadState(false);
   }
 
-  if (session) {
+  if (status === 'loading') {
+    <div className="loader-div">
+      <div className="loader"></div>
+    </div>
+  }
+  else if (session) {
     return (
       <>
         <div className="text-center">
