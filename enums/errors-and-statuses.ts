@@ -29,6 +29,6 @@ export enum OtpStatus {
 export enum SignInError {
   USER_DOESNT_EXIST = "User with the specified ID doesn't exist",
   ACCOUNT_NOT_INITIALIZED = "User account not yet created. Please create a new account with this ID and set a password to continue",
-  INCORRECT_PASSWORD = "Incorrect Password",
+  INCORRECT_PASSWORD = "Password Incorrect. Try something else or click `Forgot Password?` to reset it",
   UNKNOWN_ERROR = "An unknown error has occurred. Please check your internet connection and try again later"
 }

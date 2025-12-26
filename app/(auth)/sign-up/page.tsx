@@ -328,7 +328,7 @@ const SignUp = () => {
                           otpStatus === OtpStatus.OTP_EXPIRED ? 
                           `The last OTP requested by you has expired. Please request a new one` :
                           otpStatus === OtpStatus.NO_REQUEST ? 
-                          `No OTP requests exist apparently... Strange` :
+                          `No OTP requests were made apparently... Strange` :
                           otpStatus === OtpStatus.BAD_REQUEST ? 
                           `Something seems to be missing to verify your OTP. An error worth reporting` :
                           otpStatus === OtpStatus.OTHER ? 

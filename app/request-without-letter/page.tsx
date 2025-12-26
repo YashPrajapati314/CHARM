@@ -12,6 +12,7 @@ import TableSkeleton from '../table-loading-skeleton';
 import { Student } from '@prisma/client';
 import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import ConfirmationPopup from '@/app/confirmation';
+import sucrose_clipboard from '@/images/webp/sucrose-clipboard.webp'
 import { Skeleton } from "@/components/ui/skeleton"
 import SkeletonTable from "@patternfly/react-component-groups/dist/dynamic/SkeletonTable";
 import imageCompression from 'browser-image-compression';
@@ -47,7 +48,7 @@ interface StudentWithLetterStatus extends Student {
 
 
 const RequestWithoutLetterPage = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [loadingMessage, setLoadingMessage] = useState<string>('Fetching response... Please wait');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -374,7 +375,12 @@ const RequestWithoutLetterPage = () => {
   const twoMonthsFromNow = new Date();
   twoMonthsFromNow.setDate(twoMonthsFromNow.getDate() + 30 * 2);
 
-  if (session) {
+  if (status === 'loading') {
+    <div className="loader-div">
+      <div className="loader"></div>
+    </div>
+  }
+  else if (session) {
     return (
       <div className='homepage'>
         <div className='top-container'>
@@ -515,6 +521,10 @@ const RequestWithoutLetterPage = () => {
             You aren't signed in! <br />
             <div className="justify-center text-center text-lg">
               Please <a href="/sign-in" className="text-blue-600 visited:text-blue-600">sign in</a> to continue
+            </div>
+            <br />
+            <div className='flex flex-col justify-center text-center'>
+              <img className="h-[100px] object-contain" src={sucrose_clipboard.src}></img>
             </div>
           </div>
         </div>

@@ -12,6 +12,9 @@ import yanfei_thinking from '@/images/webp/yanfei-thinking.webp'
 import fischl_folded_arms from '@/images/webp/fischl-folded-arms.webp'
 import { DateTime } from 'luxon';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
+import sucrose_clipboard from '@/images/webp/sucrose-clipboard.webp'
+import { useSession } from 'next-auth/react';
+import React from 'react';
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -23,6 +26,8 @@ const dancingScript = Dancing_Script({
 });
 
 const AttendancesForLecture = () => {
+
+    const { data: session, status } = useSession();
 
     // interface Lecture {
     //     batchid: string;
@@ -238,183 +243,211 @@ const AttendancesForLecture = () => {
         return ['', '', '', ''];
     }
 
-    return (
-        errorScenario2 ? 
-        (<div className="server-error">
-            <img className="server-error-image" src={qiqi_fallen.src}></img>
-            <p className='request-page'>Error fetching lectures</p>
-            <p className='request-page'>This could be an internal server error, please try refreshing the page</p>
-        </div>) :
-        (
-            (invalidDayScenario || invalidRequestScenario) ?
-            <>
+    if (status === 'loading') {
+        <div className="loader-div">
+        <div className="loader"></div>
+        </div>
+    }
+    else if (session) {
+        return (
+            errorScenario2 ? 
+            (<div className="server-error">
+                <img className="server-error-image" src={qiqi_fallen.src}></img>
+                <p className='request-page'>Error fetching lectures</p>
+                <p className='request-page'>This could be an internal server error, please try refreshing the page</p>
+            </div>) :
+            (
+                (invalidDayScenario || invalidRequestScenario) ?
                 <>
-                    <div className="invalid-request">
-                        <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
-                        <h1 className='request-page'>One or more of the requested batches do not exist. Perhaps you have mistyped the URL</h1>
-                    </div>
-                </>
-                {/* {
-                    invalidRequestScenario ?
                     <>
                         <div className="invalid-request">
                             <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
-                            <h1 className='request-page'>No such lecture found... Perhaps you have lost your way</h1>
-                        </div>
-                    </> :
-                    <>
-                        <div className="invalid-day">
-                            <img className="invalid-day-image" src={fischl_folded_arms.src}></img>
-                            <h1 className='request-page'>The requested lecture exists but is not scheduled for today</h1>
+                            <h1 className='request-page'>One or more of the requested batches do not exist. Perhaps you have mistyped the URL</h1>
                         </div>
                     </>
-                } */}
-            </> :
-            (<div className="request-list">
-                <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
-                {
-                    (<div className='title-and-table-container'>
-                        {
-                            <>
-                                <h1 className='request-page'>Attendance Requests for <br></br> {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} </h1>
-                                <h1 className='request-page'>
-                                    {selectedBatches.join(', ')} 
-                                    {/* <br></br>
-                                    {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} 
-                                    <br></br> */}
-                                </h1>
-                            </>
-                        }
-                        {loadedRequests ? 
-                            ( listOfStudentsWithRequests?.length > 0 ?
-                            <motion.div className='body-container'
-                                initial={{ opacity: 0, scale: 1 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                            >
-                                <div className='colour-key-div'>
-                                    <details className='colour-details'>
-                                        <summary className='colour-key-header'>
-                                            What do the colours mean?
-                                        </summary>
-                                        <div className='colour-key-desc'>
-                                            Each row is assigned a particular colour to make it easier to check for a request's validity
-                                        </div>
-                                        <div className='colour-key'>
-                                            <div className='colour-explanation-pair'>
-                                                <div className='colour-square green-square'></div>
-                                                <h6 className='explanation green-text'>Green means all the details have been extracted from the letter automatically</h6>
+                    {/* {
+                        invalidRequestScenario ?
+                        <>
+                            <div className="invalid-request">
+                                <img className="invalid-request-image" src={fischl_folded_arms.src}></img>
+                                <h1 className='request-page'>No such lecture found... Perhaps you have lost your way</h1>
+                            </div>
+                        </> :
+                        <>
+                            <div className="invalid-day">
+                                <img className="invalid-day-image" src={fischl_folded_arms.src}></img>
+                                <h1 className='request-page'>The requested lecture exists but is not scheduled for today</h1>
+                            </div>
+                        </>
+                    } */}
+                </> :
+                (<div className="request-list">
+                    <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
+                    {
+                        (<div className='title-and-table-container'>
+                            {
+                                <>
+                                    <h1 className='request-page'>Attendance Requests for <br></br> {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} </h1>
+                                    <h1 className='request-page'>
+                                        {selectedBatches.join(', ')} 
+                                        {/* <br></br>
+                                        {dateToday}<sup>{ordinalSuffixForToday}</sup> {monthToday} {yearToday} 
+                                        <br></br> */}
+                                    </h1>
+                                </>
+                            }
+                            {loadedRequests ? 
+                                ( listOfStudentsWithRequests?.length > 0 ?
+                                <motion.div className='body-container'
+                                    initial={{ opacity: 0, scale: 1 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 1 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                >
+                                    <div className='colour-key-div'>
+                                        <details className='colour-details'>
+                                            <summary className='colour-key-header'>
+                                                What do the colours mean?
+                                            </summary>
+                                            <div className='colour-key-desc'>
+                                                Each row is assigned a particular colour to make it easier to check for a request's validity
                                             </div>
-                                            <div className='colour-explanation-pair'>
-                                                <div className='colour-square yellow-square'></div>
-                                                <h6 className='explanation yellow-text'>Yellow suggests that the <b>name has been entered manually</b> apart from the ones extracted from the letter</h6>
+                                            <div className='colour-key'>
+                                                <div className='colour-explanation-pair'>
+                                                    <div className='colour-square green-square'></div>
+                                                    <h6 className='explanation green-text'>Green means all the details have been extracted from the letter automatically</h6>
+                                                </div>
+                                                <div className='colour-explanation-pair'>
+                                                    <div className='colour-square yellow-square'></div>
+                                                    <h6 className='explanation yellow-text'>Yellow suggests that the <b>name has been entered manually</b> apart from the ones extracted from the letter</h6>
+                                                </div>
+                                                <div className='colour-explanation-pair'>
+                                                    <div className='colour-square orange-square'></div>
+                                                    <h6 className='explanation orange-text'>Orange indicates that the <b>date has been entered manually</b>, other than the ones that could be detected in the letter</h6>
+                                                </div>
+                                                <div className='colour-explanation-pair'>
+                                                    <div className='colour-square red-square'></div>
+                                                    <h6 className='explanation red-text'>Red means <b>no letter</b> has been attached with the associated request</h6>
+                                                </div>
                                             </div>
-                                            <div className='colour-explanation-pair'>
-                                                <div className='colour-square orange-square'></div>
-                                                <h6 className='explanation orange-text'>Orange indicates that the <b>date has been entered manually</b>, other than the ones that could be detected in the letter</h6>
-                                            </div>
-                                            <div className='colour-explanation-pair'>
-                                                <div className='colour-square red-square'></div>
-                                                <h6 className='explanation red-text'>Red means <b>no letter</b> has been attached with the associated request</h6>
-                                            </div>
-                                        </div>
-                                    </details>
-                                </div>
-                                <h1 className='request-page desc'>Click on a row to view the student's letter / request details</h1>
-                                <div className='request-table-container-container'>
-                                    <div className='request-table-container'>
-                                        <table className='request-table'>
-                                            <thead>
-                                                <tr>
-                                                    <th>SAP ID</th>
-                                                    <th>Name</th>
-                                                    <th>Batch</th>
-                                                    <th>Roll No</th>
-                                                    <th>Reason</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    listOfStudentsWithRequests.map((student) => {
-                                                        const std = student as StudentWithRequests;
-                                                        // const minLetterStatus = Math.min(...std.listofrequests.map(request => request.letterstatus));
-                                                        const minLetterStatus = std.listofrequests[0].letterstatus;
-                                                        return (
-                                                            <tr
-                                                            key={`${std.sapid}`}
-                                                            className={`request ` + 
-                                                                (minLetterStatus === 0 ? `green-row` : (
-                                                                    minLetterStatus === 1 ? `yellow-row` : (
-                                                                        minLetterStatus === 2 ? `orange-row` :
-                                                                            `red-row`))) + (selectedStudent?.sapid === std.sapid ? ` selected-${minLetterStatus}` : ``) 
-                                                            }
-                                                            onClick={() => selectStudent(std)}
-                                                            >
-                                                                <td>{std.sapid}</td>
-                                                                <td>{std.name}</td>
-                                                                <td>{std.batchid}</td>
-                                                                <td>{std.rollno}</td>
-                                                                <td className={(std.listofrequests[0].reason?.split(/\s+/).every(word => word.length < 12) && std.listofrequests[0].reason?.split(/\s+/).length < 5) ? `` : `truncatable`}>{std.listofrequests[0].reason} {std.listofrequests.length > 1 ? `& ${std.listofrequests.length - 1} other${std.listofrequests.length > 2 ? 's' : ''}` : ``}</td>
-                                                            </tr>
-                                                        );
-                                                    })
-                                                }
-                                            </tbody>
-                                        </table>
+                                        </details>
                                     </div>
-                                </div>
-                                <div className='root-request-container'>
-                                    <div  id='list-of-requests'>
-                                        {selectedStudent && 
-                                        (<div className='all-requests-container'>
-                                            <div className='approve-info'>
-                                                Kindly go through all the requests till a valid request is found
-                                            </div>
-                                            <div className='all-requests'>
-                                                <p className='request-page students-name-request'>{selectedStudent.name}'s Request{selectedStudent.listofrequests.length > 1 ? 's' : ''}</p>
-                                                {
-                                                    selectedStudent.listofrequests.map((request, index) =>  (
-                                                        <div id={`${index}`} key={index} className={`image-container image-container-${request.letterstatus}`}>
-                                                            <>
-                                                                <p className='request-page' style={{fontWeight: 'bold', color: (request.letterstatus === 0 ? 'green' : (
-                                                                            request.letterstatus === 1 ? 'rgb(255, 208, 0)' : (
-                                                                                request.letterstatus === 2 ? 'orange' :
-                                                                                    'red')))}}>Request {index + 1} {request.letterstatus === 0 ? '' : request.letterstatus === 1 ? '(Manually Entered Name)' : request.letterstatus === 2 ? '(Modified Date)' : request.letterstatus === 3 ? '(No Letter Uploaded)' : ''}</p>
-                                                                <div className='request-reason-container'>
-                                                                    <p className='request-page request-reason'>Reason: {request.reason}</p>
-                                                                </div>
-                                                                {request.imagelinks.map((imageLink, imageIndex) => {
-                                                                    return <a id={`${imageIndex}`} key={imageIndex} href={imageLink} target='_blank'><img src={imageLink} id={`${imageIndex}`} key={imageIndex} className='letter-image' alt='Deleted Image'></img></a>
-                                                                })}
-                                                            </>
-                                                            Uploaded by {request.uploadedby}
-                                                            {/* //// */}
-                                                        </div>
-                                                    ))
-                                                }
-                                            </div>
-                                        </div>)}
+                                    <h1 className='request-page desc'>Click on a row to view the student's letter / request details</h1>
+                                    <div className='request-table-container-container'>
+                                        <div className='request-table-container'>
+                                            <table className='request-table'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>SAP ID</th>
+                                                        <th>Name</th>
+                                                        <th>Batch</th>
+                                                        <th>Roll No</th>
+                                                        <th>Reason</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        listOfStudentsWithRequests.map((student) => {
+                                                            const std = student as StudentWithRequests;
+                                                            // const minLetterStatus = Math.min(...std.listofrequests.map(request => request.letterstatus));
+                                                            const minLetterStatus = std.listofrequests[0].letterstatus;
+                                                            return (
+                                                                <tr
+                                                                key={`${std.sapid}`}
+                                                                className={`request ` + 
+                                                                    (minLetterStatus === 0 ? `green-row` : (
+                                                                        minLetterStatus === 1 ? `yellow-row` : (
+                                                                            minLetterStatus === 2 ? `orange-row` :
+                                                                                `red-row`))) + (selectedStudent?.sapid === std.sapid ? ` selected-${minLetterStatus}` : ``) 
+                                                                }
+                                                                onClick={() => selectStudent(std)}
+                                                                >
+                                                                    <td>{std.sapid}</td>
+                                                                    <td>{std.name}</td>
+                                                                    <td>{std.batchid}</td>
+                                                                    <td>{std.rollno}</td>
+                                                                    <td className={(std.listofrequests[0].reason?.split(/\s+/).every(word => word.length < 12) && std.listofrequests[0].reason?.split(/\s+/).length < 5) ? `` : `truncatable`}>{std.listofrequests[0].reason} {std.listofrequests.length > 1 ? `& ${std.listofrequests.length - 1} other${std.listofrequests.length > 2 ? 's' : ''}` : ``}</td>
+                                                                </tr>
+                                                            );
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                            :
-                            <div className="no-requests">
-                                <img className="no-requests-image" src={yanfei_thinking.src}></img>
-                                <p>No attendance requests for {selectedBatches.length > 1 ? `these batches` : `this batch`}...</p>
-                                <p>Quite surprising</p>
-                            </div> ) :
-                            <>
-                                <br></br>
-                                <TableSkeleton />
-                                {/* <div className="loader"></div> */}
-                            </>
-                        }
-                    </div>)
-                }
-            </div>)
-        )
-    );
+                                    <div className='root-request-container'>
+                                        <div  id='list-of-requests'>
+                                            {selectedStudent && 
+                                            (<div className='all-requests-container'>
+                                                <div className='approve-info'>
+                                                    Kindly go through all the requests till a valid request is found
+                                                </div>
+                                                <div className='all-requests'>
+                                                    <p className='request-page students-name-request'>{selectedStudent.name}'s Request{selectedStudent.listofrequests.length > 1 ? 's' : ''}</p>
+                                                    {
+                                                        selectedStudent.listofrequests.map((request, index) =>  (
+                                                            <div id={`${index}`} key={index} className={`image-container image-container-${request.letterstatus}`}>
+                                                                <>
+                                                                    <p className='request-page' style={{fontWeight: 'bold', color: (request.letterstatus === 0 ? 'green' : (
+                                                                                request.letterstatus === 1 ? 'rgb(255, 208, 0)' : (
+                                                                                    request.letterstatus === 2 ? 'orange' :
+                                                                                        'red')))}}>Request {index + 1} {request.letterstatus === 0 ? '' : request.letterstatus === 1 ? '(Manually Entered Name)' : request.letterstatus === 2 ? '(Modified Date)' : request.letterstatus === 3 ? '(No Letter Uploaded)' : ''}</p>
+                                                                    <div className='request-reason-container'>
+                                                                        <p className='request-page request-reason'>Reason: {request.reason}</p>
+                                                                    </div>
+                                                                    {request.imagelinks.map((imageLink, imageIndex) => {
+                                                                        return <a id={`${imageIndex}`} key={imageIndex} href={imageLink} target='_blank'><img src={imageLink} id={`${imageIndex}`} key={imageIndex} className='letter-image' alt='Deleted Image'></img></a>
+                                                                    })}
+                                                                </>
+                                                                Uploaded by {request.uploadedby}
+                                                                {/* //// */}
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>)}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                                :
+                                <div className="no-requests">
+                                    <img className="no-requests-image" src={yanfei_thinking.src}></img>
+                                    <p>No attendance requests for {selectedBatches.length > 1 ? `these batches` : `this batch`}...</p>
+                                    <p>Quite surprising</p>
+                                </div> ) :
+                                <>
+                                    <br></br>
+                                    <TableSkeleton />
+                                    {/* <div className="loader"></div> */}
+                                </>
+                            }
+                        </div>)
+                    }
+                </div>)
+            )
+        );
+    }
+    else {
+        return (
+            <>
+                <div className="text-center">
+                    <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+                </div>
+                <div className="m-2 flex flex-col gap-4">
+                    <div className="p-2 justify-center text-center text-lg">
+                        You aren't signed in! <br />
+                        <div className="justify-center text-center text-lg">
+                            Please <a href="/sign-in" className="text-blue-600 visited:text-blue-600">sign in</a> to continue
+                        </div>
+                        <br />
+                        <div className='flex flex-col justify-center text-center'>
+                            <img className="h-[100px] object-contain" src={sucrose_clipboard.src}></img>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    }
 };
 
 export default AttendancesForLecture;
