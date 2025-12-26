@@ -106,7 +106,7 @@ model AttendanceRequest {
   endtime                   DateTime    @db.Time              @default("1970-01-01T23:59:59Z")
   uploadedby                String
   Student                   Student     @relation(fields: [sapid], references: [sapid])
-  User                      User        @relation(fields: [uploadedby], references: [universityid])
+  User                      User        @relation(fields: [uploadedby], references: [universityid], onDelete: NoAction)
   AttendanceRequestToMedia  AttendanceRequestToMedia[]
 
   @@map("attendancerequest")
