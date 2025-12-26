@@ -309,7 +309,7 @@ const RequestWithLetterPage = () => {
       if(validFiles.length > MEDIA_FILES_LIMIT)
       {
         setMediaFilesLimitExceededMessage(`Sorry, due to memory constraints we can only allow uploads of upto ${MEDIA_FILES_LIMIT} images at once. The last ${validFiles.length - MEDIA_FILES_LIMIT} image${validFiles.length - MEDIA_FILES_LIMIT > 1 ? 's' : ''} will be discarded. 
-          If all of these images are a part of a single letter and you really need to upload them, please try contacting the owner or attach a link to these files uploaded on a separate cloud storage in the reason section.`);
+          If all of these images are a part of a single letter and you really need to upload them, please try contacting the creator of this website or attach a link to these files uploaded on a separate cloud storage in the reason section.`);
         validFiles = validFiles.slice(0, MEDIA_FILES_LIMIT);
       }
 
