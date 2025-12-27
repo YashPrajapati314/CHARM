@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import { DateTime } from "luxon";
 import { EmailStatus } from "@/enums/errors-and-statuses";
+import { Resend } from 'resend'; 
 
 
 const prisma = new PrismaClient();
@@ -20,6 +21,41 @@ async function storeOtpForUser(universityId: string, otp: string) {
     where: { universityid: universityId },
     data: { otphash: otpHash, otpexpiration: otpExpiry }
   });
+}
+
+async function sendMailUsingNodeMailer(CHARM_MAIL: string, CHARM_PASS: string, receiverEmail: string, mailSubject: string, mailContent: string) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: CHARM_MAIL,
+      pass: CHARM_PASS
+    }
+  });
+
+  await transporter.sendMail({
+    from: `"CHARM Auth" <${CHARM_MAIL}>`,
+    to: receiverEmail,
+    subject: mailSubject,
+    html: mailContent
+  });
+}
+
+async function sendMailUsingResend(CHARM_MAIL: string, RESEND_API_KEY: string, receiverEmail: string, mailSubject: string, mailContent: string) {
+  const resend = new Resend(RESEND_API_KEY);
+
+  const { data, error } = await resend.emails.send({
+    from: CHARM_MAIL,
+    to: receiverEmail,
+    subject: mailSubject,
+    html: mailContent
+  });
+
+  if (error) {
+    return false;
+  }
+  else {
+    return true;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -52,8 +88,9 @@ export async function POST(req: NextRequest) {
 
     await storeOtpForUser(universityId, otp);
 
-    const CHARM_MAIL = process.env.CHARM_MAIL;
-    const CHARM_PASS = process.env.CHARM_PASS;
+    const CHARM_MAIL = process.env.CHARM_MAIL || '';
+    const CHARM_PASS = process.env.CHARM_PASS || '';
+    const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 
     const mailSubject = `Verify Your Account – CHARM`
 
@@ -76,20 +113,7 @@ export async function POST(req: NextRequest) {
     </html>
     `;
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: CHARM_MAIL,
-        pass: CHARM_PASS
-      }
-    });
-
-    await transporter.sendMail({
-      from: `"CHARM Auth" <${CHARM_MAIL}>`,
-      to: receiverEmail,
-      subject: mailSubject,
-      html: mailContent
-    });
+    await sendMailUsingResend(CHARM_MAIL, RESEND_API_KEY, receiverEmail, mailSubject, mailContent);
 
     return NextResponse.json({ success: true, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
   }
