@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     const otp = generateOtp();
 
-    storeOtpForUser(universityId, otp);
+    await storeOtpForUser(universityId, otp);
 
     const CHARM_MAIL = process.env.CHARM_MAIL;
     const CHARM_PASS = process.env.CHARM_PASS;
