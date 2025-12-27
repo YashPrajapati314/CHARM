@@ -47,7 +47,7 @@ const About = () => {
             },
             {
                 title: "Can requests posted once be deleted?",
-                content: <p className='text-lg'>Since CHARM has no authentication or authorization mechanisms for the moment, deletion of requests is not possible. Requests of the past would be deleted, but if you ever wanted a request you posted to be deleted immediately, please <a className='text-blue-600 underline' href="mailto:yashprajapati.professionalmail@gmail.com">contact me</a>.</p>
+                content: <p className='text-lg'>Since CHARM can have requests posted by anyone for anyone, and additionally since keeping records might be important, deciding what kind of deletions should be allowed is kinda tricky. Therefore, it's probably the best, atleast for now, to disable deletion of posted requests. However, if for any reason, you ever wanted a request you posted to be deleted anytime, please <a className='text-blue-600 underline' href="mailto:yashprajapati.professionalmail@gmail.com">contact me</a>.</p>
             },
             {
                 title: "How does CHARM work? Can it handle every possible scenario flawlessly?",
