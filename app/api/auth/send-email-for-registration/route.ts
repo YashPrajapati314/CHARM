@@ -113,9 +113,14 @@ export async function POST(req: NextRequest) {
     </html>
     `;
 
-    await sendMailUsingResend(CHARM_MAIL, RESEND_API_KEY, receiverEmail, mailSubject, mailContent);
+    const result = await sendMailUsingResend(CHARM_MAIL, RESEND_API_KEY, receiverEmail, mailSubject, mailContent);
 
-    return NextResponse.json({ success: true, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
+    if (result) {
+      return NextResponse.json({ success: true, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
+    }
+    else {
+      return NextResponse.json({ error: "Mail sending failed", errorType: EmailStatus.OTHER }, { status: 500 });
+    }
   }
   catch (err: any) {
     console.error(err);
