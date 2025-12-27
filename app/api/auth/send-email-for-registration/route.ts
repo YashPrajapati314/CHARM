@@ -51,9 +51,11 @@ async function sendMailUsingResend(CHARM_MAIL: string, RESEND_API_KEY: string, r
   });
 
   if (error) {
+    console.log(error);
     return false;
   }
   else {
+    console.log(data);
     return true;
   }
 }
