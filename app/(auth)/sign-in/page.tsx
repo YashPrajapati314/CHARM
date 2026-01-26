@@ -91,9 +91,11 @@ const SignIn = () => {
             <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
           </div>
           <div>
-            Signed in as {
-              session.user.name ? `${session.user.name}` : `${session.user.universityid}`
-            } <br />
+            <div className="text-center">
+              Signed in as {
+                session.user.name ? `${session.user.name}` : `${session.user.universityid}`
+              } <br />
+            </div>
             {/* University ID: {session.user?.universityid} <br /> */}
 
             <div className='table-div-container'>
@@ -117,7 +119,7 @@ const SignIn = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-between max-w-96">
+          <div className="flex flex-row justify-between">
             <div className="text-blue-600">
               <a href="/" className="text-blue-600 visited:text-blue-600">Go to home page</a>
             </div>

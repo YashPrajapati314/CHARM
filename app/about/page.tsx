@@ -23,11 +23,15 @@ const About = () => {
         rows: [
             {
                 title: "What is CHARM and why was it created?",
-                content: <p className='text-lg'>Since several of you must have faced scenarios where you can't attend lectures due to a genuine reason like working for a committee / student club, going for a hackathon or interview, etc. you might be aware that you need to submit a letter to your teachers as a proof of truthfulness to be granted attendance for the lectures you couldn't attend as you were busy. <br></br> The question now is how will the teachers be informed of this and shown the letter with valid reason for your absence when you won't be present to show it. Usually, you would resort to asking a friend or classmate attending the lecture so they can show your letter while the attendance is being taken. <br></br> However, it is not always possible to find a student who would be present in every lecture to show your requests, secondly if such a student does exist, they would be bombarded with such requests from everyone. Now this one person has to look through a bunch of requests (which were sent to them either yesterday, a few days ago, or even during that lecture!) among other messages, all while the attendance is being taken. <br></br> Obviously, it is very easy to miss out marking someone's attendance among this chaos, and teachers also struggle to keep halting for verifying those letters. <br></br> To eliminate this burden from everyone involved, I created CHARM (Centralized Home for Attendance Request Management). CHARM allows students and teachers to make and view attendance requests conveniently. No more overhead of intermediate communication, no more missed requests, just post, view and relax!</p>,
+                content: <p className='text-lg'>Since several of you must have faced scenarios where you can't attend lectures due to a genuine reason like working for a committee / student club, going for a hackathon or interview, etc. you might be aware that you need to submit a letter to your teachers as a proof of truthfulness to be granted attendance for the lectures you couldn't attend as you were busy. <br></br> The question now is how will the teachers be informed of this and shown the letter with valid reason for your absence when you won't be present to show it. Usually, you would resort to asking a friend or classmate attending the lecture so they can show your letter while the attendance is being taken. <br></br> However, it is not always possible to find a student who would be present in every lecture to show your requests. Secondly if such a student does exist, they would be bombarded with such requests from everyone. Now this one person has to look through a bunch of requests (which were sent to them either yesterday, a few days ago, or even during that lecture!) among other messages, all while the attendance is being taken. <br></br> Obviously, it is very easy to miss out marking someone's attendance among this chaos, and teachers also struggle to keep halting for verifying those letters. <br></br> To eliminate this burden from everyone involved, I created CHARM (Centralized Home for Attendance Request Management). CHARM allows students and teachers to make and view attendance requests conveniently. No more overhead of intermediate communication, no more missed requests, just post, view and relax!</p>,
             },
             {
                 title: "How to make requests using CHARM?",
                 content: <p className='text-lg'>CHARM has been crafted with extreme detail, keeping user-centric design in mind. You can upload letters on CHARM, through which SAP IDs will be extracted and looked up in the student database. The list of those students and their details then appear as a table, in which you can select particular rows to make a request for, along with the dates for which you wish to make the request, and the reason. To make things more convenient, the dates and reasons also get automatically extracted if they are visible in the letter (also works with all the dates in a date range!), so now you are just a few clicks away from confirming and posting the request. If you do not have a letter but still have a valid request to make, you can go to the post request without letter option and enter your SAP IDs to proceed similarly.</p>,
+            },
+            {
+                title: "Does posting a request on CHARM guarantee getting attendance for every lecture / practical on that day?",
+                content: <p className='text-lg'>CHARM is only a medium of communication between students and teachers. It is not a substitute for gaining or granting permissions. Whether or not you are granted attendance for an uploaded request is completely up to the discretion of your professors. It is highly recommended you upload proofs of granted permission (ex: request letters signed by the HOD) with your requests, and always better to inform your professors about your absence beforehand.</p>
             },
             {
                 title: "What if the OCR models miss something out?",
@@ -47,7 +51,7 @@ const About = () => {
             },
             {
                 title: "Can requests posted once be deleted?",
-                content: <p className='text-lg'>Since CHARM can have requests posted by anyone for anyone, and additionally since keeping records might be important, deciding what kind of deletions should be allowed is kinda tricky. Therefore, it's probably the best, atleast for now, to disable deletion of posted requests. However, if for any reason, you ever wanted a request you posted to be deleted anytime, please <a className='text-blue-600 underline' href="mailto:yashprajapati.professionalmail@gmail.com">contact me</a>.</p>
+                content: <p className='text-lg'>Since CHARM can have requests posted by anyone for anyone, and additionally since keeping records might be important, deciding what kind of deletions should be allowed is kinda tricky. Therefore, it's probably the best, atleast for now, to disable deletion of posted requests. If however for any reason, you ever wanted a request you posted to be deleted anytime, please <a className='text-blue-600 underline' href="mailto:yashprajapati.professionalmail@gmail.com">contact me</a>.</p>
             },
             {
                 title: "How does CHARM work? Can it handle every possible scenario flawlessly?",
@@ -66,7 +70,7 @@ const About = () => {
 
     const styles = {
         titleTextColor: "grey",
-        rowTitleColor: "#c66bff",
+        rowTitleColor: "#983fc5",
         rowContentColor: '#1e0078',
         // arrowColor: "grey",
     };

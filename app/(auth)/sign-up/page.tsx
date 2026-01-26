@@ -37,7 +37,9 @@ const SignUp = () => {
   const [allPasswordConstraintsMet, setAllPasswordConstraintsMet] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [submissionState, setSubmissionState] = useState<boolean>(false);
+  const [maskedEmail, setMaskedEmail] = useState<string>('');
   const router = useRouter();
+
 
   useEffect(() => {
     setLowercaseLetterConstraintMet(
@@ -110,23 +112,27 @@ const SignUp = () => {
         if (result.success) {
           setPageState(PageStatus.EMAIL_SENT);
           setEmailStatus(EmailStatus.NO_ERROR);
+          setMaskedEmail(result.maskedEmail);
           return true;
         }
         else {
           setPageState(PageStatus.EMAIL_ERROR);
           setEmailStatus(EmailStatus.USER_HAS_NO_EMAIL);
+          setMaskedEmail('');
           return false;
         }
       }
       else {
         setPageState(PageStatus.EMAIL_ERROR);
         setEmailStatus(result.errorType || EmailStatus.OTHER);
+        setMaskedEmail('');
         return false;
       }
     }
     catch (err) {
       setPageState(PageStatus.EMAIL_ERROR);
       setEmailStatus(EmailStatus.OTHER);
+      setMaskedEmail('');
       return false;
     }
   }
@@ -212,9 +218,11 @@ const SignUp = () => {
             <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
           </div>
           <div>
-            Signed in as {
-              session.user.name ? `${session.user.name}` : `${session.user.universityid}`
-            } <br />
+            <div className="text-center">
+              Signed in as {
+                session.user.name ? `${session.user.name}` : `${session.user.universityid}`
+              } <br />
+            </div>
             {/* University ID: {session.user?.universityid} <br /> */}
 
             <div className='table-div-container'>
@@ -238,7 +246,7 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-between max-w-96">
+          <div className="flex flex-row justify-between">
             <div className="text-blue-600">
               <a href="/" className="text-blue-600 visited:text-blue-600">Go to home page</a>
             </div>
@@ -310,8 +318,8 @@ const SignUp = () => {
             
                   (pageState === PageStatus.EMAIL_SENT || pageState === PageStatus.OTP_ERROR) ? 
                   <>
-                    <div className="flex justify-center">
-                      We have sent a 6 digit code to your registered email address. If you don't find the mail, please check the spam folder. The OTP is valid for 10 minutes. Please enter it below <br />
+                    <div className="flex justify-center text-center">
+                      We have sent a 6 digit code to your registered email address{maskedEmail ? ` (${maskedEmail})` : ``}. <br></br> If you don't find the mail, please check the spam folder. <br></br> The OTP is valid for 10 minutes. <br></br> Please enter it below <br />
                     </div>
                     <div className="flex justify-center">
                       <input
@@ -354,7 +362,7 @@ const SignUp = () => {
             
                   ((pageState === PageStatus.OTP_VERIFIED) || (pageState === PageStatus.PASSWORD_CHANGE_FAILED)) ? 
                   <>
-                    <div className="flex">
+                    <div className="flex text-center">
                       OTP Verified! Please set up your account by setting a password. <br/>
                       {/* Passwords must contain atleast 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and should be a minimum of 8 characters long. <br/> */}
                     </div>
@@ -418,7 +426,7 @@ const SignUp = () => {
             
                   pageState === PageStatus.PASSWORD_CHANGED ? 
                   <>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center text-center">
                       Account created successfully! Please login to your account with the password you just set.
                     </div>
                     <div className="flex justify-center text-blue-600"> <a href="/sign-in" className="text-blue-600 visited:text-blue-600"> Sign in </a> </div>
