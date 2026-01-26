@@ -138,3 +138,5 @@ const deleteUnrequiredFilesAndData = async () => {
 }
 
 deleteUnrequiredFilesAndData();
+
+export {};
