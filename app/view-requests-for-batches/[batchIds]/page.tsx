@@ -50,6 +50,7 @@ const AttendancesForLecture = () => {
             reason: string;
             imagelinks: string[];
             uploadedby: string;
+            uploadedbyname: string | null;
         }[];
     }
 
@@ -399,7 +400,9 @@ const AttendancesForLecture = () => {
                                                                         return <a id={`${imageIndex}`} key={imageIndex} href={imageLink} target='_blank'><img src={imageLink} id={`${imageIndex}`} key={imageIndex} className='letter-image' alt='Deleted Image'></img></a>
                                                                     })}
                                                                 </>
-                                                                Uploaded by {request.uploadedby}
+                                                                {request.uploadedbyname ?
+                                                                <>Uploaded by {request.uploadedby} <br/> ({request.uploadedbyname})</> :
+                                                                <>Uploaded by {request.uploadedby}</>}
                                                                 {/* //// */}
                                                             </div>
                                                         ))

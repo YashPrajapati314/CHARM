@@ -75,7 +75,8 @@ export async function GET(req: NextRequest) {
                         Media: true
                     }
                 },
-                Student: true
+                Student: true,
+                User: true
             }
         });
 
@@ -89,6 +90,7 @@ export async function GET(req: NextRequest) {
                 reason: string;
                 imagelinks: string[];
                 uploadedby: string;
+                uploadedbyname: string | null;
             }[];
         }
 
@@ -102,7 +104,8 @@ export async function GET(req: NextRequest) {
                     letterstatus: request.letterstatus,
                     reason: request.AttendanceRequestToMedia[0]?.Media?.reason,
                     imagelinks: request.AttendanceRequestToMedia?.map(mediaObject => mediaObject?.Media?.mediaurl),
-                    uploadedby: request.uploadedby
+                    uploadedby: request.uploadedby,
+                    uploadedbyname: request.User.name
                 });
             }
             else
@@ -116,7 +119,8 @@ export async function GET(req: NextRequest) {
                         letterstatus: request.letterstatus,
                         reason: request.AttendanceRequestToMedia[0]?.Media?.reason,
                         imagelinks: request.AttendanceRequestToMedia?.map(mediaObject => mediaObject?.Media?.mediaurl),
-                        uploadedby: request.uploadedby
+                        uploadedby: request.uploadedby,
+                        uploadedbyname: request.User.name
                     }]
                 });
             }
