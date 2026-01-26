@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import { DateTime } from "luxon";
 import { EmailStatus } from "@/enums/errors-and-statuses";
+import { Resend } from 'resend';
 
 
 const prisma = new PrismaClient();
@@ -20,6 +21,65 @@ async function storeOtpForUser(universityId: string, otp: string) {
     where: { universityid: universityId },
     data: { otphash: otpHash, otpexpiration: otpExpiry }
   });
+}
+
+function maskEmail(email: string) {
+  let [id, domain] = email.split('@');
+  let obfuscatedId;
+
+  if (id.length <= 1) {
+    obfuscatedId = '*';
+  }
+  else if (id.length <= 4) {
+    obfuscatedId = id.slice(0, 1) + '***';
+  }
+  else if (id.length <= 6) {
+    obfuscatedId = id.slice(0, 2) + '****';
+  }
+  else {
+    obfuscatedId = id.slice(0, 2) + '****' + id.slice(id.length - 2);
+  }
+
+  const obfuscatedEmailId = obfuscatedId + '@' + domain;
+
+  return obfuscatedEmailId;
+}
+
+async function sendMailUsingNodeMailer(CHARM_MAIL: string, CHARM_PASS: string, receiverEmail: string, mailSubject: string, mailContent: string) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: CHARM_MAIL,
+      pass: CHARM_PASS
+    }
+  });
+
+  await transporter.sendMail({
+    from: `"CHARM Auth" <${CHARM_MAIL}>`,
+    to: receiverEmail,
+    subject: mailSubject,
+    html: mailContent
+  });
+}
+
+async function sendMailUsingResend(CHARM_MAIL: string, RESEND_API_KEY: string, receiverEmail: string, mailSubject: string, mailContent: string) {
+  const resend = new Resend(RESEND_API_KEY);
+
+  const { data, error } = await resend.emails.send({
+    from: CHARM_MAIL,
+    to: receiverEmail,
+    subject: mailSubject,
+    html: mailContent
+  });
+
+  if (error) {
+    console.log(error);
+    return false;
+  }
+  else {
+    console.log(data);
+    return true;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -48,8 +108,9 @@ export async function POST(req: NextRequest) {
 
     storeOtpForUser(universityId, otp);
 
-    const CHARM_MAIL = process.env.CHARM_MAIL;
-    const CHARM_PASS = process.env.CHARM_PASS;
+    const CHARM_MAIL = process.env.CHARM_MAIL || '';
+    const CHARM_PASS = process.env.CHARM_PASS || '';
+    const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 
     const mailSubject = `Change Your Password – CHARM`
 
@@ -58,7 +119,7 @@ export async function POST(req: NextRequest) {
       <body>
         <p>
           Someone appears to be attempting to change your password on CHARM (Centralized Home for Attendance Request Management) <br>
-          The 6-digit One Time Password for your password update is <b>${otp}</b>. <br>
+          The 6-digit OTP for updating your password is <b>${otp}</b>. <br>
           Please do not share this OTP with anyone. If this request was not made by you, please ignore this email.
         </p>
         <p>
@@ -72,22 +133,16 @@ export async function POST(req: NextRequest) {
     </html>
     `;
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: CHARM_MAIL,
-        pass: CHARM_PASS
-      }
-    });
+    const result = await sendMailUsingResend(CHARM_MAIL, RESEND_API_KEY, receiverEmail, mailSubject, mailContent);
 
-    await transporter.sendMail({
-      from: `"CHARM Auth" <${CHARM_MAIL}>`,
-      to: receiverEmail,
-      subject: mailSubject,
-      html: mailContent
-    });
+    const maskedEmail = maskEmail(receiverEmail);
 
-    return NextResponse.json({ success: true, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
+    if (result) {
+      return NextResponse.json({ success: true, maskedEmail: maskedEmail, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
+    }
+    else {
+      return NextResponse.json({ error: "Mail sending failed", errorType: EmailStatus.OTHER }, { status: 500 });
+    }
   }
   catch (err: any) {
     console.error(err);

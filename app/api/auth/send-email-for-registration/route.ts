@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import { DateTime } from "luxon";
 import { EmailStatus } from "@/enums/errors-and-statuses";
-import { Resend } from 'resend'; 
+import { Resend } from 'resend';
 
 
 const prisma = new PrismaClient();
@@ -21,6 +21,28 @@ async function storeOtpForUser(universityId: string, otp: string) {
     where: { universityid: universityId },
     data: { otphash: otpHash, otpexpiration: otpExpiry }
   });
+}
+
+function maskEmail(email: string) {
+  let [id, domain] = email.split('@');
+  let obfuscatedId;
+
+  if (id.length <= 1) {
+    obfuscatedId = '*';
+  }
+  else if (id.length <= 4) {
+    obfuscatedId = id.slice(0, 1) + '***';
+  }
+  else if (id.length <= 6) {
+    obfuscatedId = id.slice(0, 2) + '****';
+  }
+  else {
+    obfuscatedId = id.slice(0, 2) + '****' + id.slice(id.length - 2);
+  }
+
+  const obfuscatedEmailId = obfuscatedId + '@' + domain;
+
+  return obfuscatedEmailId;
 }
 
 async function sendMailUsingNodeMailer(CHARM_MAIL: string, CHARM_PASS: string, receiverEmail: string, mailSubject: string, mailContent: string) {
@@ -117,8 +139,10 @@ export async function POST(req: NextRequest) {
 
     const result = await sendMailUsingResend(CHARM_MAIL, RESEND_API_KEY, receiverEmail, mailSubject, mailContent);
 
+    const maskedEmail = maskEmail(receiverEmail);
+
     if (result) {
-      return NextResponse.json({ success: true, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
+      return NextResponse.json({ success: true, maskedEmail: maskedEmail, errorType: EmailStatus.NO_ERROR, message: "OTP sent to registered email address." });
     }
     else {
       return NextResponse.json({ error: "Mail sending failed", errorType: EmailStatus.OTHER }, { status: 500 });
