@@ -10,11 +10,19 @@ const prisma = new PrismaClient();
 
 const csvFilePath = process.env.USER_DATA_CSV;
 
-async function pushDataFromCSV() {
+async function pushUserDataFromCSV() {
     const userData: any[] = [];
 
     fs.createReadStream(csvFilePath)
-        .pipe(csv())
+        .pipe(csv({
+            // @ts-ignore
+            mapHeaders: ({ header }) =>
+            header
+                .trim()
+                .replace(/\uFEFF/g, '')   // BOM
+                .replace(/\u200B/g, '')   // zero-width space
+                .replace(/\u00A0/g, ''),  // non-breaking space
+        }))
         .on('data', (row: any) => {
                 const formattedRow = {
                 universityid: row.universityid,
@@ -43,6 +51,6 @@ async function pushDataFromCSV() {
         });
 }
 
-pushDataFromCSV();
+pushUserDataFromCSV();
 
 export {};

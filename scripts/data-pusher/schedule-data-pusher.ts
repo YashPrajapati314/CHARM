@@ -16,11 +16,19 @@
 //     return convertedDate;
 // }
 
-// async function pushDataFromCSV() {
+// async function pushScheduleDataFromCSV() {
 //     const scheduleData: any[] = [];
 
 //     fs.createReadStream(csvFilePath)
-//         .pipe(csv())
+//         .pipe(csv({
+//             // @ts-ignore
+//             mapHeaders: ({ header }) =>
+//             header
+//                 .trim()
+//                 .replace(/\uFEFF/g, '')   // BOM
+//                 .replace(/\u200B/g, '')   // zero-width space
+//                 .replace(/\u00A0/g, ''),  // non-breaking space
+//         }))
 //         .on('data', (row: any) => {
 //             const formattedRow = {
 //                 batchid: row.batchid,
@@ -47,6 +55,6 @@
 //         });
 // }
 
-// // pushDataFromCSV();
+// // pushScheduleDataFromCSV();
 
 // export {};

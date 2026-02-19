@@ -17,6 +17,7 @@ interface ConfirmationPopupProps {
   submitFunction: () => Promise<number>;
 }
 
+
 const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, closePopup, letter, studentsExtractedFromLetter, studentsManuallyAddedWithLetter, noLetterStudents, extractedDates, manuallyAddedDates, noLetterDates, submitFunction }) => {
     console.log(studentsExtractedFromLetter, studentsManuallyAddedWithLetter, noLetterStudents);
     console.log(extractedDates, manuallyAddedDates, noLetterDates);
@@ -65,6 +66,18 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
 
     const handleConsentChange = () => {
         setConsent((prev) => !(prev));
+    }
+
+    const getDatesString = (dateList: Date[]): string => {
+        const formattedDateList: string[] = dateList!.map((date: Date) => formattedDate(date));
+        let datesString: string;
+        if (formattedDateList.length > 6) {
+            datesString = `${formattedDateList[0]}, ${formattedDateList[1]}, ${formattedDateList[2]}, etc.`;
+        }
+        else {
+            datesString = formattedDateList.join(', ');
+        }
+        return datesString;
     }
 
     return (
@@ -134,8 +147,8 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                             }
                             <div className="letter-dates-confirmation">
                                 The request will be made for <br></br>
-                                {extractedDates!.length > 0 && <>The following dates extracted from the letter: <div className="extracted-ones">{extractedDates!.map((date: Date) => formattedDate(date)).join(', ')}</div></>}
-                                {manuallyAddedDates!.length > 0 && <>The following dates added manually: <div className="added-ones">{manuallyAddedDates!.map((date: Date) => formattedDate(date)).join(', ')}</div></>}
+                                {(extractedDates && extractedDates!.length > 0) && <>The following dates extracted from the letter: <div className="extracted-ones">{getDatesString(extractedDates)}</div></>}
+                                {(manuallyAddedDates && manuallyAddedDates!.length > 0) && <>The following dates added manually: <div className="added-ones">{getDatesString(manuallyAddedDates)}</div></>}
                                 Rest assured, everything will be handled by itself
                             </div>
                             <br></br>
@@ -185,8 +198,13 @@ const ConfirmationPopup: React.FC<ConfirmationPopupProps> = ({ isPopupOpen, clos
                             </div>}
                             <br></br>
                             <div className="no-letter-dates-confirmation">
-                                The request will be made for the following dates: <br></br>{noLetterDates!.map((date: Date) => formattedDate(date)).join(', ')}
-                                <br></br>
+                                {
+                                    (noLetterDates && noLetterDates.length > 0) &&
+                                    <>
+                                        The request will be made for the following dates: <br></br>{getDatesString(noLetterDates)}
+                                        <br></br>
+                                    </>
+                                }
                                 Rest assured, everything will be handled by itself
                             </div>
                             <br></br>

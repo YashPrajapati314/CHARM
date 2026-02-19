@@ -836,6 +836,29 @@ const RequestWithLetterPage = () => {
     });
   }
 
+  const getPastDatesMessage = (pastDates: Date[]): string => {
+    let pastDatesMessage;
+    if (pastDates.length > 4) {
+      pastDatesMessage = `Dates from ${pastDates[0]} to ${pastDates[pastDates.length - 1]} extracted from the letter are of the past now and can no longer be requested for`;
+    }
+    else {
+      const pluralPastDates = (pastDates.length > 1);
+      pastDatesMessage = `Date${pluralPastDates ? 's' : ''} ${pastDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter ${pluralPastDates ? 'are' : 'is'} of the past now and can no longer be requested for`;
+    }
+    return pastDatesMessage;
+  }
+
+  const getFarFutureDatesMessage = (farFutureDates: Date[]): string => {
+    let farFutureDatesMessage;
+    if (farFutureDates.length > 4) {
+      farFutureDatesMessage = `Dates from ${farFutureDates[0]} to ${farFutureDates[farFutureDates.length - 1]} extracted from the letter are more than 2 months into the future from today and can't be requested for at the moment.`;
+    }
+    else {
+      const pluralFarFutureDates = (pastDates.length > 1);
+      farFutureDatesMessage = `Date${pluralFarFutureDates ? 's' : ''} ${farFutureDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter ${farFutureDates ? 'are' : 'is'} more than 2 months into the future from today and can't be requested for at the moment.`;
+    }
+    return farFutureDatesMessage;
+  }
 
   const handleSubmit = async (force_reupload: boolean = false): Promise<number> => {
     const currDate = (new Date());
@@ -1182,14 +1205,16 @@ const RequestWithLetterPage = () => {
               <div>
                 <br></br>
                 <p className='home-page past-dates'>
-                  Date{pastDates.length > 1 ? 's' : ''} {pastDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {pastDates.length > 1 ? 'are' : 'is'} of the past now and can no longer be requested for
+                  {getPastDatesMessage(pastDates)}
+                  {/* Date{pastDates.length > 1 ? 's' : ''} {pastDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {pastDates.length > 1 ? 'are' : 'is'} of the past now and can no longer be requested for */}
                 </p>
               </div> : <></>}
               {farFutureDates.length !== 0 ? 
               <div>
                 <br></br>
                 <p className='home-page far-future-dates'>
-                  Date{farFutureDates.length > 1 ? 's' : ''} {farFutureDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {farFutureDates.length > 1 ? 'are' : 'is'} more than 2 months into the future from today and can't be requested for now
+                  {getFarFutureDatesMessage(farFutureDates)}
+                  {/* Date{farFutureDates.length > 1 ? 's' : ''} {farFutureDates.map((date: Date) => formattedDate(date)).join(', ')} extracted from the letter {farFutureDates.length > 1 ? 'are' : 'is'} more than 2 months into the future from today and can't be requested for now */}
                 </p>
               </div> : <></>}
             </motion.div>

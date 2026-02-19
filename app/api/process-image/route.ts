@@ -244,6 +244,7 @@ async function getSAPIDsFromPaddleOCR(img: Blob) {
 async function getDatesAndReasonFromGPT4(API_KEY: string, imgBase64: FormDataEntryValue, getFullText: boolean): Promise<StructuredResponse | null> {
   try
   {
+    console.log('********');
     const openai = new OpenAI({
       apiKey: API_KEY
     });
@@ -262,6 +263,11 @@ async function getDatesAndReasonFromGPT4(API_KEY: string, imgBase64: FormDataEnt
     });
 
     const extractedText = completion?.choices[0].message?.content;
+
+    console.log('********');
+
+    console.log('GPT:', extractedText);
+
     if (extractedText) {
       console.log(`GPT responded with dates and reason: \n${extractedText}\n`);
       const parsedDetails = JSON.parse(extractedText);
@@ -276,8 +282,9 @@ async function getDatesAndReasonFromGPT4(API_KEY: string, imgBase64: FormDataEnt
       return null;
     }
   }
-  catch
+  catch (error)
   {
+    console.log('GPT Response failed:', error);
     return null;
   }
 }

@@ -62,7 +62,18 @@ const Batches = () => {
     
     useEffect(() => {
         console.log(selectedBatches);
-    }, [selectedBatches])
+    }, [selectedBatches]);
+
+    
+    useEffect(() => {
+    if (listOfBatches.length > 0) {
+        const initialSelection: Record<string, boolean> = {};
+        listOfBatches.forEach(batch => {
+        initialSelection[batch.batchid] = false;
+        });
+        setSelectedBatches(initialSelection);
+    }
+    }, [listOfBatches]);
     
     const toggleBatchSelection = (batchId: string) => {
         setSelectedBatches((prev) => ({
@@ -71,6 +82,11 @@ const Batches = () => {
         }));
     }
 
+    const selectOrDeselectAll = () => {
+        const allSelected = Object.values(selectedBatches).every(val => val);
+        const newSelection = Object.fromEntries(listOfBatches.map(batch => [batch.batchid, !allSelected]));
+        setSelectedBatches(newSelection);
+    };
     
     const fetchLectures = (batchIds: string) => {
         console.log("Batch Selected:", batchIds);
@@ -149,7 +165,7 @@ const Batches = () => {
                             {selectedDepartment.trim() === 'First Year Block' ? <h2 className='teacher-page-open'>First Year Block</h2> : 
                             selectedDepartment.trim() === 'Other' ? <h2 className='teacher-page-open'>Other Departments</h2> : 
                             <h2 className='teacher-page-open'>Department of {selectedDepartment.trim()} ({year})</h2> }
-                            {listOfBatches.length > 0 ? <h2 className='text-xl'>Select Batches To View Requests Of</h2> : <></>}
+                            {listOfBatches.length > 0 ? <h2 className='text-xl'>Select Batches To View Requests</h2> : <></>}
                             {loadedBatches ? (listOfBatches.length > 0 ? (
                                 <>
                                     <div className="grid grid-cols-2 gap-4">
@@ -174,9 +190,16 @@ const Batches = () => {
                                             </motion.div>
                                         ))}
                                     </div>
+                                    <button 
+                                        className='w-12 py-2 px-1 sm:w-auto text-md text-cyan-800 rounded-full bg-[rgba(139,184,184,0.665)] 
+                                        transition-[width,background-color] duration-300 ease-in-out hover:bg-[rgba(139,184,184,0.5)]' 
+                                        onClick={selectOrDeselectAll}
+                                    >
+                                        {Object.values(selectedBatches).every(val => val) ? 'Deselect All' : 'Select All'}
+                                    </button>
                                     <motion.button
                                         onClick={handleBatchSubmit}
-                                        className="mt-4 px-4 py-2 bg-blue-600 text-white text-base rounded-full transition duration-200 ease-in-out hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                        className="px-4 py-2 bg-blue-600 text-white text-base rounded-full transition duration-200 ease-in-out hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
@@ -185,6 +208,9 @@ const Batches = () => {
                                     >
                                         View Requests of Selected Batches
                                     </motion.button>
+                                    <div className='text-lg p-[10px] rounded-[8px] inline-block mt-[10px] bg-[rgba(255,248,125,0.603)] text-[rgb(255,153,0)]'>
+                                        <b>Note:</b> Students' batches keep changing every semester. Sometimes, they may not have been updated. The best practice is to view requests for all the batches and mark attendance for those currently in your batch.
+                                    </div>
                                 </>
                             ) : (
                                 <div className="batches-not-found">
