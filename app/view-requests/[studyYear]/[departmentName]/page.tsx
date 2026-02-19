@@ -191,7 +191,7 @@ const Batches = () => {
                                         ))}
                                     </div>
                                     <button 
-                                        className='w-12 py-2 px-1 sm:w-auto text-md text-cyan-800 rounded-full bg-[rgba(139,184,184,0.665)] 
+                                        className='w-12 py-2 px-1 sm:w-auto text-base text-cyan-800 rounded-full bg-[rgba(139,184,184,0.665)] 
                                         transition-[width,background-color] duration-300 ease-in-out hover:bg-[rgba(139,184,184,0.5)]' 
                                         onClick={selectOrDeselectAll}
                                     >
