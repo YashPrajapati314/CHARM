@@ -84,36 +84,48 @@ h1.request-page, h2.request-page, p.request-page {
     background-color: #c72b2b;
 }
 
-.selected-0 td {
-    background-color: rgba(137, 202, 255, 0.483); ;
+/* .selected-0 td {
+    background-color: rgba(137, 202, 255, 0.483);
 }
 
 .selected-1 td {
-    background-color: rgba(176, 178, 77, 0.483); ;
+    background-color: rgba(176, 178, 77, 0.483);
 }
 
 .selected-2 td {
-    background-color: rgba(255, 200, 158, 0.483); ;
+    background-color: rgba(255, 200, 158, 0.483);
 }
 
 .selected-3 td {
-    background-color: rgba(255, 122, 122, 0.483); ;
-}
+    background-color: rgba(255, 122, 122, 0.483);
+} */
 
 .selected-0 {
     border: 2px solid green;
+    /* background-color: rgba(137, 202, 255, 0.483); */
+    background: linear-gradient(rgba(137, 202, 255, 0.483), rgba(137, 202, 255, 0.483)), /* top */
+                linear-gradient(#268c40, #268c40); /* base */
 }
 
 .selected-1 {
     border: 2px solid rgb(166, 205, 50);
+    /* background-color: rgba(176, 178, 77, 0.483); */
+    background: linear-gradient(rgba(176, 178, 77, 0.483), rgba(176, 178, 77, 0.483)), /* top */
+                linear-gradient(rgb(255, 204, 0), rgb(255, 204, 0)); /* base */
 }
 
 .selected-2 {
     border: 2px solid rgb(255, 136, 0);
+    /* background-color: rgba(255, 200, 158, 0.483); */
+    background: linear-gradient(rgba(255, 200, 158, 0.483), rgba(255, 200, 158, 0.483)), /* top */
+                linear-gradient(rgb(255, 145, 0), rgb(255, 145, 0)); /* base */
 }
 
 .selected-3 {
     border: 2px solid rgb(154, 0, 0);
+    /* background-color: rgba(255, 122, 122, 0.483); */
+    background: linear-gradient(rgba(255, 122, 122, 0.483), rgba(255, 122, 122, 0.483)), /* top */
+                linear-gradient(#c72b2b, #c72b2b); /* base */
 }
 
 td.truncatable {

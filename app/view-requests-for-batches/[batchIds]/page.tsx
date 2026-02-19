@@ -355,11 +355,24 @@ const AttendancesForLecture = () => {
                                                             return (
                                                                 <tr
                                                                 key={`${std.sapid}`}
-                                                                className={`request ` + 
-                                                                    (minLetterStatus === 0 ? `green-row` : (
-                                                                        minLetterStatus === 1 ? `yellow-row` : (
-                                                                            minLetterStatus === 2 ? `orange-row` :
-                                                                                `red-row`))) + (selectedStudent?.sapid === std.sapid ? ` selected-${minLetterStatus}` : ``) 
+                                                                // className={`request` + ` ` +
+                                                                //     (minLetterStatus === 0 ? `green-row` : (
+                                                                //         minLetterStatus === 1 ? `yellow-row` : (
+                                                                //             minLetterStatus === 2 ? `orange-row` :
+                                                                //                 `red-row`))) + ` ` + ((selectedStudent?.sapid === std.sapid) ? `selected-${minLetterStatus}` : ``) 
+                                                                // }
+                                                                className={
+                                                                    `request ${
+                                                                        minLetterStatus === 0 ? `green-row` : (
+                                                                            minLetterStatus === 1 ? `yellow-row` : (
+                                                                                minLetterStatus === 2 ? `orange-row` :
+                                                                                    `red-row`
+                                                                            )
+                                                                        )
+                                                                    } ${
+                                                                        (selectedStudent?.sapid === std.sapid) ? 
+                                                                        `selected-${minLetterStatus}` : ``
+                                                                    }`
                                                                 }
                                                                 onClick={() => selectStudent(std)}
                                                                 >
