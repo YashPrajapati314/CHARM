@@ -27,6 +27,7 @@ import { trackSynchronousPlatformIOAccessInDev } from 'next/dist/server/app-rend
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import { DateTime } from 'luxon';
 import { useSession } from 'next-auth/react';
+import { CHARM } from '@/app/charm-logo';
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -391,7 +392,8 @@ const RequestWithoutLetterPage = () => {
             </button>
           </div> */}
           {/* <Header></Header> */}
-          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          {/* <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1> */}
+          <CHARM />
           <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
         </div>
         <br/>
@@ -514,7 +516,7 @@ const RequestWithoutLetterPage = () => {
     return (
       <>
         <div className="text-center">
-          <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+          <CHARM />
         </div>
         <div className="m-4 flex flex-col gap-4">
           <div className="p-2 justify-center text-center text-lg">

@@ -33,6 +33,7 @@ import timetable from '@/images/webp/timetable.webp';
 import question_mark from '@/images/webp/question-mark.webp';
 import standard_profile_picture from '@/images/webp/account-profile-user-avatar-icon.webp';
 import { useSession } from 'next-auth/react';
+import { CHARM } from '@/app/charm-logo';
 
 
 const plwrtITModerna = Playwrite_IT_Moderna({
@@ -88,7 +89,7 @@ const HomePage = () => {
   
         <div className='homepage'>
           <div className='top-container'>
-            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+            <CHARM />
             <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1>
           </div>
   

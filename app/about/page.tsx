@@ -5,6 +5,7 @@ import '@/app/styles/HomePage.css';
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import Faq from "react-faq-component";
 import ganyu_happy from '@/images/webp/ganyu-happy.webp'
+import { CHARM } from '@/app/charm-logo';
 
 
 const plwrtITModerna = Playwrite_IT_Moderna({
@@ -84,7 +85,7 @@ const About = () => {
     return (
         <div className='about-page'>
             <div className='top-container'>
-                <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+                <CHARM />
                 {/* <h1 className={`home-page title-desc ${plwrtITModerna.className}`}>Centralized Home for Attendance Request Management</h1> */}
             </div>
             <h1 className='text-center text-3xl my-4 text-blue-800'>About</h1>

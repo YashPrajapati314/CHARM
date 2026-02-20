@@ -7,6 +7,7 @@ import { Dancing_Script, Playwrite_IT_Moderna } from "next/font/google";
 import { useRouter } from "next/navigation";
 import '@/app/styles/HomePage.css';
 import '@/app/styles/SignInLoader.css'
+import { CHARM } from '@/app/charm-logo';
 
 const dancingScript = Dancing_Script({
   variable: "--font-dancing-script",
@@ -88,7 +89,7 @@ const SignIn = () => {
       <>
         <div className="m-4 flex flex-col gap-4">
           <div className="text-center">
-            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+            <CHARM />
           </div>
           <div>
             <div className="text-center">
@@ -136,7 +137,7 @@ const SignIn = () => {
       <>
         <div className="m-4">
           <div className="text-center">
-            <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+            <CHARM />
           </div>
           <div className="p-2 justify-center text-center text-lg">
             Sign in to your account <br />

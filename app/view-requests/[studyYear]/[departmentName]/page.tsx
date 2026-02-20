@@ -13,6 +13,7 @@ import { buffer } from "stream/consumers";
 import { Dancing_Script, Playwrite_IT_Moderna } from 'next/font/google';
 import { useSession } from "next-auth/react";
 import e from "express";
+import { CHARM, MarginedCHARM } from '@/app/charm-logo';
 
 const plwrtITModerna = Playwrite_IT_Moderna({
   variable: "--font-dancing-script"
@@ -160,7 +161,7 @@ const Batches = () => {
             (<div className='teacher-view'>
                 {selectedDepartment && (
                     <>
-                        <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
+                        <MarginedCHARM />
                         <div className="teacher-list">
                             {selectedDepartment.trim() === 'First Year Block' ? <h2 className='teacher-page-open'>First Year Block</h2> : 
                             selectedDepartment.trim() === 'Other' ? <h2 className='teacher-page-open'>Other Departments</h2> : 
@@ -235,7 +236,7 @@ const Batches = () => {
         return (
             <>
                 <div className="text-center">
-                    <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+                    <CHARM />
                 </div>
                 <div className="m-4 flex flex-col gap-4">
                     <div className="p-2 justify-center text-center text-lg">

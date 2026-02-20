@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { Dancing_Script, Playwrite_IT_Moderna } from "next/font/google";
+import { CHARM } from '@/app/charm-logo';
 
 const dancingScript = Dancing_Script({
   variable: "--font-dancing-script",
@@ -22,7 +23,7 @@ const Header = () => {
         <Menu size={32} />
       </button>
 
-      <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+      <CHARM />
 
       <button
         className="btn view-requests-button"
