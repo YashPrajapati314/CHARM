@@ -232,13 +232,13 @@
     /* min-width: 420px; */
   }
 
-  table.user-details-table th, table.user-details-table td {
+  table.user-details-table th, table.user-details-table tr, table.user-details-table td {
     padding: 8px;
     border: 1px solid #ddd;
     text-align: left;
     color: white;
     white-space: nowrap;
-    background-color: rgba(131, 8, 202, 0.811);
+    background-color: rgba(96, 21, 161, 0.811);
   }
 
   .table-title {

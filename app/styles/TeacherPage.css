@@ -22,7 +22,8 @@
 }
 
 h1.teacher-page-open, h2.teacher-page-open, p.teacher-page-open, h1.batches-page-open, h2.batches-page-open, p.batches-page-open {
-    color: #333;
+    /* color: #333; */
+    color: #1d233d;
     font-size: 22px;
 }
 

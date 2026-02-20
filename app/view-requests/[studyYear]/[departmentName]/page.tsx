@@ -174,9 +174,9 @@ const Batches = () => {
                                                 key={`div_${batch.batchid}`} 
                                                 className={
                                                     `${selectedBatches[batch.batchid]
-                                                    ? "bg-emerald-400"
-                                                    : "bg-emerald-300"}
-                                                    flex flex-row w-[130px] gap-2 px-2 py-2 items-center justify-center rounded-full text-base text-cyan-900 cursor-pointer transition duration-200 ease-in-out select-none
+                                                    ? "bg-blue-300"
+                                                    : "bg-blue-100"}
+                                                    flex flex-row w-[130px] gap-2 px-2 py-2 items-center justify-center rounded-full text-base text-blue-800 cursor-pointer transition duration-200 ease-in-out select-none
                                                     ${((index === listOfBatches.length - 1) && (listOfBatches.length % 2 === 1)) ? "col-span-2 justify-self-center" : ""}`
                                                 }
                                                 id={`${batch.batchid}`}
@@ -191,8 +191,11 @@ const Batches = () => {
                                         ))}
                                     </div>
                                     <button 
-                                        className='w-12 py-2 px-1 sm:w-auto text-base text-cyan-800 rounded-full bg-[rgba(139,184,184,0.665)] 
-                                        transition-[width,background-color] duration-300 ease-in-out hover:bg-[rgba(139,184,184,0.5)]' 
+                                        className={
+                                            `w-12 py-2 px-1 sm:w-auto text-base text-cyan-800 rounded-full bg-[rgba(139,184,184,0.665)] 
+                                            transition-[width,color,background-color] duration-100 ease-in-out
+                                            ${Object.values(selectedBatches).every(val => val) ? `text-cyan-900 rounded-full bg-[rgba(69,147,147,0.67)]` : `text-cyan-800 rounded-full bg-[rgba(139,184,184,0.665)]`}`
+                                        }
                                         onClick={selectOrDeselectAll}
                                     >
                                         {Object.values(selectedBatches).every(val => val) ? 'Deselect All' : 'Select All'}
@@ -200,6 +203,7 @@ const Batches = () => {
                                     <motion.button
                                         onClick={handleBatchSubmit}
                                         className="px-4 py-2 bg-blue-600 text-white text-base rounded-full transition duration-200 ease-in-out hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                        // className="px-4 py-2 bg-blue-100 text-blue-800 text-base rounded-full transition duration-200 ease-in-out hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
@@ -208,6 +212,7 @@ const Batches = () => {
                                     >
                                         View Requests of Selected Batches
                                     </motion.button>
+                                    {/* <div className='text-lg p-[10px] rounded-[8px] inline-block mt-[10px] bg-[rgba(255,248,125,0.603)] text-[rgb(255,153,0)]'> */}
                                     <div className='text-lg p-[10px] rounded-[8px] inline-block mt-[10px] bg-[rgba(255,248,125,0.603)] text-[rgb(255,153,0)]'>
                                         <b>Note:</b> Students' batches keep changing every semester. Sometimes, they may not have been updated. The best practice is to view requests for all the batches and mark attendance for those currently in your batch.
                                     </div>
