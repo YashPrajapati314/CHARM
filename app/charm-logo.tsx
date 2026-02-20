@@ -13,12 +13,12 @@ const dancingScript = Dancing_Script({
 
 export const CHARM = () => {
     return (
-        <h1 className={`home-page title ${dancingScript.className}`}>CHARM</h1>
+        <h1 className={`home-page title text-center ${dancingScript.className}`}>CHARM</h1>
     );
 };
 
 export const MarginedCHARM = () => {
     return (
-        <h1 className={`charm ${dancingScript.className}`}>CHARM</h1>
+        <h1 className={`charm text-center ${dancingScript.className}`}>CHARM</h1>
     );
 };
